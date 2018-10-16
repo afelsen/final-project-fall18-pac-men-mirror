@@ -1,83 +1,106 @@
-* Cover Page
-    * A cover page containing your group member names, project title, course number, and semester
-    * Github URL
-    * Project Demo Presentation as Google Slide URL
-Example:
-# Project Title
+# PacXon
 ## CS 110 Final Project
-### Semester, Year
+### Semester 1, 2018
 
-[https://github.com/<repo>](#)
+[https://github.com/binghamtonuniversity-cs110/final-project-fall18-pac-men](https://github.com/binghamtonuniversity-cs110/final-project-fall18-pac-men#)
 
-[link to demo presentation slides](#)
+[Link to demo presentation slides - TBD](#)
 
 ### Team:
-#### Team Names
+#### Adiel Felsen, Matt Damiata, Jack Stanley
 
 ***
 
 ## Project Description
-Give an overview of your project
+PacXon is a game where a player controls a Pacman character to fence portions of the screen. The challenge is that the Pacman has to avoid ghosts who are bouncing around the screen. If the Pacman hits into a ghost, he loses a life. The game is over when Pacman runs out of lives or fences in a certain percentage of the screen. There are many levels with a different number of ghosts and even ghosts with special abilities to make the game more challenging. Pacman can also collect powerups of his own to help him succeed. PacXon uses Pacman’s original characters – Pacman and ghosts – but it is entirely a unique game of its own.
+
+1. Core
+   1. Pacman moves across screen
+   2. Pacman fences in parts of the screen
+   3. Pacman wins when a certain percent of the screen is fenced in
+   4. Ghosts bounce across walls
+     * Pacman does not fence in area occupied by ghosts
+   6. Pacman loses when his current line is hit by a ghost
+2. Features
+   1. Pacman image changes direction
+   2. Multiple levels
+     * More ghosts on later levels
+     * Some ghosts move faster in later levels
+   3. Powerups
+     * Allows Pacman to move faster.
+     * Remain unaffected by ghosts for a period of time.
+3. Dreams
+   1. Multiplayer mode – Pacmen compete or work together
+   2. Pacman does not immediately die when his current line is hit – there is a delay based on how far away the ghost is
+   3. You can apply different skins for the Pacman and ghosts
+
 
 ***    
 
 ## User Interface Design
-* A wireframe or drawing of the user interface concept along with a short description of the interface. You should have one for each screen in your program.
-    * For example, if your program has a start screen, game screen, and game over screen, you should include a wireframe / screenshot / drawing of each one and a short description of the components
-    * You should also have a screenshot of your final GUI
+1.	Start Screen
+
+   TBD
+2.	Instructions Screen
+
+   TBD
+
+3.	The Game Menu
+
+   TBD
+
+4.	Next Level Screen
+
+   TBD
+
+5.	Game Over Screen
+
+   TBD
+
+Pictures: TBD
 
 ***        
 
 ## Program Design
-* You should have a list of any additional libraries or modules used (pygame, request) beyond non-standard python.
-    * For each additional module you should include
-        * url for the module documentation
-        * a short description of the module
-* Decide upon a class interface for the classes in your project.
-    * A simple drawing that shows the class relationships in your code (see the sample Proposal document for an example).
-    * This does not need to be overly detailed, but should show how your code fits into the Model/View/Controller paradigm.
-* You should have a list of each of your classes with a description.
 
+### Non-Standard Libraries and Modules Used
+* **Pygame** (https://pygame.org) - A free and Open Source python programming language library for making multimedia applications like games, developed by Pete Shinners and the pygame community.
+* TBD
+
+### List of Classes
+* TBD
 ***
 
 ## Tasks and Responsibilities
-* You must outline the team member roles and who was responsible for each class/method, both individual and collaborative.
-    * Example:
-### Software Lead - [name]
 
-Worked as integration specialist by helping organize the code for the main game into the proper MVC format, which allowed all portions of the code to be run from a single file. He worked very closely with the back end to develop the high-score database functionality, as well as establish the win- and fail-states for the main game. He also lead the implementation of the ‘sprite’ and ‘group’ classes of pygame into the back end code.
+### Software Lead - Adiel Felsen
 
-### Front End Specialist - [name]
+TBD
 
-Front-end lead conducted significant research on using pygame to create visual aspects such as buttons and on-screen text. She used this information to design and program a consistent UI to help the player navigate the title screen, the instructions page, and the “GAME OVER” screen. In addition to implementing the wide majority of the visual element for the UI, she also collaborated with the Software Lead to create a jukebox function that played music and to add sound effects to the menu navigation buttons.
+### Front End Specialist - Matt Damiata
 
-### Back End Specialist - [name]
+TBD
 
-The back end specialist helped with the “Model” portion of BLOCKBUSTERS by writing the major classes that would be used in the main game, as well as implementing major pygame functionality into each of them. He also made headway in major game mechanics such as the basic paddle movement and advanced functionality such as the screen-wrap function for the paddle as it approached the ends of the screen. He collaborated with the Front End Specialist in the implementation of the classes into our Controller file, as well as develop our high-score database.
+### Back End Specialist - Jack Stanley
+
+TBD
+
+***
 
 ## Testing
-* Describe your testing strategy for your project.
-    * Example
 
 ### Menu Testing
 
-First, we run Controller()  and ensure the main menu opens normally, the musical score begins playing and that hovering the mouse over each button changes the color to the “highlighted” shade. Next, we click the Instructions button to ensure the INSTRUCTIONS menu opens, and the buttons are highlighted when hovered over as well. We also check to see if the music playback continues and that the sound effect is played when the button is pressed.
-
-We then press the MAIN MENU button and return, checking that the same functionality with button hover, music and sound effects as before are present. Afterwards, we test that both of the QUIT buttons on the Main Menu and Instructions Menu properly close the game.We then test the PLAY buttons on the Instructions and Main Menu pages to make sure that the Game screen opens properly both times. We then move
-
+TBD
 
 ### Game Testing
 
-When the Game screen boots up , we test if spacebar starts the game and launches the ball, so we test to see if this remains true. From there, in the middle of play, we will test the single-press and holding of both the left and right arrow buttons to make sure movement works in single presses and continues to move when a key is held. We then move all the way to the left and right of the screen to see if it causes the paddle to appear on the other side - our wrap-around function.
+TBD
 
-From here, we conduct normal playtesting to ensure that the collisions, the speed of the ball, and the dynamic bounding and angles are all working together meaningfully and without any obvious error, especially in regards to the ball reflecting off of the corners and edges of the paddle. We also check to make sure the music plays throughout and that the destruction of a brick does in fact increase the score.
-
-We then try to reach a win state, to check if it resets the game with an increase in ball speed, without resetting the score. If successful, we then purposefully reach three consecutive fail-states, one to test each of the GAME OVER screens’ three buttons - Play Again, Main Menu, and Quit - with the same functionality as before. Finally, we check that the “X” button on the window does in fact close the window. This concludes the testing protocol.
-
-* A copy of your ATP
+**Acceptance Test Procedure**
 
 | Step                  | Procedure     | Expected Results  | Actual Results |
 | ----------------------|:-------------:| -----------------:| -------------- |
-|  1  | Run Counter Program  | GUI window appears with count = 0  |          |
-|  2  | click count button  | display changes to count = 1 |                 |
+|  1  | TBD  | TBD  | TBD    |
+|  2  | TBD  | TBD | TBD |
 etc...
