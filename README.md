@@ -68,7 +68,14 @@ Pictures: TBD
 * TBD
 
 ### List of Classes
-* TBD
+* **Pacman** - A class that defines the Pacman which is the character that the player controls. The character moves in any direction and is able to "fence in" portions of the screen.
+* **Pinky** - the pink ghost that Pacman needs to avoid. This ghost bounces off the walls of non-fenced in areas of the screen. If Pinky collides with Pacman or one of the fences he is currently drawing, Pacman loses a life.
+* **Inky** - the light-blue ghost that Pacman needs to avoid. This ghost bounces off the walls of fenced in areas of the screen. If Inky collides with Pacman, Pacman loses a life.
+* **Binky** - the red ghost that Pacman needs to avoid. This ghost bounces off the walls of the non-fenced in areas of the screen and breaks any block it hits into (excluding the borders). If Blinky collides with Pacman or one of the fences he is currently drawing, Pacman loses a life.
+* **Clyde** - the orange ghost that Pacman needs to avoid. This ghost moves along the edge of a fenced in area. If Clyde collides with Pacman, Pacman loses a life.
+* **Banana** - one of the powerups that Pacman can collide with. Once collided with, Pacman's speed will double for <some period of time>.
+* **Snowflake** - one of the powerups that Pacman can collide with. Once collided with, the speed of the ghosts is set to zero for <some period of time>.
+**Powerpellet** - one of the powerups that Pacman can collide with. Once collided with, Pacman is no longer affected by the ghosts for <some period of time>. During this time, if Pacman collides with a ghost, the ghost's location is reset.
 ***
 
 ## Tasks and Responsibilities
