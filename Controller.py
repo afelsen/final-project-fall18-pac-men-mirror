@@ -17,16 +17,42 @@ class Controller:
         self.banana = Powerup.Banana('banana.png',400,400)
         self.bananaGroup = pygame.sprite.Group(self.banana)
 
+
         done = False
+        introdone = False
         frame = 1
         self.pacDirection = ""
         self.pinkyangle = 45
+        self.pacangle = 0
         while not done:
+            self.menuscreen = pygame.display.set_mode((width,height))
+            self.menubackground = pygame.Surface(self.menuscreen.get_size()).convert()
+            pygame.font.init()
+            self.myfont = pygame.font.Font("KaushanScript-Regular.otf", 50)
+            self.subfont = pygame.font.Font("KaushanScript-Regular.otf", 25)
+            frame = 1
+            while not introdone:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        introdone = True
+                        done = True
+                keys = pygame.key.get_pressed()
+                if frame % 1 == 0:
+                    textTop = self.myfont.render("PacXon",False,(50,50,50))
+                    textBottom = self.subfont.render("Created by the PacMen",False,(50,50,50))
+                    if keys[pygame.K_SPACE]: # space to start
+                        introdone = True
+                    frame += 1
+                    self.menuscreen.blit(self.menubackground,(0,0))
+                    self.menuscreen.blit(textTop,(242,100))
+                    self.menuscreen.blit(textBottom,(200,300))
+                    pygame.display.flip()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     done = True
             keys = pygame.key.get_pressed()
-            if frame % 7 == 0:
+            if frame % 1 == 0:
                 if keys[pygame.K_UP]:
                     self.pacDirection = "U"
                 elif keys[pygame.K_DOWN]:
@@ -44,7 +70,6 @@ class Controller:
                     self.pacman.moveLeft()
                 if self.pacDirection == "R":
                     self.pacman.moveRight()
-
 
                 self.pinkyGroup.update(self.pinkyangle)
 
