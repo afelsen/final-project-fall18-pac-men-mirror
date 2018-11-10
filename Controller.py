@@ -61,12 +61,16 @@ class Controller:
             if frame % 1 == 0:
                 if keys[pygame.K_UP]:
                     self.pacDirection = "U"
+                    self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,90)
                 elif keys[pygame.K_DOWN]:
                     self.pacDirection = "D"
+                    self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,270)
                 elif keys[pygame.K_LEFT]:
                     self.pacDirection = "L"
+                    self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,180)
                 elif keys[pygame.K_RIGHT]:
                     self.pacDirection = "R"
+                    self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,0)
                 elif keys[pygame.K_q]:
                     done = True
 
