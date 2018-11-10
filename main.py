@@ -1,5 +1,5 @@
-from src import Controller
+#import your controller
 
 def main():
-    controller = Controller.Controller()
+    #Create an instance on your controller object
 main()
