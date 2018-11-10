@@ -3,7 +3,8 @@ import pygame
 class Pacman(pygame.sprite.Sprite):
     def __init__(self, filename, x, y, speed):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
+        self.imageorig = pygame.transform.scale(pygame.image.load(filename),(20,20))
+        self.image = self.imageorig
         self.rect = self.image.get_rect()
 
         self.rect.x = x
