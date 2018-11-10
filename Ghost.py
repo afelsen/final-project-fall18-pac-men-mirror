@@ -23,7 +23,6 @@ class Pinky(pygame.sprite.Sprite): #Pink; normal bouncing ghost
             self.ymultiplier = 1
         if self.rect.y >=480-20:
             self.ymultiplier = -1
-        print(self.rect.y)
         self.rect.x += self.xmultiplier*self.speed/2
         self.rect.y += self.ymultiplier*self.speed/2
 

@@ -3,6 +3,7 @@ import Pacman
 import Ghost
 import Powerup
 import random
+import Screen
 
 class Controller:
     def __init__(self, width = 640, height = 480):
@@ -17,6 +18,11 @@ class Controller:
         self.cherryGroup = pygame.sprite.Group(self.cherry)
         self.banana = Powerup.Banana('banana.png',random.randint(1,641),random.randint(1,481))
         self.bananaGroup = pygame.sprite.Group(self.banana)
+        self.boxes = pygame.sprite.Group()
+
+        for i in range(0,width,20):
+            for j in range(0,height,20):
+                self.boxes.add(Screen.Box(i,j,'EmptyBox.png'))
 
         done = False
         introdone = False
@@ -58,22 +64,23 @@ class Controller:
                 if event.type == pygame.QUIT:
                     done = True
             keys = pygame.key.get_pressed()
-            if frame % 1 == 0:
-                if keys[pygame.K_UP]:
-                    self.pacDirection = "U"
-                    self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,90)
-                elif keys[pygame.K_DOWN]:
-                    self.pacDirection = "D"
-                    self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,270)
-                elif keys[pygame.K_LEFT]:
-                    self.pacDirection = "L"
-                    self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,180)
-                elif keys[pygame.K_RIGHT]:
-                    self.pacDirection = "R"
-                    self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,0)
-                elif keys[pygame.K_q]:
-                    done = True
 
+            if keys[pygame.K_UP]:
+                self.pacDirection = "U"
+                self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,90)
+            elif keys[pygame.K_DOWN]:
+                self.pacDirection = "D"
+                self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,270)
+            elif keys[pygame.K_LEFT]:
+                self.pacDirection = "L"
+                self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,180)
+            elif keys[pygame.K_RIGHT]:
+                self.pacDirection = "R"
+                self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,0)
+            elif keys[pygame.K_q]:
+                done = True
+
+            if frame % 6 == 0:
                 if self.pacDirection == "U":
                     self.pacman.moveUp()
                 if self.pacDirection == "D":
@@ -84,19 +91,18 @@ class Controller:
                     self.pacman.moveRight()
 
                 self.pinkyGroup.update(self.pinkyangle)
-
             frame += 1
 
+            overbox = pygame.sprite.spritecollide(self.pacman, self.boxes, False)
+            if(overbox):
+                for box in pygame.sprite.spritecollide(self.pacman, self.boxes, False):
+                    box.fillBox()
+
             self.screen.blit(self.background,(0,0))
+            self.boxes.draw(self.screen)
             self.pacGroup.draw(self.screen)
             self.pinkyGroup.draw(self.screen)
             self.cherryGroup.draw(self.screen)
             self.bananaGroup.draw(self.screen)
 
             pygame.display.flip()
-
-
-def main():
-    controller = Controller()
-
-main()
