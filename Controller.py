@@ -19,14 +19,17 @@ class Controller:
         self.banana = Powerup.Banana('banana.png',random.randint(1,641),random.randint(1,481))
         self.bananaGroup = pygame.sprite.Group(self.banana)
         self.boxes = pygame.sprite.Group()
+        self.screenmatrix = Screen.Screen(width//20,height//20)
 
         for i in range(0,width,20):
             for j in range(0,height,20):
                 self.boxes.add(Screen.Box(i,j,'EmptyBox.png'))
+        self.boxes.update(self.screenmatrix)
 
         done = False
         introdone = False
         frame = 1
+        notOnFilled = False
         self.pacDirection = ""
         self.pinkyangle = 45
         while not done:
@@ -65,6 +68,7 @@ class Controller:
                     done = True
             keys = pygame.key.get_pressed()
 
+
             if keys[pygame.K_UP]:
                 self.pacDirection = "U"
                 self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,90)
@@ -80,7 +84,9 @@ class Controller:
             elif keys[pygame.K_q]:
                 done = True
 
+
             if frame % 6 == 0:
+
                 if self.pacDirection == "U":
                     self.pacman.moveUp()
                 if self.pacDirection == "D":
@@ -90,13 +96,22 @@ class Controller:
                 if self.pacDirection == "R":
                     self.pacman.moveRight()
 
-                self.pinkyGroup.update(self.pinkyangle)
+                self.pinkyGroup.update()
             frame += 1
+
 
             overbox = pygame.sprite.spritecollide(self.pacman, self.boxes, False)
             if(overbox):
                 for box in pygame.sprite.spritecollide(self.pacman, self.boxes, False):
-                    box.fillBox()
+                    self.screenmatrix.trackPacman((box.rect.x//20,box.rect.y//20))
+                    box.update(self.screenmatrix)
+                    if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] != 1:
+                        notOnFilled = True
+                        #This prevents the next lines from running over and over if the pacman is just staying in the "filled area"
+                    if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == 1 and notOnFilled == True:
+                        self.screenmatrix.fillMatrix(self.pinkyGroup)
+                        self.boxes.update(self.screenmatrix)
+                        notOnFilled = False
 
             self.screen.blit(self.background,(0,0))
             self.boxes.draw(self.screen)
