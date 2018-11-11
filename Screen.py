@@ -21,55 +21,55 @@ class Screen:
 
     def fillMatrix(self,pinkyGroup):
 
+        #fills in the current line
         for i in range(24):
             for j in range(32):
                 if self.matrix[j][i] == .5:
                     self.matrix[j][i] = 1
 
-        #find a starting point
         ultimateAreaPoints = []
         done = False
+
         while not done:
+            #find a starting point
             startingPoint = None
             for c in range(24):
                 for r in range(32):
                     if self.matrix[r][c] == 0 and (r,c) not in ultimateAreaPoints:
                         startingPoint = (r,c)
                         break
-            if startingPoint == None:
+            if startingPoint == None: #If all areas have been mapped
                 done = True
                 continue
 
             filled = False
-            areaPoints = [startingPoint]
             currentPoints = [startingPoint]
-            currentPointsTemp = []
+            #Check adjacent points to currentPoints. If those points have the matrix value of 0, append it to currentPoints.
             for p in currentPoints:
-                if p[0] != 31 and (p[0]+1,p[1]) not in areaPoints:
+                if p[0] != 31 and (p[0]+1,p[1]) not in currentPoints:
                     if self.matrix[p[0]+1][p[1]] == 0:
                         currentPoints.append((p[0]+1,p[1]))
-                        areaPoints.append((p[0]+1,p[1]))
-                if p[0] != 0 and (p[0]-1,p[1]) not in areaPoints:
+                if p[0] != 0 and (p[0]-1,p[1]) not in currentPoints:
                     if self.matrix[p[0]-1][p[1]] == 0:
                         currentPoints.append((p[0]-1,p[1]))
-                        areaPoints.append((p[0]-1,p[1]))
-                if p[1] != 23 and (p[0],p[1]+1) not in areaPoints:
+                if p[1] != 23 and (p[0],p[1]+1) not in currentPoints:
                     if self.matrix[p[0]][p[1]+1] == 0:
                         currentPoints.append((p[0],p[1]+1))
-                        areaPoints.append((p[0],p[1]+1))
-                if p[1] != 0 and (p[0],p[1]-1) not in areaPoints:
+                if p[1] != 0 and (p[0],p[1]-1) not in currentPoints:
                     if self.matrix[p[0]][p[1]-1] == 0:
                         currentPoints.append((p[0],p[1]-1))
-                        areaPoints.append((p[0],p[1]-1))
 
-            for i in areaPoints:
-                ultimateAreaPoints.append(i)
+            #Add all currentPoints to the mater list of all points that have been checked
+            for i in currentPoints:
+                ultimateAreaPoints.append(i)\
+
+            #If pinky is not in the region, fill it in with 1s
             Pinky = False
             for pinky in pinkyGroup:
-                if (pinky.rect.x//20,pinky.rect.y//20) in areaPoints:
+                if (pinky.rect.x//20,pinky.rect.y//20) in currentPoints:
                     Pinky = True
             if Pinky == False:
-                for i in areaPoints:
+                for i in currentPoints:
                     self.matrix[i[0]][i[1]] = 1
 
 class Box(pygame.sprite.Sprite):
