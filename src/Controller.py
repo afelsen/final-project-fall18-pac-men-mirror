@@ -1,29 +1,29 @@
 import pygame
-import Pacman
-import Ghost
-import Powerup
 import random
-import Screen
+from src import Pacman
+from src import Ghost
+from src import Powerup
+from src import Screen
 
 class Controller:
     def __init__(self, width = 640, height = 480):
         self.screen = pygame.display.set_mode((width,height))
         self.background = pygame.Surface(self.screen.get_size()).convert()
-        self.pacman = Pacman.Pacman('Pacman.png',0,0,20)
+        self.pacman = Pacman.Pacman('assets/Pacman.png',0,0,20)
         self.pacGroup = pygame.sprite.Group(self.pacman)
-        self.pinky1 = Ghost.Pinky('pinky.png',random.randint(1,641),random.randint(1,481),20)
-        self.pinky2 = Ghost.Pinky('pinky.png',random.randint(1,641),random.randint(1,481),20)
+        self.pinky1 = Ghost.Pinky('assets/pinky.png',random.randint(1,641),random.randint(1,481),20)
+        self.pinky2 = Ghost.Pinky('assets/pinky.png',random.randint(1,641),random.randint(1,481),20)
         self.pinkyGroup = pygame.sprite.Group(self.pinky1,self.pinky2)
-        self.cherry = Powerup.Cherry('cherry.png',random.randint(1,641),random.randint(1,481))
+        self.cherry = Powerup.Cherry('assets/cherry.png',random.randint(1,641),random.randint(1,481))
         self.cherryGroup = pygame.sprite.Group(self.cherry)
-        self.banana = Powerup.Banana('banana.png',random.randint(1,641),random.randint(1,481))
+        self.banana = Powerup.Banana('assets/banana.png',random.randint(1,641),random.randint(1,481))
         self.bananaGroup = pygame.sprite.Group(self.banana)
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,height//20)
 
         for i in range(0,width,20):
             for j in range(0,height,20):
-                self.boxes.add(Screen.Box(i,j,'EmptyBox.png'))
+                self.boxes.add(Screen.Box(i,j,'assets/EmptyBox.png'))
         self.boxes.update(self.screenmatrix)
 
         done = False
@@ -36,9 +36,9 @@ class Controller:
             self.menuscreen = pygame.display.set_mode((width,height))
             self.menubackground = pygame.Surface(self.menuscreen.get_size()).convert()
             pygame.font.init()
-            self.myfont = pygame.font.Font("KaushanScript-Regular.otf", 75)
-            self.subfont = pygame.font.Font("KaushanScript-Regular.otf", 25)
-            self.midfont = pygame.font.Font("KaushanScript-Regular.otf", 50)
+            self.myfont = pygame.font.Font("assets/KaushanScript-Regular.otf", 75)
+            self.subfont = pygame.font.Font("assets/KaushanScript-Regular.otf", 25)
+            self.midfont = pygame.font.Font("assets/KaushanScript-Regular.otf", 50)
             while not introdone:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:

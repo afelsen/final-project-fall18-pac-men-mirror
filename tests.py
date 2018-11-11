@@ -1,8 +1,8 @@
 import math
-import Pacman
-import Powerup
-import Ghost
-import Screen
+from src import Pacman
+from src import Powerup
+from src import Ghost
+from src import Screen
 
 
 def main():

@@ -68,6 +68,7 @@ Pictures: TBD
 * TBD
 
 ### List of Classes
+* **Controller** -
 * **Pacman** - A class that defines the Pacman which is the character that the player controls. The character moves in any direction and is able to "fence in" portions of the screen.
 * **Pinky** - the pink ghost that Pacman needs to avoid. This ghost bounces off the walls of non-fenced in areas of the screen. If Pinky collides with Pacman or one of the fences he is currently drawing, Pacman loses a life.
 * **Inky** - the light-blue ghost that Pacman needs to avoid. This ghost bounces off the walls of fenced in areas of the screen. If Inky collides with Pacman, Pacman loses a life.
@@ -75,7 +76,9 @@ Pictures: TBD
 * **Clyde** - the orange ghost that Pacman needs to avoid. This ghost moves along the edge of a fenced in area. If Clyde collides with Pacman, Pacman loses a life.
 * **Banana** - one of the powerups that Pacman can collide with. Once collided with, Pacman's speed will double for <some period of time>.
 * **Snowflake** - one of the powerups that Pacman can collide with. Once collided with, the speed of the ghosts is set to zero for <some period of time>.
-**Powerpellet** - one of the powerups that Pacman can collide with. Once collided with, Pacman is no longer affected by the ghosts for <some period of time>. During this time, if Pacman collides with a ghost, the ghost's location is reset.
+* **Powerpellet** - one of the powerups that Pacman can collide with. Once collided with, Pacman is no longer affected by the ghosts for <some period of time>. During this time, if Pacman collides with a ghost, the ghost's location is reset.
+* **Screen** - this class holds the matrix which includes the state of each box on the grid - filled (state = 1), unfilled (state = 0) or in the process of being drawn (state = .5). This class also has a method to fill in areas of the screen not containing a ghost.
+* **Box** - this class defines each "box" object of the grid background. This class references the matrix in the Screen class for changing the images of the objects.  
 ***
 
 ## Tasks and Responsibilities
@@ -108,6 +111,6 @@ TBD
 
 | Step                  | Procedure     | Expected Results  | Actual Results |
 | ----------------------|:-------------:| -----------------:| -------------- |
-|  1  | TBD  | TBD  | TBD    |
+|  1  | TBD  | TBD  | TBD |
 |  2  | TBD  | TBD | TBD |
 etc...

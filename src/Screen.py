@@ -61,7 +61,7 @@ class Screen:
 
             #Add all currentPoints to the mater list of all points that have been checked
             for i in currentPoints:
-                ultimateAreaPoints.append(i)\
+                ultimateAreaPoints.append(i)
 
             #If pinky is not in the region, fill it in with 1s
             Pinky = False
@@ -81,6 +81,6 @@ class Box(pygame.sprite.Sprite):
         self.rect.y = y
     def update(self, screen):
         if screen.matrix[self.rect.x//20][self.rect.y//20] == 1:
-            self.image = pygame.transform.scale(pygame.image.load('Bluebox.png'),(20,20))
+            self.image = pygame.transform.scale(pygame.image.load('assets/Bluebox.png'),(20,20))
         if screen.matrix[self.rect.x//20][self.rect.y//20] == .5:
-            self.image = pygame.transform.scale(pygame.image.load('Halfwaybox.png'),(20,20))
+            self.image = pygame.transform.scale(pygame.image.load('assets/Halfwaybox.png'),(20,20))
