@@ -9,7 +9,7 @@ class Controller:
     def __init__(self, width = 640, height = 480):
         self.screen = pygame.display.set_mode((width,height))
         self.background = pygame.Surface(self.screen.get_size()).convert()
-        self.pacman = Pacman.Pacman('assets/Pacman.png',0,0,20)
+        self.pacman = Pacman.Pacman('assets/PacmanOpen.png',0,0,20)
         self.pacGroup = pygame.sprite.Group(self.pacman)
         self.pinky1 = Ghost.Pinky('assets/pinky.png',random.randint(1,641),random.randint(1,481),20)
         self.pinky2 = Ghost.Pinky('assets/pinky.png',random.randint(1,641),random.randint(1,481),20)
@@ -71,16 +71,16 @@ class Controller:
 
             if keys[pygame.K_UP]:
                 self.pacDirection = "U"
-                self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,90)
+                self.pacman.angle = 90
             elif keys[pygame.K_DOWN]:
                 self.pacDirection = "D"
-                self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,270)
+                self.pacman.angle = 270
             elif keys[pygame.K_LEFT]:
                 self.pacDirection = "L"
-                self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,180)
+                self.pacman.angle = 180
             elif keys[pygame.K_RIGHT]:
                 self.pacDirection = "R"
-                self.pacman.image = pygame.transform.rotate(self.pacman.imageorig,0)
+                self.pacman.angle = 0
             elif keys[pygame.K_q]:
                 done = True
 
@@ -97,6 +97,7 @@ class Controller:
                     self.pacman.moveRight()
 
                 self.pinkyGroup.update()
+                self.pacman.animate()
             frame += 1
 
 

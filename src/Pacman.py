@@ -9,6 +9,8 @@ class Pacman(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.speed = speed
+        self.mouthState = 0
+        self.angle = 0
     def __str__(self):
         string = "(x:" + str(self.rect.x) + ", y:" + str(self.rect.y) + ")" + " Speed" + self.speed
         return string
@@ -30,3 +32,13 @@ class Pacman(pygame.sprite.Sprite):
             self.rect.y = 0
     def getCoordinates(self):
         return self.rect.x,self.rect.y
+    def animate(self):
+        if self.mouthState == 0:
+            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/PacmanOpen.png'),(20,20)),self.angle)
+            self.mouthState += 1
+        elif self.mouthState == 1:
+            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/PacmanMiddle.png'),(20,20)),self.angle)
+            self.mouthState += 1
+        else:
+            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/PacmanClosed.png'),(20,20)),self.angle)
+            self.mouthState = 0
