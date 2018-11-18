@@ -11,13 +11,17 @@ class Controller:
         self.background = pygame.Surface(self.screen.get_size()).convert()
         self.pacman = Pacman.Pacman('assets/PacmanOpen.png',0,0,20)
         self.pacGroup = pygame.sprite.Group(self.pacman)
-        self.pinky1 = Ghost.Pinky('assets/pinky.png',random.randint(1,641),random.randint(1,481),20)
-        self.pinky2 = Ghost.Pinky('assets/pinky.png',random.randint(1,641),random.randint(1,481),20)
+        self.pinky1 = Ghost.Pinky('assets/pinky.png',random.randint(2,600),random.randint(2,450),20)
+        self.pinky2 = Ghost.Pinky('assets/pinky.png',random.randint(2,600),random.randint(2,450),20)
         self.pinkyGroup = pygame.sprite.Group(self.pinky1,self.pinky2)
-        self.cherry = Powerup.Cherry('assets/cherry.png',random.randint(1,641),random.randint(1,481))
+        self.cherry = Powerup.Cherry('assets/cherry.png',random.randint(2,600),random.randint(2,450))
         self.cherryGroup = pygame.sprite.Group(self.cherry)
-        self.banana = Powerup.Banana('assets/banana.png',random.randint(1,641),random.randint(1,481))
+        self.banana = Powerup.Banana('assets/banana.png',random.randint(2,600),random.randint(2,450))
         self.bananaGroup = pygame.sprite.Group(self.banana)
+        self.snowflake = Powerup.Snowflake('assets/snowflake.png',random.randint(2,600),random.randint(2,450))
+        self.snowflakeGroup = pygame.sprite.Group(self.snowflake)
+        self.powerpellet = Powerup.Powerpellet('assets/powerpellet.png',random.randint(2,600),random.randint(2,450))
+        self.powerpelletGroup = pygame.sprite.Group(self.powerpellet)
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,height//20)
 
@@ -85,7 +89,7 @@ class Controller:
                 done = True
 
 
-            if frame % 6 == 0:
+            if frame % 2 == 0:
 
                 if self.pacDirection == "U":
                     self.pacman.moveUp()
@@ -99,6 +103,21 @@ class Controller:
                 self.pinkyGroup.update()
                 self.pacman.animate()
             frame += 1
+
+            powerpelletCol = pygame.sprite.spritecollide(self.pacman, self.powerpelletGroup, True)
+            cherryCol = pygame.sprite.spritecollide(self.pacman, self.cherryGroup, True)
+            snowflakeCol = pygame.sprite.spritecollide(self.pacman, self.snowflakeGroup, True)
+            bananaCol = pygame.sprite.spritecollide(self.pacman, self.bananaGroup, True)
+
+            if powerpelletCol:
+                pass
+            if cherryCol:
+                pass
+            if snowflakeCol:
+                pass
+            if bananaCol:
+                pass
+
 
 
             overbox = pygame.sprite.spritecollide(self.pacman, self.boxes, False)
@@ -117,6 +136,8 @@ class Controller:
             self.screen.blit(self.background,(0,0))
             self.boxes.draw(self.screen)
             self.pacGroup.draw(self.screen)
+            self.powerpelletGroup.draw(self.screen)
+            self.snowflakeGroup.draw(self.screen)
             self.pinkyGroup.draw(self.screen)
             self.cherryGroup.draw(self.screen)
             self.bananaGroup.draw(self.screen)
