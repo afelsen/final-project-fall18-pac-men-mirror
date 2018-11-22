@@ -111,6 +111,14 @@ TBD
 
 | Step                  | Procedure     | Expected Results  | Actual Results |
 | ----------------------|:-------------:| -----------------:| -------------- |
-|  1  | TBD  | TBD  | TBD |
+|  1  |  Run main.py  | TBD  | TBD |
 |  2  | TBD  | TBD | TBD |
-etc...
+|  3  | TBD  | TBD | TBD |
+|  4  | TBD  | TBD | TBD |
+|  5  | TBD  | TBD | TBD |
+|  6  | TBD  | TBD | TBD |
+|  7  | TBD  | TBD | TBD |
+|  8  | TBD  | TBD | TBD |
+|  9  | TBD  | TBD | TBD |
+|  10  | TBD  | TBD | TBD |
+|  11  | TBD  | TBD | TBD |

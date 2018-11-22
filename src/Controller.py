@@ -32,7 +32,15 @@ class Controller:
 
         done = False
         introdone = False
+        pacmanSpeed = 2
+        ghostSpeed = 2
+        generalSpeed = 2
         frame = 1
+        #___Time are variables that keep track of what frame a powerup was collided with
+        cherryTime = -100
+        bananaTime = -100
+        snowflakeTime = -100
+        powerpelletTime = -100
         notOnFilled = False
         self.pacDirection = ""
         self.pinkyangle = 45
@@ -72,7 +80,6 @@ class Controller:
                     done = True
             keys = pygame.key.get_pressed()
 
-
             if keys[pygame.K_UP]:
                 self.pacDirection = "U"
                 self.pacman.angle = 90
@@ -89,8 +96,7 @@ class Controller:
                 done = True
 
 
-            if frame % 2 == 0:
-
+            if frame % pacmanSpeed == 0:
                 if self.pacDirection == "U":
                     self.pacman.moveUp()
                 if self.pacDirection == "D":
@@ -99,8 +105,10 @@ class Controller:
                     self.pacman.moveLeft()
                 if self.pacDirection == "R":
                     self.pacman.moveRight()
-
+            if frame % ghostSpeed == 0:
                 self.pinkyGroup.update()
+
+            if frame % generalSpeed == 0:
                 self.pacman.animate()
             frame += 1
 
@@ -112,11 +120,23 @@ class Controller:
             if powerpelletCol:
                 pass
             if cherryCol:
-                pass
+                cherryTime = frame
+                pacmanSpeed /= 2
             if snowflakeCol:
-                pass
+                snowflakeTime = frame
+                ghostSpeed *= 1000
             if bananaCol:
-                pass
+                bananaTime = frame
+                ghostSpeed *= 2
+
+            if frame == cherryTime + 50:
+                pacmanSpeed *= 2
+            if frame == snowflakeTime + 50:
+                ghostSpeed /= 1000
+            if frame == bananaTime + 50:
+                ghostSpeed /= 2
+
+
 
 
 
