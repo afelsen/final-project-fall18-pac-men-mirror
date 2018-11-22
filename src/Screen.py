@@ -1,12 +1,12 @@
 import pygame
 class Screen:
-    def __init__(self, length, width):
-        self.length = length
+    def __init__(self, width, height):
         self.width = width
-        self.matrix = [[0]*self.width for i in range (self.length)]
-        self.matrix[0] = [1]*self.width
-        self.matrix[-1] = [1]*self.width
-        for i in range(self.length):
+        self.height = height
+        self.matrix = [[0]*self.height for i in range (self.width)]
+        self.matrix[0] = [1]*self.height
+        self.matrix[-1] = [1]*self.height
+        for i in range(self.width):
             self.matrix[i][0] = 1
             self.matrix[i][-1] = 1
         self.finalpercent = 80

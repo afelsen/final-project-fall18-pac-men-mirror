@@ -6,7 +6,7 @@ from src import Powerup
 from src import Screen
 
 class Controller:
-    def __init__(self, width = 640, height = 480):
+    def __init__(self, width = 640, height = 520):
         self.screen = pygame.display.set_mode((width,height))
         self.background = pygame.Surface(self.screen.get_size()).convert()
         self.pacman = Pacman.Pacman('assets/PacmanOpen.png',0,0,20)
@@ -23,10 +23,10 @@ class Controller:
         self.powerpellet = Powerup.Powerpellet('assets/powerpellet.png',random.randint(1,30)*20,random.randint(1,22)*20)
         self.powerpelletGroup = pygame.sprite.Group(self.powerpellet)
         self.boxes = pygame.sprite.Group()
-        self.screenmatrix = Screen.Screen(width//20,height//20)
+        self.screenmatrix = Screen.Screen(width//20,(height-40)//20)
 
         for i in range(0,width,20):
-            for j in range(0,height,20):
+            for j in range(0,height-40,20):
                 self.boxes.add(Screen.Box(i,j,'assets/EmptyBox.png'))
         self.boxes.update(self.screenmatrix)
 
@@ -36,7 +36,7 @@ class Controller:
         ghostSpeed = 2
         generalSpeed = 2
         frame = 1
-        #___Time are variables that keep track of what frame a powerup was collided with
+        #_____Time are variables that keep track of what frame a powerup was collided with
         cherryTime = -100
         bananaTime = -100
         snowflakeTime = -100
@@ -112,10 +112,18 @@ class Controller:
                 self.pacman.animate()
             frame += 1
 
+            #Powerup fucntionality
             powerpelletCol = pygame.sprite.spritecollide(self.pacman, self.powerpelletGroup, True)
             cherryCol = pygame.sprite.spritecollide(self.pacman, self.cherryGroup, True)
             snowflakeCol = pygame.sprite.spritecollide(self.pacman, self.snowflakeGroup, True)
             bananaCol = pygame.sprite.spritecollide(self.pacman, self.bananaGroup, True)
+
+            #Pinky collide
+            pygame.sprite.groupcollide(self.pinkyGroup, self.powerpelletGroup, False, True)
+            pygame.sprite.groupcollide(self.pinkyGroup, self.cherryGroup, False, True)
+            pygame.sprite.groupcollide(self.pinkyGroup, self.snowflakeGroup, False, True)
+            pygame.sprite.groupcollide(self.pinkyGroup, self.bananaGroup, False, True)
+
 
             if powerpelletCol:
                 pass
@@ -129,6 +137,8 @@ class Controller:
                 bananaTime = frame
                 ghostSpeed *= 2
 
+            if frame == powerpelletTime + 50:
+                pass
             if frame == cherryTime + 50:
                 pacmanSpeed *= 2
             if frame == snowflakeTime + 50:
