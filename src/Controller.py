@@ -95,7 +95,6 @@ class Controller:
             elif keys[pygame.K_q]:
                 done = True
 
-
             if frame % pacmanSpeed == 0:
                 if self.pacDirection == "U":
                     self.pacman.moveUp()
@@ -105,12 +104,11 @@ class Controller:
                     self.pacman.moveLeft()
                 if self.pacDirection == "R":
                     self.pacman.moveRight()
-            if frame % ghostSpeed == 0:
-                self.pinkyGroup.update()
 
             if frame % generalSpeed == 0:
                 self.pacman.animate()
             frame += 1
+
 
             #Powerup fucntionality
             powerpelletCol = pygame.sprite.spritecollide(self.pacman, self.powerpelletGroup, True)
@@ -118,7 +116,7 @@ class Controller:
             snowflakeCol = pygame.sprite.spritecollide(self.pacman, self.snowflakeGroup, True)
             bananaCol = pygame.sprite.spritecollide(self.pacman, self.bananaGroup, True)
 
-            #Pinky collide
+            #Pinky-powerup collide
             pygame.sprite.groupcollide(self.pinkyGroup, self.powerpelletGroup, False, True)
             pygame.sprite.groupcollide(self.pinkyGroup, self.cherryGroup, False, True)
             pygame.sprite.groupcollide(self.pinkyGroup, self.snowflakeGroup, False, True)
@@ -146,10 +144,21 @@ class Controller:
             if frame == bananaTime + 50:
                 ghostSpeed /= 2
 
+            pinkyCol = pygame.sprite.groupcollide(self.pinkyGroup,self.boxes,False, False)
+            if (pinkyCol and (frame % ghostSpeed) == 0):
+                print(ghostSpeed)
+                for ghost in pygame.sprite.groupcollide(self.pinkyGroup,self.boxes,False, False):
+                    if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer() and self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1:
+                        ghost.ymultiplier *= -1
+                    elif (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer() and self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
+                        ghost.ymultiplier *= -1
+                    if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer() and self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1:
+                        ghost.xmultiplier *= -1
+                    elif (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer() and self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
+                        ghost.xmultiplier *= -1
+                self.pinkyGroup.update()
 
-
-
-
+            #Pacman-box collision
             overbox = pygame.sprite.spritecollide(self.pacman, self.boxes, False)
             if(overbox):
                 for box in pygame.sprite.spritecollide(self.pacman, self.boxes, False):

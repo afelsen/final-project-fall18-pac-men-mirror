@@ -19,13 +19,12 @@ class Pinky(pygame.sprite.Sprite): #Pink; normal bouncing ghost
             self.xmultiplier = 1
         if self.rect.x >= 640-20:
             self.xmultiplier = -1
-        if self.rect.y <=0:
-            self.ymultiplier = 1
-        if self.rect.y >=480-20:
-            self.ymultiplier = -1
+        # if self.rect.y <=0:
+        #     self.ymultiplier = 1
+        # if self.rect.y >=480-20:
+        #     self.ymultiplier = -1
         self.rect.x += self.xmultiplier*self.speed/2
         self.rect.y += self.ymultiplier*self.speed/2
-
 
     def getCoordinates(self):
         return self.x,self.y
@@ -81,8 +80,8 @@ class Blinky(pygame.sprite.Sprite): #Red; Breaks any block it hits - moves at 1/
             self.ymultiplier = 1
         if self.rect.y >=480-20:
             self.ymultiplier = -1
-        self.rect.x += self.xmultiplier*self.speed/2
-        self.rect.y += self.ymultiplier*self.speed/2
+        self.rect.x += self.xmultiplier*self.speed
+        self.rect.y += self.ymultiplier*self.speed
 
 
     def getCoordinates(self):
