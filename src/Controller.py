@@ -4,6 +4,7 @@ from src import Pacman
 from src import Ghost
 from src import Powerup
 from src import Screen
+from src import TopBar
 
 class Controller:
     def __init__(self, width = 640, height = 520):
@@ -24,6 +25,7 @@ class Controller:
         self.powerpelletGroup = pygame.sprite.Group(self.powerpellet)
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-40)//20)
+        self.lives = TopBar.Lives('assets/PacmanMiddle.png',5,5)
 
         for i in range(0,width,20):
             for j in range(0,height-40,20):
