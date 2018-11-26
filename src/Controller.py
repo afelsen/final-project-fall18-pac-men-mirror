@@ -53,6 +53,7 @@ class Controller:
             self.myfont = pygame.font.Font("assets/KaushanScript-Regular.otf", 75)
             self.subfont = pygame.font.Font("assets/KaushanScript-Regular.otf", 25)
             self.midfont = pygame.font.Font("assets/KaushanScript-Regular.otf", 50)
+            self.barfont = pygame.font.Font("assets/KaushanScript-Regular.otf", 30)
             while not introdone:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -62,7 +63,8 @@ class Controller:
                     textTop = self.myfont.render("PacXon",False,(255,255,50))
                     textBottom = self.subfont.render("Created by the PacMen",False,(255,255,50))
                     textHelp = self.subfont.render("Press SPACEBAR to start!",False,(255,255,50))
-                    textControls = self.subfont.render("Controls: Arrow keys and Q to quit",False,(255,255,50))
+                    textControls = self.subfont.render("Controls: Arrow keys to move and Q to quit",False,(255,255,50))
+
                 if frame % 1 == 0:
                     if keys[pygame.K_SPACE]: # space to start
                         introdone = True
@@ -74,13 +76,14 @@ class Controller:
                     self.menuscreen.blit(textTop,(205,75))
                     self.menuscreen.blit(textBottom,(200,300))
                     self.menuscreen.blit(textHelp,(180,210))
-                    self.menuscreen.blit(textControls,(0,440))
+                    self.menuscreen.blit(textControls,(0,485))
                     pygame.display.flip()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     done = True
             keys = pygame.key.get_pressed()
+
 
             if keys[pygame.K_UP]:
                 self.pacDirection = "U"
@@ -173,8 +176,34 @@ class Controller:
                         self.screenmatrix.fillMatrix(self.pinkyGroup)
                         self.boxes.update(self.screenmatrix)
                         notOnFilled = False
-
+            progress = 2
+            level = 2
+            highScore = 2
+            progress = 2
+            score = 2
+            menubarLives = self.barfont.render("Lives:",False,(255,255,50))
+            menubarLivesInt = self.barfont.render(str(self.pacman.lives),False,(255,255,255))
+            menubarLevel = self.barfont.render("Level:",False,(255,255,50))
+            menubarLevelInt = self.barfont.render(str(level),False,(255,255,255))
+            menubarScore = self.barfont.render("Score:",False,(255,255,50))
+            menubarScoreInt = self.barfont.render(str(score),False,(255,255,255))
+            menubarHighscore = self.barfont.render("HighScore:",False,(255,255,50))
+            menubarHighscoreInt = self.barfont.render(str(highScore),False,(255,255,255))
+            menubarPercent = self.barfont.render("Progress:",False,(255,255,50))
+            menubarPercentOut = self.barfont.render("/80%",False,(255,255,50))
+            menubarPercentInt = self.barfont.render(str(progress),False,(255,255,255))
             self.screen.blit(self.background,(0,0))
+            self.screen.blit(menubarLives,(0,475))
+            self.screen.blit(menubarLivesInt,(65,475))
+            self.screen.blit(menubarScore,(85,475))
+            self.screen.blit(menubarScoreInt,(168,475))
+            self.screen.blit(menubarHighscore,(190,475))
+            self.screen.blit(menubarHighscoreInt,(327,475))
+            self.screen.blit(menubarPercent,(435,475))
+            self.screen.blit(menubarPercentOut,(565,475))
+            self.screen.blit(menubarPercentInt,(547,475))
+            self.screen.blit(menubarLevel,(345,475))
+            self.screen.blit(menubarLevelInt,(415,475))
             self.boxes.draw(self.screen)
             self.pacGroup.draw(self.screen)
             self.powerpelletGroup.draw(self.screen)

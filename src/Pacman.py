@@ -8,6 +8,7 @@ class Pacman(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.lives = 3
         self.speed = speed
         self.mouthState = 0
         self.angle = 0
