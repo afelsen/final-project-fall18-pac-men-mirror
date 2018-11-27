@@ -13,6 +13,9 @@ class Controller:
         self.pacman = Pacman.Pacman('assets/PacmanOpen.png',0,0,20)
         self.pacGroup = pygame.sprite.Group(self.pacman)
         self.pinkyGroup = pygame.sprite.Group()
+        self.inkyGroup = pygame.sprite.Group()
+        self.blinkyGroup = pygame.sprite.Group()
+        self.clydeGroup = pygame.sprite.Group()
         self.cherry = Powerup.Cherry('assets/cherry.png',random.randint(1,30)*20,random.randint(1,22)*20)
         self.cherryGroup = pygame.sprite.Group(self.cherry)
         self.banana = Powerup.Banana('assets/banana.png',random.randint(1,30)*20,random.randint(1,22)*20)
@@ -56,10 +59,16 @@ class Controller:
         self.level = 1
         while self.level < 100:
 
-            for i in range(self.level+1):
+            for i in range(self.level + 1):
                 self.pinkyGroup.add(Ghost.Pinky('assets/pinky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
             ######## Here you add the spawning of all ghosts ########
             #Make sure to create a group at the top and use a for loop to add the ghosts in with some function (2*level or level + 1, etc.)
+            for i in range(self.level + 2):
+                self.inkyGroup.add(Ghost.Inky('assets/inky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
+            for i in range(self.level + 3):
+                self.blinkyGroup.add(Ghost.Blinky('assets/blinky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
+            for i in range(self.level * 2):
+                self.clydeGroup.add(Ghost.Clyde('assets/clyde.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
 
             while not done:
                 while not introdone:
@@ -92,6 +101,7 @@ class Controller:
 
                 ######## Here add a "Level ___" screen ########
 
+
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         done = True
@@ -102,16 +112,26 @@ class Controller:
                 cherryCol = pygame.sprite.spritecollide(self.pacman, self.cherryGroup, True)
                 snowflakeCol = pygame.sprite.spritecollide(self.pacman, self.snowflakeGroup, True)
                 bananaCol = pygame.sprite.spritecollide(self.pacman, self.bananaGroup, True)
-
                 #Pinky-powerup collide
                 pygame.sprite.groupcollide(self.pinkyGroup, self.powerpelletGroup, False, True)
                 pygame.sprite.groupcollide(self.pinkyGroup, self.cherryGroup, False, True)
                 pygame.sprite.groupcollide(self.pinkyGroup, self.snowflakeGroup, False, True)
                 pygame.sprite.groupcollide(self.pinkyGroup, self.bananaGroup, False, True)
-
-                ########Here add other ghosts-powerup collide ########
-
-
+                #Inky-powerup collide
+                pygame.sprite.groupcollide(self.inkyGroup, self.powerpelletGroup, False, True)
+                pygame.sprite.groupcollide(self.inkyGroup, self.cherryGroup, False, True)
+                pygame.sprite.groupcollide(self.inkyGroup, self.snowflakeGroup, False, True)
+                pygame.sprite.groupcollide(self.inkyGroup, self.bananaGroup, False, True)
+                #Blinky-powerup collide
+                pygame.sprite.groupcollide(self.blinkyGroup, self.powerpelletGroup, False, True)
+                pygame.sprite.groupcollide(self.blinkyGroup, self.cherryGroup, False, True)
+                pygame.sprite.groupcollide(self.blinkyGroup, self.snowflakeGroup, False, True)
+                pygame.sprite.groupcollide(self.blinkyGroup, self.bananaGroup, False, True)
+                #Clyde-powerup collide
+                pygame.sprite.groupcollide(self.clydeGroup, self.powerpelletGroup, False, True)
+                pygame.sprite.groupcollide(self.clydeGroup, self.cherryGroup, False, True)
+                pygame.sprite.groupcollide(self.clydeGroup, self.snowflakeGroup, False, True)
+                pygame.sprite.groupcollide(self.clydeGroup, self.bananaGroup, False, True)
                 if powerpelletCol:
                     pass
                 if cherryCol:
@@ -134,17 +154,35 @@ class Controller:
                     ghostSpeed /= 2
 
                 pinkyCol = pygame.sprite.groupcollide(self.pinkyGroup,self.boxes,False, False)
+                inkyCol = pygame.sprite.groupcollide(self.inkyGroup,self.boxes,False,False)
+                blinkyCol = pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,True)
+
+                if (inkyCol and (frame %ghostSpeed) == 0):
+                    for ghost in pygame.sprite.groupcollide(self.inkyGroup,self.boxes,False, False):
+                        if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
+                            if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
+                                ghost.ymultiplier *= -1
+                            if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
+                                ghost.xmultiplier *= -1
+                    self.inkyGroup.update()
+
+                if (blinkyCol and (frame %ghostSpeed) == 0):
+                    for ghost in pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,True):
+                        if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
+                            if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
+                                ghost.ymultiplier *= -1
+                            if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
+                                ghost.xmultiplier *= -1
+                    self.blinkyGroup.update()
+
                 if (pinkyCol and (frame % ghostSpeed) == 0):
-                    print(ghostSpeed)
                     for ghost in pygame.sprite.groupcollide(self.pinkyGroup,self.boxes,False, False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
-                            if  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1: #If the ghost collides on top or bottom
+                            if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1: #If the ghost collides on top or bottom
                                 ghost.ymultiplier *= -1
-                            if  self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1: #If the ghost collides on left or right
+                            if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1: #If the ghost collides on left or right
                                 ghost.xmultiplier *= -1
                     self.pinkyGroup.update()
-
-                ########Here add collisions for the other 3 ghosts########
 
                 #Pacman-box collision
                 overbox = pygame.sprite.spritecollide(self.pacman, self.boxes, False)
