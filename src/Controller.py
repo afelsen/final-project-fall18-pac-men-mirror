@@ -198,6 +198,7 @@ class Controller:
 
                 ########Add loss functionality here########
                 #If pacman has 0 lives, set done = true, and level = 100
+                    ########Add Game Over Screen########
 
                 ########Add win functionality here########
                 #If the screen is >= 80% full, set done = true, level += 1
