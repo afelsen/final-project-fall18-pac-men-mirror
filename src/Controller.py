@@ -97,37 +97,6 @@ class Controller:
                         done = True
                         self.level = 100
 
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_UP]:
-                    self.pacDirection = "U"
-                    self.pacman.angle = 90
-                elif keys[pygame.K_DOWN]:
-                    self.pacDirection = "D"
-                    self.pacman.angle = 270
-                elif keys[pygame.K_LEFT]:
-                    self.pacDirection = "L"
-                    self.pacman.angle = 180
-                elif keys[pygame.K_RIGHT]:
-                    self.pacDirection = "R"
-                    self.pacman.angle = 0
-                elif keys[pygame.K_q]:
-                    done = True
-
-                if frame % pacmanSpeed == 0:
-                    if self.pacDirection == "U":
-                        self.pacman.moveUp()
-                    if self.pacDirection == "D":
-                        self.pacman.moveDown()
-                    if self.pacDirection == "L":
-                        self.pacman.moveLeft()
-                    if self.pacDirection == "R":
-                        self.pacman.moveRight()
-
-                if frame % generalSpeed == 0:
-                    self.pacman.animate()
-                frame += 1
-
-
                 #Powerup fucntionality
                 powerpelletCol = pygame.sprite.spritecollide(self.pacman, self.powerpelletGroup, True)
                 cherryCol = pygame.sprite.spritecollide(self.pacman, self.cherryGroup, True)
@@ -190,6 +159,44 @@ class Controller:
                             self.screenmatrix.fillMatrix(self.pinkyGroup)
                             self.boxes.update(self.screenmatrix)
                             notOnFilled = False
+
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_UP]:
+                    self.pacDirection = "U"
+                    self.pacman.angle = 90
+                    if notOnFilled == False and frame % pacmanSpeed == 0:
+                        self.pacman.moveUp()
+                elif keys[pygame.K_DOWN]:
+                    self.pacDirection = "D"
+                    self.pacman.angle = 270
+                    if notOnFilled == False and frame % pacmanSpeed == 0:
+                        self.pacman.moveDown()
+                elif keys[pygame.K_LEFT]:
+                    self.pacDirection = "L"
+                    self.pacman.angle = 180
+                    if notOnFilled == False and frame % pacmanSpeed == 0:
+                        self.pacman.moveLeft()
+                elif keys[pygame.K_RIGHT]:
+                    self.pacDirection = "R"
+                    self.pacman.angle = 0
+                    if notOnFilled == False and frame % pacmanSpeed == 0:
+                        self.pacman.moveRight()
+                elif keys[pygame.K_q]:
+                    done = True
+
+                if frame % pacmanSpeed == 0 and notOnFilled:
+                    if self.pacDirection == "U":
+                        self.pacman.moveUp()
+                    if self.pacDirection == "D":
+                        self.pacman.moveDown()
+                    if self.pacDirection == "L":
+                        self.pacman.moveLeft()
+                    if self.pacDirection == "R":
+                        self.pacman.moveRight()
+
+                if frame % generalSpeed == 0:
+                    self.pacman.animate()
+                frame += 1
 
 
                 ########Add collision with pacman's trail here########
