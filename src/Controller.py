@@ -28,6 +28,7 @@ class Controller:
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-40)//20)
         self.lives = TopBar.Lives('assets/PacmanMiddle.png',5,5)
+        self.bottombar = BottomBar.bottomBar(2,2,2,2,2)
 
         for i in range(0,width,20):
             for j in range(0,height-40,20):
@@ -249,6 +250,10 @@ class Controller:
                 ########Add win functionality here########
                 #If the screen is >= 80% full, set done = true, level += 1
 
+
+                bottombar = self.barfont.render(self.bottombar.data(),False,(255,255,50))
+                self.screen.blit(self.background,(0,0))
+                self.screen.blit(bottombar,(0,475))
 
 
 
