@@ -102,6 +102,16 @@ class Controller:
                         pygame.display.flip()
 
                 ######## Here add a "Level ___" screen ########
+                # if getPercent() > 80:
+                    # self.level += 1
+                    # self.levelscreen = pygame.display.set_mode((width,height))
+                    # self.levelbackground = pygame.Surface(self.menuscreen.get_size()).convert()
+                    # levelText = self.myfont.render("Level",False,(255,255,50))
+                    # levelnumberText = self.myfont.render(str(self.level),False,(255,255,255))
+                    # self.levelscreen.blit(self.levelbackground,(0,0))
+                    # self.levelscreen.blit(levelText,(205,125))
+                    # self.levelscreen.blit(levelnumberText,(305,125))
+
 
 
                 for event in pygame.event.get():
@@ -135,7 +145,8 @@ class Controller:
                 pygame.sprite.groupcollide(self.clydeGroup, self.snowflakeGroup, False, True)
                 pygame.sprite.groupcollide(self.clydeGroup, self.bananaGroup, False, True)
                 if powerpelletCol:
-                    pass
+                    powerpelletTime = frame
+                    pacmanInvicible = True
                 if cherryCol:
                     cherryTime = frame
                     pacmanSpeed /= 2
@@ -147,7 +158,7 @@ class Controller:
                     ghostSpeed *= 2
 
                 if frame == powerpelletTime + 50:
-                    pass
+                    pacmanInvincible = False
                 if frame == cherryTime + 50:
                     pacmanSpeed *= 2
                 if frame == snowflakeTime + 50:
