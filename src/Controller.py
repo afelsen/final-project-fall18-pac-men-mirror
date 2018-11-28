@@ -252,11 +252,41 @@ class Controller:
 
                 ########Add collision with pacman's trail here########
                 #If pacman's trail is collided with by a ghost or by pacman, let pacman lose a life, reset to the top left.
+                # trailpacCol = pygame.sprite.groupcollide(self.pacmanGroup, self.boxes,False, False)
+                # trailpinkyCol = pygame.sprite.groupcollide(self.pacmanGroup, self.boxes,False, False)
+                # trailinkyCol = pygame.sprite.groupcollide(self.pacmanGroup, self.boxes,False, False)
+                # trailblinkyCol = pygame.sprite.groupcollide(self.pacmanGroup, self.boxes,False, False)
+                # trailclydeCol = pygame.sprite.groupcollide(self.pacmanGroup, self.boxes,False, False)
+                #
+                # if trailpacCol:
+                #     self.lives -= 1
+                #     self.pacman.setPos(0,0)
+                # if trailpinkyCol:
+                #     self.lives -= 1
+                #     self.pacman.setPos(0,0)
+                # if trailinkyCol:
+                #     self.lives -= 1
+                #     self.pacman.setPos(0,0)
+                # if trailblinkyCol:
+                #     self.lives -= 1
+                #     self.pacman.setPos(0,0)
+                # if trailclydeCol:
+                #     self.lives -= 1
+                #     self.pacman.setPos(0,0)
 
 
                 ########Add loss functionality here########
                 #If pacman has 0 lives, set done = true, and level = 100
                     ########Add Game Over Screen########
+                # if pacman.lives == 0:
+                #     done = True
+                #     self.level = 100
+                #     self.gameoverscreen = pygame.display.set_mode((width,height))
+                #     self.gameoverscreenbackground = pygame.Surface(self.menuscreen.get_size()).convert()
+                #     gameoverText = self.myfont.render("Game Over!",False,(255,0,0))
+                #     self.gameoverscreen.blit(self.levelbackground,(0,0))
+                #     self.gameoverscreen.blit(gameoverText,(205,125))
+
 
                 ########Add win functionality here########
                 #If the screen is >= 80% full, set done = true, level += 1

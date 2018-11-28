@@ -31,6 +31,9 @@ class Pacman(pygame.sprite.Sprite):
         self.rect.y -= self.speed
         if self.rect.y < 0:
             self.rect.y = 0
+    def setPos(self,x,y):
+        self.rect.x = x
+        self.rect.y = y
     def getCoordinates(self):
         return self.rect.x,self.rect.y
     def animate(self):
