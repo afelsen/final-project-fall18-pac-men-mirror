@@ -19,7 +19,7 @@ class Screen:
         if self.matrix[pacmanPos[0]][pacmanPos[1]] == 0:
             self.matrix[pacmanPos[0]][pacmanPos[1]] = .5
 
-    def fillMatrix(self,pinkyGroup):
+    def fillMatrix(self,ghostGroupList):
 
         #fills in the current line
         for i in range(24):
@@ -63,12 +63,13 @@ class Screen:
             for i in currentPoints:
                 ultimateAreaPoints.append(i)
 
-            #If pinky is not in the region, fill it in with 1s
-            Pinky = False
-            for pinky in pinkyGroup:
-                if (pinky.rect.x//20,pinky.rect.y//20) in currentPoints:
-                    Pinky = True
-            if Pinky == False:
+            #If ghost is not in the region, fill it in with 1s
+            Ghost = False
+            for ghostGroup in ghostGroupList:
+                for ghost in ghostGroup:
+                    if (ghost.rect.x//20,ghost.rect.y//20) in currentPoints:
+                        Ghost = True
+            if Ghost == False:
                 for i in currentPoints:
                     self.matrix[i[0]][i[1]] = 1
     def reset(self):

@@ -17,6 +17,8 @@ class Controller:
         self.inkyGroup = pygame.sprite.Group()
         self.blinkyGroup = pygame.sprite.Group()
         self.clydeGroup = pygame.sprite.Group()
+        self.ghostGroupList = [self.pinkyGroup,self.inkyGroup,self.blinkyGroup,self.clydeGroup]
+
         self.cherry = Powerup.Cherry('assets/cherry.png',random.randint(1,30)*20,random.randint(1,22)*20)
         self.cherryGroup = pygame.sprite.Group(self.cherry)
         self.banana = Powerup.Banana('assets/banana.png',random.randint(1,30)*20,random.randint(1,22)*20)
@@ -25,10 +27,13 @@ class Controller:
         self.snowflakeGroup = pygame.sprite.Group(self.snowflake)
         self.powerpellet = Powerup.Powerpellet('assets/powerpellet.png',random.randint(1,30)*20,random.randint(1,22)*20)
         self.powerpelletGroup = pygame.sprite.Group(self.powerpellet)
+        self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup,self.powerpelletGroup]
+
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-40)//20)
         self.lives = TopBar.Lives('assets/PacmanMiddle.png',5,5)
         self.bottombar = BottomBar.bottomBar(2,2,2,2,2)
+
 
         for i in range(0,width,20):
             for j in range(0,height-40,20):
@@ -113,37 +118,25 @@ class Controller:
                     # self.levelscreen.blit(levelnumberText,(305,125))
 
 
-
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         done = True
                         self.level = 100
 
+                ######## Here add random powerup spawning ########
+
                 #Powerup fucntionality
+
                 powerpelletCol = pygame.sprite.spritecollide(self.pacman, self.powerpelletGroup, True)
                 cherryCol = pygame.sprite.spritecollide(self.pacman, self.cherryGroup, True)
                 snowflakeCol = pygame.sprite.spritecollide(self.pacman, self.snowflakeGroup, True)
                 bananaCol = pygame.sprite.spritecollide(self.pacman, self.bananaGroup, True)
-                #Pinky-powerup collide
-                pygame.sprite.groupcollide(self.pinkyGroup, self.powerpelletGroup, False, True)
-                pygame.sprite.groupcollide(self.pinkyGroup, self.cherryGroup, False, True)
-                pygame.sprite.groupcollide(self.pinkyGroup, self.snowflakeGroup, False, True)
-                pygame.sprite.groupcollide(self.pinkyGroup, self.bananaGroup, False, True)
-                #Inky-powerup collide
-                pygame.sprite.groupcollide(self.inkyGroup, self.powerpelletGroup, False, True)
-                pygame.sprite.groupcollide(self.inkyGroup, self.cherryGroup, False, True)
-                pygame.sprite.groupcollide(self.inkyGroup, self.snowflakeGroup, False, True)
-                pygame.sprite.groupcollide(self.inkyGroup, self.bananaGroup, False, True)
-                #Blinky-powerup collide
-                pygame.sprite.groupcollide(self.blinkyGroup, self.powerpelletGroup, False, True)
-                pygame.sprite.groupcollide(self.blinkyGroup, self.cherryGroup, False, True)
-                pygame.sprite.groupcollide(self.blinkyGroup, self.snowflakeGroup, False, True)
-                pygame.sprite.groupcollide(self.blinkyGroup, self.bananaGroup, False, True)
-                #Clyde-powerup collide
-                pygame.sprite.groupcollide(self.clydeGroup, self.powerpelletGroup, False, True)
-                pygame.sprite.groupcollide(self.clydeGroup, self.cherryGroup, False, True)
-                pygame.sprite.groupcollide(self.clydeGroup, self.snowflakeGroup, False, True)
-                pygame.sprite.groupcollide(self.clydeGroup, self.bananaGroup, False, True)
+
+                #Deleting powerups when ghost collide with them
+                for ghostGroup in self.ghostGroupList:
+                    for powerupGroup in self.powerupGroupList:
+                        pygame.sprite.groupcollide(ghostGroup, powerupGroup, False, True)
+
                 if powerpelletCol:
                     powerpelletTime = frame
                     pacmanInvicible = True
@@ -170,6 +163,8 @@ class Controller:
                 inkyCol = pygame.sprite.groupcollide(self.inkyGroup,self.boxes,False,False)
                 blinkyCol = pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,True)
 
+
+                ## Ghost bouncing
                 if (inkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.inkyGroup,self.boxes,False, False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
@@ -180,7 +175,7 @@ class Controller:
                     self.inkyGroup.update()
 
                 if (blinkyCol and (frame %ghostSpeed) == 0):
-                    for ghost in pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,True):
+                    for ghost in pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
                             if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
                                 ghost.ymultiplier *= -1
@@ -197,6 +192,7 @@ class Controller:
                                 ghost.xmultiplier *= -1
                     self.pinkyGroup.update()
 
+
                 #Pacman-box collision
                 overbox = pygame.sprite.spritecollide(self.pacman, self.boxes, False)
                 if(overbox):
@@ -207,9 +203,10 @@ class Controller:
                             notOnFilled = True
                             #This prevents the next lines from running over and over if the pacman is just staying in the "filled area"
                         if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == 1 and notOnFilled == True:
-                            self.screenmatrix.fillMatrix(self.pinkyGroup)
+                            self.screenmatrix.fillMatrix(self.ghostGroupList)
                             self.boxes.update(self.screenmatrix)
                             notOnFilled = False
+
 
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_UP]:
@@ -307,9 +304,8 @@ class Controller:
 
                 self.boxes.draw(self.screen)
                 self.pacGroup.draw(self.screen)
-                self.powerpelletGroup.draw(self.screen)
-                self.snowflakeGroup.draw(self.screen)
-                self.pinkyGroup.draw(self.screen)
-                self.cherryGroup.draw(self.screen)
-                self.bananaGroup.draw(self.screen)
+                for powerupGroup in self.powerupGroupList:
+                    powerupGroup.draw(self.screen)
+                for ghostGroup in self.ghostGroupList:
+                    ghostGroup.draw(self.screen)
                 pygame.display.flip()
