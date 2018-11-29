@@ -252,26 +252,31 @@ class Controller:
 
                 ########Add collision with pacman's trail here########
                 #If pacman's trail is collided with by a ghost or by pacman, let pacman lose a life, reset to the top left.
-                # trailpacCol = pygame.sprite.groupcollide(self.pacmanGroup, self.boxes,False, False)
-                # trailpinkyCol = pygame.sprite.groupcollide(self.pacmanGroup, self.boxes,False, False)
-                # trailinkyCol = pygame.sprite.groupcollide(self.pacmanGroup, self.boxes,False, False)
-                # trailblinkyCol = pygame.sprite.groupcollide(self.pacmanGroup, self.boxes,False, False)
-                # trailclydeCol = pygame.sprite.groupcollide(self.pacmanGroup, self.boxes,False, False)
-                #
+                trailpacCol = pygame.sprite.groupcollide(self.pacGroup, self.boxes,False, False)
+                trailpinkyCol = pygame.sprite.groupcollide(self.pinkyGroup, self.boxes,False, False)
+                trailinkyCol = pygame.sprite.groupcollide(self.inkyGroup, self.boxes,False, False)
+                trailblinkyCol = pygame.sprite.groupcollide(self.blinkyGroup, self.boxes,False, False)
+                trailclydeCol = pygame.sprite.groupcollide(self.clydeGroup, self.boxes,False, False)
+
                 # if trailpacCol:
-                #     self.lives -= 1
-                #     self.pacman.setPos(0,0)
-                # if trailpinkyCol:
-                #     self.lives -= 1
-                #     self.pacman.setPos(0,0)
+                #     for box in pygame.sprite.spritecollide(self.pacman, self.boxes, False):
+                #         #if self.screenmatrix[box.rect.x//20][box.rect.y//20] == .5
+                #         self.bottombar.lives -= 1
+                #         self.pacman.setPos(0,0)
+                if trailpinkyCol:
+                    for box in pygame.sprite.groupcollide(self.pinkyGroup, self.boxes,False, False):
+                        if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5:
+                            self.bottombar.lives -= 1
+                            self.pacman.setPos(0,0)
+                            self.screenmatrix.reset()
                 # if trailinkyCol:
-                #     self.lives -= 1
+                #     self.bottombar.lives -= 1
                 #     self.pacman.setPos(0,0)
                 # if trailblinkyCol:
-                #     self.lives -= 1
+                #     self.bottombar.lives -= 1
                 #     self.pacman.setPos(0,0)
                 # if trailclydeCol:
-                #     self.lives -= 1
+                #     self.bottombar.lives -= 1
                 #     self.pacman.setPos(0,0)
 
 

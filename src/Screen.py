@@ -71,6 +71,11 @@ class Screen:
             if Pinky == False:
                 for i in currentPoints:
                     self.matrix[i[0]][i[1]] = 1
+    def reset(self):
+        pass
+
+    def getPercent(self):
+        pass
 
 class Box(pygame.sprite.Sprite):
     def __init__(self,x,y,filename):
