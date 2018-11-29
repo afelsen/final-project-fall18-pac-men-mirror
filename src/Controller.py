@@ -30,7 +30,7 @@ class Controller:
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-40)//20)
         self.lives = TopBar.Lives('assets/PacmanMiddle.png',5,5)
-        self.bottombar = BottomBar.bottomBar(2,2,2,2,2)
+        self.bottombar = BottomBar.bottomBar(3,1,0,0,0)
 
 
         for i in range(0,width,20):
@@ -154,6 +154,7 @@ class Controller:
 
 
                 ## Ghost bouncing
+                ########Get ghosts to bounce on corners########
                 if (inkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.inkyGroup,self.boxes,False, False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
@@ -166,6 +167,7 @@ class Controller:
                             elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
                                 ghost.xmultiplier = 1
                     self.inkyGroup.update()
+                    ########Make ghost bounce inside filled in area########
 
                 if (blinkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,False):
@@ -179,6 +181,7 @@ class Controller:
                             elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
                                 ghost.xmultiplier = 1
                     self.blinkyGroup.update()
+                    ########Make ghost break blocks it collides with########
 
                 if (pinkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.pinkyGroup,self.boxes,False, False):
@@ -192,6 +195,8 @@ class Controller:
                             elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
                                 ghost.xmultiplier = 1
                     self.pinkyGroup.update()
+
+                ########Add orange ghost bounce########
 
 
                 #Pacman-box collision
@@ -212,6 +217,15 @@ class Controller:
                             self.screenmatrix.fillMatrix(self.ghostGroupList)
                             self.boxes.update(self.screenmatrix)
                             notOnFilled = False
+                            ########Update Score########
+
+                #If pacman's trail is collided with by a ghost, let pacman lose a life and reset to the top left.
+                for ghostGroup in self.ghostGroupList:
+                    for box in pygame.sprite.groupcollide(ghostGroup, self.boxes,False, False):
+                        if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5:
+                            self.bottombar.lives -= 1
+                            self.pacman.setPos(0,0)
+                            self.screenmatrix.removeTrack()
 
 
                 keys = pygame.key.get_pressed()
@@ -253,18 +267,6 @@ class Controller:
                 frame += 1
 
 
-                ########Add collision with pacman's trail here########
-                #If pacman's trail is collided with by a ghost or by pacman, let pacman lose a life, reset to the top left.
-                trailpacCol = pygame.sprite.groupcollide(self.pacGroup, self.boxes,False, False)
-
-                for ghostGroup in self.ghostGroupList:
-                    for box in pygame.sprite.groupcollide(ghostGroup, self.boxes,False, False):
-                        if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5:
-                            self.bottombar.lives -= 1
-                            self.pacman.setPos(0,0)
-                            self.screenmatrix.removeTrack()
-
-
                 ########Add loss functionality here########
                 #If pacman has 0 lives, set done = true, and level = 100
                     ########Add Game Over Screen########
@@ -276,7 +278,7 @@ class Controller:
                 #     gameoverText = self.myfont.render("Game Over!",False,(255,0,0))
                 #     self.gameoverscreen.blit(self.levelbackground,(0,0))
                 #     self.gameoverscreen.blit(gameoverText,(205,125))
-
+                ########Update High Score########
 
                 ########Add win functionality here########
                 #If the screen is >= 80% full, set done = true, level += 1
