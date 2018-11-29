@@ -92,8 +92,6 @@ class Screen:
         # final = (accum/total)*100
         # return final
 
-
-
     def removeTrack(self):
         '''Removes any lines that the Pacman has made'''
 

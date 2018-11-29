@@ -25,7 +25,7 @@ class Controller:
         self.bananaGroup = pygame.sprite.Group(self.banana)
         self.snowflake = Powerup.Snowflake('assets/snowflake.png',random.randint(1,30)*20,random.randint(1,22)*20)
         self.snowflakeGroup = pygame.sprite.Group(self.snowflake)
-        self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup)
+        self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup]
 
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-40)//20)
