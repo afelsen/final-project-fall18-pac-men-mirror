@@ -107,3 +107,5 @@ class Box(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(pygame.image.load('assets/Bluebox.png'),(20,20))
         if screen.matrix[self.rect.x//20][self.rect.y//20] == .5:
             self.image = pygame.transform.scale(pygame.image.load('assets/Halfwaybox.png'),(20,20))
+        if screen.matrix[self.rect.x//20][self.rect.y//20] == 0:
+            self.image = pygame.transform.scale(pygame.image.load('assets/EmptyBox.png'),(20,20))

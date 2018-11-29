@@ -157,28 +157,40 @@ class Controller:
                 if (inkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.inkyGroup,self.boxes,False, False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
-                            if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
-                                ghost.ymultiplier *= -1
-                            if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
-                                ghost.xmultiplier *= -1
+                            if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1:
+                                ghost.ymultiplier = -1
+                            elif  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
+                                ghost.ymultiplier = 1
+                            if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1:
+                                ghost.xmultiplier = -1
+                            elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
+                                ghost.xmultiplier = 1
                     self.inkyGroup.update()
 
                 if (blinkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
-                            if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
-                                ghost.ymultiplier *= -1
-                            if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
-                                ghost.xmultiplier *= -1
+                            if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1:
+                                ghost.ymultiplier = -1
+                            elif  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
+                                ghost.ymultiplier = 1
+                            if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1:
+                                ghost.xmultiplier = -1
+                            elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
+                                ghost.xmultiplier = 1
                     self.blinkyGroup.update()
 
                 if (pinkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.pinkyGroup,self.boxes,False, False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
-                            if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1: #If the ghost collides on top or bottom
-                                ghost.ymultiplier *= -1
-                            if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1: #If the ghost collides on left or right
-                                ghost.xmultiplier *= -1
+                            if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1:
+                                ghost.ymultiplier = -1
+                            elif  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
+                                ghost.ymultiplier = 1
+                            if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1:
+                                ghost.xmultiplier = -1
+                            elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
+                                ghost.xmultiplier = 1
                     self.pinkyGroup.update()
 
 
