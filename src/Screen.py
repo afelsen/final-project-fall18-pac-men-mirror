@@ -73,9 +73,25 @@ class Screen:
                     self.matrix[i[0]][i[1]] = 1
     def reset(self):
         pass
+        # for i in range(self.height):
+        #     for j in range(self.width):
+        #         self.matrix[j][i] = 0
 
     def getPercent(self):
         pass
+        # accum = 0
+        # total = 0
+        # for i in range(self.width):
+        #     for j in range(self.width):
+        #         if self.matrix[j][i] == 1:
+        #             accum += 1
+        #             total += 1
+        #         else:
+        #             total += 1
+        # final = (accum/total)*100
+        # return final
+
+
 
 class Box(pygame.sprite.Sprite):
     def __init__(self,x,y,filename):
