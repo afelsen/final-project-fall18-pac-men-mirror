@@ -25,9 +25,7 @@ class Controller:
         self.bananaGroup = pygame.sprite.Group(self.banana)
         self.snowflake = Powerup.Snowflake('assets/snowflake.png',random.randint(1,30)*20,random.randint(1,22)*20)
         self.snowflakeGroup = pygame.sprite.Group(self.snowflake)
-        self.powerpellet = Powerup.Powerpellet('assets/powerpellet.png',random.randint(1,30)*20,random.randint(1,22)*20)
-        self.powerpelletGroup = pygame.sprite.Group(self.powerpellet)
-        self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup,self.powerpelletGroup]
+        self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup)
 
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-40)//20)
@@ -50,7 +48,6 @@ class Controller:
         cherryTime = -100
         bananaTime = -100
         snowflakeTime = -100
-        powerpelletTime = -100
         notOnFilled = False
         self.pacDirection = ""
         self.pinkyangle = 45
@@ -126,8 +123,6 @@ class Controller:
                 ######## Here add random powerup spawning ########
 
                 #Powerup fucntionality
-
-                powerpelletCol = pygame.sprite.spritecollide(self.pacman, self.powerpelletGroup, True)
                 cherryCol = pygame.sprite.spritecollide(self.pacman, self.cherryGroup, True)
                 snowflakeCol = pygame.sprite.spritecollide(self.pacman, self.snowflakeGroup, True)
                 bananaCol = pygame.sprite.spritecollide(self.pacman, self.bananaGroup, True)
@@ -137,9 +132,6 @@ class Controller:
                     for powerupGroup in self.powerupGroupList:
                         pygame.sprite.groupcollide(ghostGroup, powerupGroup, False, True)
 
-                if powerpelletCol:
-                    powerpelletTime = frame
-                    pacmanInvicible = True
                 if cherryCol:
                     cherryTime = frame
                     pacmanSpeed /= 2
@@ -150,8 +142,6 @@ class Controller:
                     bananaTime = frame
                     ghostSpeed *= 2
 
-                if frame == powerpelletTime + 50:
-                    pacmanInvincible = False
                 if frame == cherryTime + 50:
                     pacmanSpeed *= 2
                 if frame == snowflakeTime + 50:
