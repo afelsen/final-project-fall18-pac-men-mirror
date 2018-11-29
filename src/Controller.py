@@ -295,6 +295,9 @@ class Controller:
 
                 ########Add win functionality here########
                 #If the screen is >= 80% full, set done = true, level += 1
+                # if self.screen.getPercent() > 80:
+                #     done = True
+                #     level += 1
 
 
                 bottombar = self.barfont.render(self.bottombar.data(),False,(255,255,50))
