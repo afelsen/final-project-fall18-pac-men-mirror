@@ -15,14 +15,6 @@ class Pinky(pygame.sprite.Sprite): #Pink; normal bouncing ghost
         self.ymultiplier = -1
 
     def update(self):
-        if self.rect.x <= 0:
-            self.xmultiplier = 1
-        if self.rect.x >= 640-20:
-            self.xmultiplier = -1
-        # if self.rect.y <=0:
-        #     self.ymultiplier = 1
-        # if self.rect.y >=480-20:
-        #     self.ymultiplier = -1
         self.rect.x += self.xmultiplier*self.speed/2
         self.rect.y += self.ymultiplier*self.speed/2
 
@@ -43,14 +35,6 @@ class Inky(pygame.sprite.Sprite): #Light blue; Bounces in fenced in areas
         self.ymultiplier = -1
 
     def update(self):
-        if self.rect.x <= 0:
-            self.xmultiplier = 1
-        if self.rect.x >= 640-20:
-            self.xmultiplier = -1
-        if self.rect.y <=0:
-            self.ymultiplier = 1
-        if self.rect.y >=480-20:
-            self.ymultiplier = -1
         self.rect.x += self.xmultiplier*self.speed/2
         self.rect.y += self.ymultiplier*self.speed/2
 
@@ -72,16 +56,8 @@ class Blinky(pygame.sprite.Sprite): #Red; Breaks any block it hits - moves at 1/
         self.ymultiplier = -1
 
     def update(self):
-        if self.rect.x <= 0:
-            self.xmultiplier = 1
-        if self.rect.x >= 640-20:
-            self.xmultiplier = -1
-        if self.rect.y <=0:
-            self.ymultiplier = 1
-        if self.rect.y >=480-20:
-            self.ymultiplier = -1
-        self.rect.x += self.xmultiplier*self.speed
-        self.rect.y += self.ymultiplier*self.speed
+        self.rect.x += self.xmultiplier*self.speed/2
+        self.rect.y += self.ymultiplier*self.speed/2
 
 
     def getCoordinates(self):
@@ -101,14 +77,6 @@ class Clyde(pygame.sprite.Sprite): #Orange; Follows the edges of the fences
         self.ymultiplier = -1
 
     def update(self):
-        if self.rect.x <= 0:
-            self.xmultiplier = 1
-        if self.rect.x >= 640-20:
-            self.xmultiplier = -1
-        if self.rect.y <=0:
-            self.ymultiplier = 1
-        if self.rect.y >=480-20:
-            self.ymultiplier = -1
         self.rect.x += self.xmultiplier*self.speed/2
         self.rect.y += self.ymultiplier*self.speed/2
 

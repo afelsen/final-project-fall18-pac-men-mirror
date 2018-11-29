@@ -63,14 +63,13 @@ class Controller:
         self.level = 1
         while self.level < 100:
 
+            # Ghost spawning
             for i in range(self.level + 1):
                 self.pinkyGroup.add(Ghost.Pinky('assets/pinky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
-            ######## Here you add the spawning of all ghosts ########
-            #Make sure to create a group at the top and use a for loop to add the ghosts in with some function (2*level or level + 1, etc.)
             for i in range(self.level + 2):
                 self.inkyGroup.add(Ghost.Inky('assets/inky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
             for i in range(self.level + 3):
-                self.blinkyGroup.add(Ghost.Blinky('assets/blinky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
+                self.blinkyGroup.add(Ghost.Blinky('assets/blinky.png',random.randint(2,29)*20,random.randint(2,21)*20,10))
             for i in range(self.level * 2):
                 self.clydeGroup.add(Ghost.Clyde('assets/clyde.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
 
@@ -151,7 +150,7 @@ class Controller:
 
                 pinkyCol = pygame.sprite.groupcollide(self.pinkyGroup,self.boxes,False, False)
                 inkyCol = pygame.sprite.groupcollide(self.inkyGroup,self.boxes,False,False)
-                blinkyCol = pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,True)
+                blinkyCol = pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,False)
 
 
                 ## Ghost bouncing
@@ -164,7 +163,7 @@ class Controller:
                                 ghost.xmultiplier *= -1
                     self.inkyGroup.update()
 
-                if (blinkyCol and (frame %ghostSpeed) == 0):
+                if (blinkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
                             if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
@@ -187,8 +186,13 @@ class Controller:
                 overbox = pygame.sprite.spritecollide(self.pacman, self.boxes, False)
                 if(overbox):
                     for box in pygame.sprite.spritecollide(self.pacman, self.boxes, False):
-                        self.screenmatrix.trackPacman((box.rect.x//20,box.rect.y//20))
-                        box.update(self.screenmatrix)
+                        if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5:
+                                self.bottombar.lives -= 1
+                                self.pacman.setPos(0,0)
+                                self.screenmatrix.removeTrack()
+                        if frame % pacmanSpeed == 0:
+                            self.screenmatrix.trackPacman((box.rect.x//20,box.rect.y//20))
+                            box.update(self.screenmatrix)
                         if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] != 1:
                             notOnFilled = True
                             #This prevents the next lines from running over and over if the pacman is just staying in the "filled area"
@@ -240,31 +244,13 @@ class Controller:
                 ########Add collision with pacman's trail here########
                 #If pacman's trail is collided with by a ghost or by pacman, let pacman lose a life, reset to the top left.
                 trailpacCol = pygame.sprite.groupcollide(self.pacGroup, self.boxes,False, False)
-                trailpinkyCol = pygame.sprite.groupcollide(self.pinkyGroup, self.boxes,False, False)
-                trailinkyCol = pygame.sprite.groupcollide(self.inkyGroup, self.boxes,False, False)
-                trailblinkyCol = pygame.sprite.groupcollide(self.blinkyGroup, self.boxes,False, False)
-                trailclydeCol = pygame.sprite.groupcollide(self.clydeGroup, self.boxes,False, False)
 
-                # if trailpacCol:
-                #     for box in pygame.sprite.spritecollide(self.pacman, self.boxes, False):
-                #         #if self.screenmatrix[box.rect.x//20][box.rect.y//20] == .5
-                #         self.bottombar.lives -= 1
-                #         self.pacman.setPos(0,0)
-                if trailpinkyCol:
-                    for box in pygame.sprite.groupcollide(self.pinkyGroup, self.boxes,False, False):
+                for ghostGroup in self.ghostGroupList:
+                    for box in pygame.sprite.groupcollide(ghostGroup, self.boxes,False, False):
                         if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5:
                             self.bottombar.lives -= 1
                             self.pacman.setPos(0,0)
                             self.screenmatrix.removeTrack()
-                # if trailinkyCol:
-                #     self.bottombar.lives -= 1
-                #     self.pacman.setPos(0,0)
-                # if trailblinkyCol:
-                #     self.bottombar.lives -= 1
-                #     self.pacman.setPos(0,0)
-                # if trailclydeCol:
-                #     self.bottombar.lives -= 1
-                #     self.pacman.setPos(0,0)
 
 
                 ########Add loss functionality here########
