@@ -93,6 +93,9 @@ class Screen:
 
 
 
+    def removeTrack(self):
+        '''Removes any lines that the Pacman has made'''
+
 class Box(pygame.sprite.Sprite):
     def __init__(self,x,y,filename):
         pygame.sprite.Sprite.__init__(self)

@@ -170,7 +170,7 @@ class Controller:
                 inkyCol = pygame.sprite.groupcollide(self.inkyGroup,self.boxes,False,False)
                 blinkyCol = pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,True)
 
-                if (inkyCol and (frame %ghostSpeed) == 0):
+                if (inkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.inkyGroup,self.boxes,False, False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
                             if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1 or  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
@@ -268,7 +268,7 @@ class Controller:
                         if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5:
                             self.bottombar.lives -= 1
                             self.pacman.setPos(0,0)
-                            self.screenmatrix.reset()
+                            self.screenmatrix.removeTrack()
                 # if trailinkyCol:
                 #     self.bottombar.lives -= 1
                 #     self.pacman.setPos(0,0)
@@ -283,9 +283,9 @@ class Controller:
                 ########Add loss functionality here########
                 #If pacman has 0 lives, set done = true, and level = 100
                     ########Add Game Over Screen########
-                # if pacman.lives == 0:
+                # if self.bottombar.lives == 0:
                 #     done = True
-                #     self.level = 100
+                #     self.level = 1
                 #     self.gameoverscreen = pygame.display.set_mode((width,height))
                 #     self.gameoverscreenbackground = pygame.Surface(self.menuscreen.get_size()).convert()
                 #     gameoverText = self.myfont.render("Game Over!",False,(255,0,0))
@@ -300,7 +300,6 @@ class Controller:
                 bottombar = self.barfont.render(self.bottombar.data(),False,(255,255,50))
                 self.screen.blit(self.background,(0,0))
                 self.screen.blit(bottombar,(0,475))
-
 
 
                 self.boxes.draw(self.screen)
