@@ -35,7 +35,7 @@ class Inky(pygame.sprite.Sprite): #Light blue; Bounces in fenced in areas
         self.xmultiplier = random.choice([-1,1])
         self.ymultiplier = random.choice([-1,1])
 
-    def update(self):
+    def update(self):        
         self.rect.x += self.xmultiplier*self.speed/2
         self.rect.y += self.ymultiplier*self.speed/2
 

@@ -138,24 +138,15 @@ class Controller:
 
 
                 #Inky spawning
-                # if self.screenmatrix.getPercent() > 5 and inkysSpawned < self.bottombar.level + 1:
-                #     breakloop = False
-                #     for i in range(1,23):
-                #         for j in range(1,31):
-                #             if self.screenmatrix.matrix[j+1][i+1] == 1 and self.screenmatrix.matrix[j+1][i] == 1 and self.inkyGroup.add(Ghost.Inky('assets/inky.png',j,i,20)) and self.screenmatrix.matrix[j+1][i-1] == 1 and self.screenmatrix.matrix[j-1][i+1] == 1 and self.screenmatrix.matrix[j-1][i] == 1 and self.screenmatrix.matrix[j-1][i-1] == 1 and self.screenmatrix.matrix[j][i+1] == 1 and self.screenmatrix.matrix[j][i-1] == 1: #Checks to see if there is a 3x3 area for inky to spawn
-                #                 self.inkyGroup.add(Ghost.Inky('assets/inky.png',j,i,20))
-                #                 inkysSpawned +=1
-                #                 breakloop = True
-                #                 break
-                #         if breakloop:
-                #             break
-
-
-
-
-
-
-
+                if self.screenmatrix.getPercent() > 5 and inkysSpawned < self.bottombar.level + 3 and frame % 50 == 0: #Spawn an inky if more than 5% of the screen is filled, every fifty frames until level+3 ghosts have been spawned
+                    threebythreeList = [] #List of all possible places that inky can spawn (surrounded by 3x3 solid)
+                    for i in range(1,23):
+                        for j in range(1,31):
+                            if self.screenmatrix.matrix[j+1][i+1] == 1 and self.screenmatrix.matrix[j+1][i] == 1 and self.screenmatrix.matrix[j+1][i-1] == 1 and self.screenmatrix.matrix[j-1][i+1] == 1 and self.screenmatrix.matrix[j-1][i] == 1 and self.screenmatrix.matrix[j-1][i-1] == 1 and self.screenmatrix.matrix[j][i+1] == 1 and self.screenmatrix.matrix[j][i-1] == 1: #Checks to see if there is a 3x3 area for inky to spawn
+                                threebythreeList += [(j,i)]
+                    spawnLocation = random.choice(threebythreeList)
+                    self.inkyGroup.add(Ghost.Inky('assets/inky.png',spawnLocation[0]*20,spawnLocation[1]*20,20))
+                    inkysSpawned += 1
 
                 #Random powerup spawning
                 if frame%300 == 0:
@@ -205,34 +196,26 @@ class Controller:
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
                             #If a ghost hits a side
                             sidehit = False
-                            if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1:
+                            if ghost.rect.y >= height-40 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 0:
                                 ghost.ymultiplier = -1
                                 sidehit = True
-                            elif  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
+                            elif ghost.rect.y <= 0 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 0:
                                 ghost.ymultiplier = 1
                                 sidehit = True
-                            if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1:
+                            if ghost.rect.x >= width or self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 0:
                                 ghost.xmultiplier = -1
                                 sidehit = True
-                            elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
+                            elif ghost.rect.x <= 0 or self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 0:
                                 ghost.xmultiplier = 1
                                 sidehit = True
 
-
                             #If the ghost hits a corner
                             if sidehit == False:
-                                if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20+1] == 1:
-                                    ghost.xmultiplier = -1
-                                    ghost.ymultiplier = -1
-                                elif self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20-1] == 1:
-                                    ghost.xmultiplier = 1
-                                    ghost.ymultiplier = -1
-                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20+1] == 1:
-                                    ghost.xmultiplier = -1
-                                    ghost.ymultiplier = 1
-                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20-1] == 1:
-                                    ghost.xmultiplier = 1
-                                    ghost.ymultiplier = 1
+                                for xadd in [-1,1]:
+                                    for yadd in [-1,1]:
+                                        if self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] == 0:
+                                            ghost.xmultiplier = -xadd
+                                            ghost.ymultiplier = -yadd
 
                     self.inkyGroup.update()
                     ########Make ghost bounce inside filled in area########
@@ -267,26 +250,14 @@ class Controller:
 
                             #If the ghost hits a corner
                             if sidehit == False:
-                                if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20+1] == 1:
-                                    ghost.xmultiplier = -1
-                                    ghost.ymultiplier = -1
-                                    if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30:
-                                        self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20+1] = 0
-                                elif self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20-1] == 1:
-                                    ghost.xmultiplier = -1
-                                    ghost.ymultiplier = 1
-                                    if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30:
-                                        self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20-1] = 0
-                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20+1] == 1:
-                                    ghost.xmultiplier = 1
-                                    ghost.ymultiplier = -1
-                                    if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30:
-                                        self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20+1] = 0
-                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20-1] == 1:
-                                    ghost.xmultiplier = 1
-                                    ghost.ymultiplier = 1
-                                    if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30:
-                                        self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20-1] = 0
+                                for xadd in [-1,1]:
+                                    for yadd in [-1,1]:
+                                        if self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] == 1:
+                                            ghost.xmultiplier = -xadd
+                                            ghost.ymultiplier = -yadd
+                                            if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30 and ghost.rect.x//20 != 1 and ghost.rect.y//20 != 1:
+                                                self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20+1] = 0
+
                     self.boxes.update(self.screenmatrix)
                     self.blinkyGroup.update()
 
@@ -311,18 +282,11 @@ class Controller:
 
                             #If the ghost hits a corner
                             if sidehit == False:
-                                if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20+1] == 1:
-                                    ghost.xmultiplier = -1
-                                    ghost.ymultiplier = -1
-                                elif self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20-1] == 1:
-                                    ghost.xmultiplier = 1
-                                    ghost.ymultiplier = -1
-                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20+1] == 1:
-                                    ghost.xmultiplier = -1
-                                    ghost.ymultiplier = 1
-                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20-1] == 1:
-                                    ghost.xmultiplier = 1
-                                    ghost.ymultiplier = 1
+                                for xadd in [-1,1]:
+                                    for yadd in [-1,1]:
+                                        if self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] == 1:
+                                            ghost.xmultiplier = -xadd
+                                            ghost.ymultiplier = -yadd
                     self.pinkyGroup.update()
 
                 ########Add orange ghost bounce########
@@ -349,13 +313,14 @@ class Controller:
                             self.bottombar.score += 3
                             self.bottombar.percent = self.screenmatrix.getPercent()
 
-                #If pacman's trail is collided with by a ghost, let pacman lose a life and reset to the top left.
+                #If pacman's trail (or pacman himself) is collided with by a ghost, let pacman lose a life and reset to the top left.
                 for ghostGroup in self.ghostGroupList:
                     for box in pygame.sprite.groupcollide(ghostGroup, self.boxes,False, False):
-                        if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5:
+                        if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5 or pygame.sprite.spritecollide(self.pacman, ghostGroup,False, False):
                             self.bottombar.lives -= 1
                             self.pacman.setPos(0,0)
                             self.screenmatrix.removeTrack()
+                            break
 
 
                 keys = pygame.key.get_pressed()
@@ -436,7 +401,6 @@ class Controller:
                         self.gameoverscreen.blit(self.gameoverbackground,(0,0))
                         self.gameoverscreen.blit(gameoverTop,(93,75))
                         self.gameoverscreen.blit(gameoverHelp,(110,210))
-                        ###### fix the spacing for the text ######
                         pygame.display.flip()
                         gameoverframe += 1
 
@@ -451,7 +415,7 @@ class Controller:
                         ghostGroup.empty()
                     done = True
                     self.boxes.update(self.screenmatrix)
-                    self.bottombar.lives += 1
+                    self.bottombar.lives += 3
                     leveldone = False
 
 
