@@ -412,6 +412,7 @@ class Controller:
                         if self.bottombar.score > self.bottombar.highScore:
                             fptr = open("assets/highscore.txt", "w")
                             fptr.write(str(self.bottombar.score))
+                            self.bottombar.highScore = self.bottombar.score
                             fptr.close()
                         gameoverHighScore = self.subfont.render("High Score: "+str(self.bottombar.highScore),False,(255,255,50))
 
