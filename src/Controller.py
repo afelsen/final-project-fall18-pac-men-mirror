@@ -169,13 +169,13 @@ class Controller:
                     for powerupGroup in self.powerupGroupList:
                         pygame.sprite.groupcollide(ghostGroup, powerupGroup, False, True)
 
-                if cherryCol:
+                if cherryCol and frame > cherryTime + 50: #Prevents two cherrys from being collected in the same time period
                     cherryTime = frame
                     pacmanSpeed /= 2
                 if snowflakeCol:
                     snowflakeTime = frame
                     ghostSpeed *= 1000
-                if bananaCol:
+                if bananaCol and frame > bananaTime + 50: #Prevents two bananas from being collected in the same time period
                     bananaTime = frame
                     ghostSpeed *= 2
 
@@ -233,21 +233,25 @@ class Controller:
                                 sidehit = True
                                 if ghost.rect.y//20 != 22:
                                     self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] = 0
+                                    self.boxes.update(self.screenmatrix)
                             elif  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
                                 ghost.ymultiplier = 1
                                 sidehit = True
                                 if ghost.rect.y//20 != 1:
                                     self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] = 0
+                                    self.boxes.update(self.screenmatrix)
                             if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1:
                                 ghost.xmultiplier = -1
                                 sidehit = True
                                 if ghost.rect.x//20 != 30:
                                     self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] = 0
+                                    self.boxes.update(self.screenmatrix)
                             elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
                                 ghost.xmultiplier = 1
                                 sidehit = True
                                 if ghost.rect.x//20 != 1:
                                     self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] = 0
+                                    self.boxes.update(self.screenmatrix)
 
 
                             #If the ghost hits a corner
@@ -258,9 +262,8 @@ class Controller:
                                             ghost.xmultiplier = -xadd
                                             ghost.ymultiplier = -yadd
                                             if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30 and ghost.rect.x//20 != 1 and ghost.rect.y//20 != 1:
-                                                self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20+1] = 0
-
-                    self.boxes.update(self.screenmatrix)
+                                                self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] = 0
+                                                self.boxes.update(self.screenmatrix)
                     self.blinkyGroup.update()
 
                 if (pinkyCol and (frame % ghostSpeed) == 0):
@@ -296,6 +299,20 @@ class Controller:
                     self.clydeGroup.update()
 
 
+                #If pacman's trail (or pacman himself) is collided with by a ghost, let pacman lose a life and reset to the top left.
+                for ghostGroup in self.ghostGroupList:
+                    for box in pygame.sprite.groupcollide(ghostGroup, self.boxes,False, False):
+                        if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5 or pygame.sprite.spritecollide(self.pacman, ghostGroup,False, False):
+                            deathFrame = 0
+                            while deathFrame <=14*100:
+                                if deathFrame%100 ==0:
+                                    self.pacman.animateDeath()
+                                deathFrame +=1
+                            self.bottombar.lives -= 1
+                            self.pacman.setPos(0,0)
+                            self.screenmatrix.removeTrack()
+                            break
+
                 #Pacman-box collision
                 overbox = pygame.sprite.spritecollide(self.pacman, self.boxes, False)
                 if(overbox):
@@ -314,24 +331,10 @@ class Controller:
                             self.screenmatrix.fillMatrix(self.ghostGroupList)
                             self.boxes.update(self.screenmatrix)
                             notOnFilled = False
-                            self.bottombar.score += 3
+                            self.bottombar.score +=  int(self.screenmatrix.getNumLastFilled()**1.5/100+1) #Score increases with an exponential function based on boxes filled. Rewards taking risks. (max of 170 if every box is filled)
                             self.bottombar.percent = self.screenmatrix.getPercent()
 
-                #If pacman's trail (or pacman himself) is collided with by a ghost, let pacman lose a life and reset to the top left.
-                for ghostGroup in self.ghostGroupList:
-                    for box in pygame.sprite.groupcollide(ghostGroup, self.boxes,False, False):
-                        if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5 or pygame.sprite.spritecollide(self.pacman, ghostGroup,False, False):
-                            deathFrame = 0
-                            while deathFrame <=14*100:
-                                if deathFrame%100 ==0:
-                                    self.pacman.animateDeath()
-                                deathFrame +=1
-                            self.bottombar.lives -= 1
-                            self.pacman.setPos(0,0)
-                            self.screenmatrix.removeTrack()
-                            break
-
-
+                #Pacman moving functionality
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_UP]:
                     self.pacDirection = "U"
@@ -372,7 +375,7 @@ class Controller:
                 frame += 1
 
 
-
+                #Print the bottombar
                 bottombar1 = self.barfont.render(self.bottombar.data()[0],False,(255,255,50))
                 bottombar2 = self.barfont.render(self.bottombar.data()[1],False,(255,255,50))
                 bottombar3 = pygame.transform.scale(pygame.image.load("assets/pacxon.png"),(640-250, 320))
@@ -391,8 +394,6 @@ class Controller:
                     ghostGroup.draw(self.screen)
                 pygame.display.flip()
 
-
-                ########PRINT HIGH SCORE WHEN LOSE########
                 #If pacman has 0 lives, show GAMEOVER screen
                 if self.bottombar.lives == 0:
                     done = True
@@ -429,7 +430,7 @@ class Controller:
                                 done = True
                                 self.bottombar.level = 100
 
-                        ########Update High Score########
+                        # Update High Score
                         if self.bottombar.score > self.bottombar.highScore:
                             fptr = open("assets/highscore.txt", "w")
                             fptr.write(str(self.bottombar.score))
@@ -457,4 +458,4 @@ class Controller:
                     self.bottombar.lives += 2
                     leveldone = False
                     self.bottombar.percent = 0
-                    self.bottombar.score += 100
+                    self.bottombar.score += 250

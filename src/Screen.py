@@ -11,6 +11,7 @@ class Screen:
             self.matrix[i][-1] = 1
         self.finalpercent = 80
         self.currentpercent = 0
+        self.numpointsfilled = 0
 
     def getMatrix(self):
         return self.matrix
@@ -18,6 +19,7 @@ class Screen:
         #Pacman pos in the format (x,y)
         if self.matrix[pacmanPos[0]][pacmanPos[1]] == 0:
             self.matrix[pacmanPos[0]][pacmanPos[1]] = .5
+            self.numpointsfilled +=1
 
     def fillMatrix(self,ghostGroupList):
 
@@ -72,10 +74,17 @@ class Screen:
             if Ghost == False:
                 for i in currentPoints:
                     self.matrix[i[0]][i[1]] = 1
+                    self.numpointsfilled += 1
     def reset(self):
         for i in range(1,self.height-1):
             for j in range(1,self.width-1):
                 self.matrix[j][i] = 0
+
+    def getNumLastFilled(self):
+        final = self.numpointsfilled
+        self.numpointsfilled = 0
+        return final
+
 
     def getPercent(self):
         accum = 0
