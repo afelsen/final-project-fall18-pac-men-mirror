@@ -332,6 +332,7 @@ class Controller:
                             self.screenmatrix.fillMatrix(self.ghostGroupList)
                             self.boxes.update(self.screenmatrix)
                             notOnFilled = False
+                            self.bottombar.score +=  int(self.screenmatrix.getNumLastFilled()**1.5/100+1) #Score increases with an exponential function based on boxes filled. Rewards taking risks. (max of 170 if every box is filled)
                             self.bottombar.percent = self.screenmatrix.getPercent()
 
                 #Pacman moving functionality
