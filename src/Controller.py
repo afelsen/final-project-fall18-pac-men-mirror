@@ -64,11 +64,11 @@ class Controller:
         while self.bottombar.level < 100:
             done = False
             # Ghost spawning
-            for i in range(self.bottombar.level + 1):
+            for i in range(self.bottombar.level//2+1):
                 self.pinkyGroup.add(Ghost.Pinky('assets/pinky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
-            for i in range(self.bottombar.level + 3):
+            for i in range(self.bottombar.level//3):
                 self.blinkyGroup.add(Ghost.Blinky('assets/blinky.png',random.randint(2,29)*20,random.randint(2,21)*20,10))
-            for i in range(self.bottombar.level * 2):
+            for i in range(self.bottombar.level//2):
                 self.clydeGroup.add(Ghost.Clyde('assets/clyde.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
             inkysSpawned = 0
 
@@ -137,7 +137,7 @@ class Controller:
 
 
                 #Inky spawning
-                if self.screenmatrix.getPercent() > 5 and inkysSpawned < self.bottombar.level + 3 and frame % 50 == 0: #Spawn an inky if more than 5% of the screen is filled, every fifty frames until level+3 ghosts have been spawned
+                if self.screenmatrix.getPercent() > 5 and inkysSpawned < self.bottombar.level//3+1 and frame % 50 == 0: #Spawn an inky if more than 5% of the screen is filled, every fifty frames until level+3 ghosts have been spawned
                     threebythreeList = [] #List of all possible places that inky can spawn (surrounded by 3x3 solid)
                     for i in range(1,(height-40)//20-1):
                         for j in range(1,width//20-1):
@@ -148,7 +148,7 @@ class Controller:
                     inkysSpawned += 1
 
                 #Random powerup spawning
-                if frame%300 == 0:
+                if frame%200 == 0:
                     choice = random.randint(0,2)
                     if choice == 0:
                         self.cherryGroup.add(Powerup.Cherry('assets/cherry.png',random.randint(1,30)*20,random.randint(1,22)*20))
