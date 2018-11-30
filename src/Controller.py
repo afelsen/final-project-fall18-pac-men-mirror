@@ -216,7 +216,7 @@ class Controller:
                             if sidehit == False:
                                 for xadd in [-1,1]:
                                     for yadd in [-1,1]:
-                                        if self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] == 0:
+                                        if self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] == 0 and ghost.xmultiplier == xadd and ghost.ymultiplier == yadd:
                                             ghost.xmultiplier = -xadd
                                             ghost.ymultiplier = -yadd
 
@@ -255,7 +255,7 @@ class Controller:
                             if sidehit == False:
                                 for xadd in [-1,1]:
                                     for yadd in [-1,1]:
-                                        if self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] == 1:
+                                        if self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] == 1 and ghost.xmultiplier == xadd and ghost.ymultiplier == yadd:
                                             ghost.xmultiplier = -xadd
                                             ghost.ymultiplier = -yadd
                                             if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30 and ghost.rect.x//20 != 1 and ghost.rect.y//20 != 1:
@@ -287,7 +287,7 @@ class Controller:
                             if sidehit == False:
                                 for xadd in [-1,1]:
                                     for yadd in [-1,1]:
-                                        if self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] == 1:
+                                        if self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] == 1 and ghost.xmultiplier == xadd and ghost.ymultiplier == yadd:
                                             ghost.xmultiplier = -xadd
                                             ghost.ymultiplier = -yadd
                     self.pinkyGroup.update()
