@@ -8,7 +8,7 @@ from src import TopBar
 from src import BottomBar
 
 class Controller:
-    def __init__(self, width = 640, height = 520):
+    def __init__(self, width = 640, height = 560):
         self.screen = pygame.display.set_mode((width,height))
         self.background = pygame.Surface(self.screen.get_size()).convert()
         self.pacman = Pacman.Pacman('assets/PacmanOpen.png',0,0,20)
@@ -25,13 +25,16 @@ class Controller:
         self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup]
 
         self.boxes = pygame.sprite.Group()
-        self.screenmatrix = Screen.Screen(width//20,(height-40)//20)
+        self.screenmatrix = Screen.Screen(width//20,(height-80)//20)
         self.lives = TopBar.Lives('assets/PacmanMiddle.png',5,5)
         self.bottombar = BottomBar.bottomBar(3,1,0,0,0)
+        fptr = open("assets/highscore.txt", "r")
+        self.bottombar.highScore = int(fptr.read())
+        fptr.close()
 
 
         for i in range(0,width,20):
-            for j in range(0,height-40,20):
+            for j in range(0,height-80,20):
                 self.boxes.add(Screen.Box(i,j,'assets/EmptyBox.png'))
         self.boxes.update(self.screenmatrix)
 
@@ -99,7 +102,7 @@ class Controller:
                     self.menuscreen.blit(textTop,(205,75))
                     self.menuscreen.blit(textBottom,(200,300))
                     self.menuscreen.blit(textHelp,(180,210))
-                    self.menuscreen.blit(textControls,(0,485))
+                    self.menuscreen.blit(textControls,(0,525))
                     pygame.display.flip()
                     introframe += 1
 
@@ -139,7 +142,7 @@ class Controller:
                 #Inky spawning
                 if self.screenmatrix.getPercent() > 5 and inkysSpawned < self.bottombar.level//3+1 and frame % 50 == 0: #Spawn an inky if more than 5% of the screen is filled, every fifty frames until level+3 ghosts have been spawned
                     threebythreeList = [] #List of all possible places that inky can spawn (surrounded by 3x3 solid)
-                    for i in range(1,(height-40)//20-1):
+                    for i in range(1,(height-80)//20-1):
                         for j in range(1,width//20-1):
                             if self.screenmatrix.matrix[j+1][i+1] == 1 and self.screenmatrix.matrix[j+1][i] == 1 and self.screenmatrix.matrix[j+1][i-1] == 1 and self.screenmatrix.matrix[j-1][i+1] == 1 and self.screenmatrix.matrix[j-1][i] == 1 and self.screenmatrix.matrix[j-1][i-1] == 1 and self.screenmatrix.matrix[j][i+1] == 1 and self.screenmatrix.matrix[j][i-1] == 1: #Checks to see if there is a 3x3 area for inky to spawn
                                 threebythreeList += [(j,i)]
@@ -196,7 +199,7 @@ class Controller:
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
                             #If a ghost hits a side
                             sidehit = False
-                            if ghost.rect.y >= height-40-20 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 0:
+                            if ghost.rect.y >= height-80-20 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 0:
                                 ghost.ymultiplier = -1
                                 sidehit = True
                             elif ghost.rect.y <= 0 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 0:
@@ -406,9 +409,6 @@ class Controller:
                                 self.bottombar.level = 100
 
                         ########Update High Score########
-                        fptr = open("assets/highscore.txt", "r")
-                        self.bottombar.highScore = int(fptr.read())
-                        fptr.close()
                         if self.bottombar.score > self.bottombar.highScore:
                             fptr = open("assets/highscore.txt", "w")
                             fptr.write(str(self.bottombar.score))
@@ -418,8 +418,8 @@ class Controller:
                         self.gameoverscreen.blit(self.gameoverbackground,(0,0))
                         self.gameoverscreen.blit(gameoverTop,(93,75))
                         self.gameoverscreen.blit(gameoverHelp,(110,210))
-                        self.gameoverscreen.blit(gameoverScore,(110,310))
-                        self.gameoverscreen.blit(gameoverHighScore,(110,410))
+                        self.gameoverscreen.blit(gameoverScore,(240,310))
+                        self.gameoverscreen.blit(gameoverHighScore,(230,410))
                         pygame.display.flip()
                         gameoverframe += 1
 
@@ -438,9 +438,12 @@ class Controller:
                     self.bottombar.score += 100
 
 
-                bottombar = self.barfont.render(self.bottombar.data(),False,(255,255,50))
+                bottombar1 = self.barfont.render(self.bottombar.data()[0],False,(255,255,50))
+                bottombar2 = self.barfont.render(self.bottombar.data()[1],False,(255,255,50))
                 self.screen.blit(self.background,(0,0))
-                self.screen.blit(bottombar,(0,height-45))
+                self.screen.blit(bottombar1,(0,height-85))
+                self.screen.blit(bottombar2,(0,height-45))
+
 
 
                 self.boxes.draw(self.screen)
