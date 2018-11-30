@@ -378,6 +378,8 @@ class Controller:
                     gameoverframe = 0
                     gameoverTop = self.myfont.render("GAMEOVER!",False,(255,255,50))
                     gameoverHelp = self.subfont.render("Press SPACEBAR to restart, Q to quit",False,(255,255,50))
+                    gameoverScore = self.subfont.render("Your Score:"+str(self.bottombar.score),False,(255,255,50))
+                    gameoverHighScore = self.subfont.render("High Score:"+str(self.bottombar.highscore),False,(255,255,50))
                     while not gameoverdone:
                         for event in pygame.event.get():
                             if event.type == pygame.QUIT:
@@ -406,11 +408,19 @@ class Controller:
                         self.gameoverscreen.blit(self.gameoverbackground,(0,0))
                         self.gameoverscreen.blit(gameoverTop,(93,75))
                         self.gameoverscreen.blit(gameoverHelp,(110,210))
+                        self.gameoverscreen.blit(gameoverScore,(110,310))
+                        self.gameoverscreen.blit(gameoverHighScore(110,410))
                         pygame.display.flip()
                         gameoverframe += 1
 
                 ########Update High Score########
-
+                # fptr = open("assets/highscore.txt", "r")
+                # self.bottombar.highscore = fptr.read()
+                # fptr.close()
+                # if self.bottombar.score > self.bottombar.highscore:
+                #     fptr = open("assets/highscore.txt", "w")
+                #     fptr.write(self.bottombar.score)
+                #     fptr.close()
 
                 if self.screenmatrix.getPercent() >= 80:
                     self.bottombar.level += 1
