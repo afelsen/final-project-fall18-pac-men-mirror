@@ -88,7 +88,7 @@ class Controller:
                             leveldone = True
                         keys = pygame.key.get_pressed()
 
-                    if introframe >= 10: #This ensures that the text is displayed for 10 frames
+                    if introframe >= 5: #This ensures that the text is displayed for 10 frames
                         if keys[pygame.K_SPACE]: # space to start
                             introdone = True
                         elif keys[pygame.K_q]: # q to quit
@@ -114,9 +114,10 @@ class Controller:
                         if event.type == pygame.QUIT:
                             done = True
                             leveldone = True
+                            self.bottombar.level = 100
                         keys = pygame.key.get_pressed()
 
-                    if levelframe >= 10: #This ensures that the text is displayed for 10 frames
+                    if levelframe >= 5: #This ensures that the text is displayed for 10 frames
                         if keys[pygame.K_SPACE]: # space to start
                             leveldone = True
                         elif keys[pygame.K_q]: # q to quit
@@ -124,8 +125,8 @@ class Controller:
                             done = True
                             self.bottombar.level = 100
                     self.levelscreen.blit(self.levelbackground,(0,0))
-                    self.levelscreen.blit(levelTop,(205,75))
-                    self.levelscreen.blit(levelHelp,(180,210))
+                    self.levelscreen.blit(levelTop,(210,75))
+                    self.levelscreen.blit(levelHelp,(110,210))
                     ###### fix the spacing for the text ######
                     pygame.display.flip()
                     levelframe += 1
@@ -412,6 +413,7 @@ class Controller:
                             if event.type == pygame.QUIT:
                                 done = True
                                 gameoverdone = True
+                                self.bottombar.level = 100
                             keys = pygame.key.get_pressed()
 
                         if gameoverframe >= 10: #This ensures that the text is displayed for 10 frames
@@ -432,8 +434,8 @@ class Controller:
                                 done = True
                                 self.bottombar.level = 100
                         self.gameoverscreen.blit(self.gameoverbackground,(0,0))
-                        self.gameoverscreen.blit(gameoverTop,(205,75))
-                        self.gameoverscreen.blit(gameoverHelp,(180,210))
+                        self.gameoverscreen.blit(gameoverTop,(93,75))
+                        self.gameoverscreen.blit(gameoverHelp,(110,210))
                         ###### fix the spacing for the text ######
                         pygame.display.flip()
                         gameoverframe += 1
@@ -441,7 +443,7 @@ class Controller:
                 ########Update High Score########
 
 
-                if self.screenmatrix.getPercent() > 10:
+                if self.screenmatrix.getPercent() >= 80:
                     self.bottombar.level += 1
                     self.screenmatrix.reset()
                     self.pacman.setPos(0,0)
