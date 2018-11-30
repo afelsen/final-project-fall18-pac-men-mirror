@@ -1,5 +1,6 @@
 import math
 import pygame
+import random
 
 class Pinky(pygame.sprite.Sprite): #Pink; normal bouncing ghost
     def __init__(self, filename, x, y, speed):
@@ -11,8 +12,8 @@ class Pinky(pygame.sprite.Sprite): #Pink; normal bouncing ghost
         self.rect.y = y
         self.speed = speed
         self.direction = 45
-        self.xmultiplier = 1
-        self.ymultiplier = -1
+        self.xmultiplier = random.choice([-1,1])
+        self.ymultiplier = random.choice([-1,1])
 
     def update(self):
         self.rect.x += self.xmultiplier*self.speed/2
@@ -31,8 +32,8 @@ class Inky(pygame.sprite.Sprite): #Light blue; Bounces in fenced in areas
         self.rect.y = y
         self.speed = speed
         self.direction = 45
-        self.xmultiplier = 1
-        self.ymultiplier = -1
+        self.xmultiplier = random.choice([-1,1])
+        self.ymultiplier = random.choice([-1,1])
 
     def update(self):
         self.rect.x += self.xmultiplier*self.speed/2
@@ -52,8 +53,8 @@ class Blinky(pygame.sprite.Sprite): #Red; Breaks any block it hits - moves at 1/
         self.rect.y = y
         self.speed = speed
         self.direction = 45
-        self.xmultiplier = 1
-        self.ymultiplier = -1
+        self.xmultiplier = random.choice([-1,1])
+        self.ymultiplier = random.choice([-1,1])
 
     def update(self):
         self.rect.x += self.xmultiplier*self.speed/2
@@ -73,8 +74,8 @@ class Clyde(pygame.sprite.Sprite): #Orange; Follows the edges of the fences
         self.rect.y = y
         self.speed = speed
         self.direction = 45
-        self.xmultiplier = 1
-        self.ymultiplier = -1
+        self.xmultiplier = random.choice([-1,1])
+        self.ymultiplier = random.choice([-1,1])
 
     def update(self):
         self.rect.x += self.xmultiplier*self.speed/2

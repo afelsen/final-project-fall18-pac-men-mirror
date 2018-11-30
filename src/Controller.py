@@ -19,12 +19,9 @@ class Controller:
         self.clydeGroup = pygame.sprite.Group()
         self.ghostGroupList = [self.pinkyGroup,self.inkyGroup,self.blinkyGroup,self.clydeGroup]
 
-        self.cherry = Powerup.Cherry('assets/cherry.png',random.randint(1,30)*20,random.randint(1,22)*20)
-        self.cherryGroup = pygame.sprite.Group(self.cherry)
-        self.banana = Powerup.Banana('assets/banana.png',random.randint(1,30)*20,random.randint(1,22)*20)
-        self.bananaGroup = pygame.sprite.Group(self.banana)
-        self.snowflake = Powerup.Snowflake('assets/snowflake.png',random.randint(1,30)*20,random.randint(1,22)*20)
-        self.snowflakeGroup = pygame.sprite.Group(self.snowflake)
+        self.cherryGroup = pygame.sprite.Group()
+        self.bananaGroup = pygame.sprite.Group()
+        self.snowflakeGroup = pygame.sprite.Group()
         self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup]
 
         self.boxes = pygame.sprite.Group()
@@ -39,6 +36,7 @@ class Controller:
         self.boxes.update(self.screenmatrix)
 
         done = False
+        leveldone = False
         introdone = False
         pacmanSpeed = 2
         ghostSpeed = 2
@@ -54,72 +52,119 @@ class Controller:
 
         self.menuscreen = pygame.display.set_mode((width,height))
         self.menubackground = pygame.Surface(self.menuscreen.get_size()).convert()
+        self.levelscreen = pygame.display.set_mode((width,height))
+        self.levelbackground = pygame.Surface(self.menuscreen.get_size()).convert()
+        self.gameoverscreen = pygame.display.set_mode((width,height))
+        self.gameoverbackground = pygame.Surface(self.menuscreen.get_size()).convert()
         pygame.font.init()
         self.myfont = pygame.font.Font("assets/KaushanScript-Regular.otf", 75)
         self.subfont = pygame.font.Font("assets/KaushanScript-Regular.otf", 25)
         self.midfont = pygame.font.Font("assets/KaushanScript-Regular.otf", 50)
         self.barfont = pygame.font.Font("assets/KaushanScript-Regular.otf", 30)
 
-        self.level = 1
-        while self.level < 100:
-
+        while self.bottombar.level < 100:
+            done = False
             # Ghost spawning
-            for i in range(self.level + 1):
+            for i in range(self.bottombar.level + 1):
                 self.pinkyGroup.add(Ghost.Pinky('assets/pinky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
-            for i in range(self.level + 2):
-                self.inkyGroup.add(Ghost.Inky('assets/inky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
-            for i in range(self.level + 3):
+            for i in range(self.bottombar.level + 3):
                 self.blinkyGroup.add(Ghost.Blinky('assets/blinky.png',random.randint(2,29)*20,random.randint(2,21)*20,10))
-            for i in range(self.level * 2):
+            for i in range(self.bottombar.level * 2):
                 self.clydeGroup.add(Ghost.Clyde('assets/clyde.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
+            inkysSpawned = 0
 
             while not done:
+                introframe = 0
+                textTop = self.myfont.render("PacXon",False,(255,255,50))
+                textBottom = self.subfont.render("Created by the PacMen",False,(255,255,50))
+                textHelp = self.subfont.render("Press SPACEBAR to start!",False,(255,255,50))
+                textControls = self.subfont.render("Controls: Arrow keys to move and Q to quit",False,(255,255,50))
                 while not introdone:
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             introdone = True
                             done = True
-                            self.level = 100
+                            self.bottombar.level = 100
+                            leveldone = True
                         keys = pygame.key.get_pressed()
-                        textTop = self.myfont.render("PacXon",False,(255,255,50))
-                        textBottom = self.subfont.render("Created by the PacMen",False,(255,255,50))
-                        textHelp = self.subfont.render("Press SPACEBAR to start!",False,(255,255,50))
-                        textControls = self.subfont.render("Controls: Arrow keys to move and Q to quit",False,(255,255,50))
 
-                    if frame % 1 == 0:
+                    if introframe >= 10: #This ensures that the text is displayed for 10 frames
                         if keys[pygame.K_SPACE]: # space to start
                             introdone = True
-                            self.level = 100
                         elif keys[pygame.K_q]: # q to quit
                             introdone = True
                             done = True
-                            self.level = 100
-                        frame += 1
-                        self.menuscreen.blit(self.menubackground,(0,0))
-                        self.menuscreen.blit(textTop,(205,75))
-                        self.menuscreen.blit(textBottom,(200,300))
-                        self.menuscreen.blit(textHelp,(180,210))
-                        self.menuscreen.blit(textControls,(0,485))
-                        pygame.display.flip()
+                            self.bottombar.level = 100
+                            leveldone = True
+                    self.menuscreen.blit(self.menubackground,(0,0))
+                    self.menuscreen.blit(textTop,(205,75))
+                    self.menuscreen.blit(textBottom,(200,300))
+                    self.menuscreen.blit(textHelp,(180,210))
+                    self.menuscreen.blit(textControls,(0,485))
+                    pygame.display.flip()
+                    introframe += 1
 
-                ######## Here add a "Level ___" screen ########
-                # if getPercent() > 80:
-                    # self.level += 1
-                    # self.levelscreen = pygame.display.set_mode((width,height))
-                    # self.levelbackground = pygame.Surface(self.menuscreen.get_size()).convert()
-                    # levelText = self.myfont.render("Level",False,(255,255,50))
-                    # levelnumberText = self.myfont.render(str(self.level),False,(255,255,255))
-                    # self.levelscreen.blit(self.levelbackground,(0,0))
-                    # self.levelscreen.blit(levelText,(205,125))
-                    # self.levelscreen.blit(levelnumberText,(305,125))
 
+                #Level Screen
+                levelframe = 0
+                levelTop = self.myfont.render("Level "+ str(self.bottombar.level),False,(255,255,50))
+                levelHelp = self.subfont.render("Press SPACEBAR to continue, Q to quit",False,(255,255,50))
+                while not leveldone:
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            done = True
+                            leveldone = True
+                        keys = pygame.key.get_pressed()
+
+                    if levelframe >= 10: #This ensures that the text is displayed for 10 frames
+                        if keys[pygame.K_SPACE]: # space to start
+                            leveldone = True
+                        elif keys[pygame.K_q]: # q to quit
+                            leveldone = True
+                            done = True
+                            self.bottombar.level = 100
+                    self.levelscreen.blit(self.levelbackground,(0,0))
+                    self.levelscreen.blit(levelTop,(205,75))
+                    self.levelscreen.blit(levelHelp,(180,210))
+                    ###### fix the spacing for the text ######
+                    pygame.display.flip()
+                    levelframe += 1
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         done = True
-                        self.level = 100
+                        self.bottombar.level = 100
 
-                ######## Here add random powerup spawning ########
+
+                #Inky spawning
+                # if self.screenmatrix.getPercent() > 5 and inkysSpawned < self.bottombar.level + 1:
+                #     breakloop = False
+                #     for i in range(1,23):
+                #         for j in range(1,31):
+                #             if self.screenmatrix.matrix[j+1][i+1] == 1 and self.screenmatrix.matrix[j+1][i] == 1 and self.inkyGroup.add(Ghost.Inky('assets/inky.png',j,i,20)) and self.screenmatrix.matrix[j+1][i-1] == 1 and self.screenmatrix.matrix[j-1][i+1] == 1 and self.screenmatrix.matrix[j-1][i] == 1 and self.screenmatrix.matrix[j-1][i-1] == 1 and self.screenmatrix.matrix[j][i+1] == 1 and self.screenmatrix.matrix[j][i-1] == 1: #Checks to see if there is a 3x3 area for inky to spawn
+                #                 self.inkyGroup.add(Ghost.Inky('assets/inky.png',j,i,20))
+                #                 inkysSpawned +=1
+                #                 breakloop = True
+                #                 break
+                #         if breakloop:
+                #             break
+
+
+
+
+
+
+
+
+                #Random powerup spawning
+                if frame%300 == 0:
+                    choice = random.randint(0,2)
+                    if choice == 0:
+                        self.cherryGroup.add(Powerup.Cherry('assets/cherry.png',random.randint(1,30)*20,random.randint(1,22)*20))
+                    if choice == 1:
+                        self.snowflakeGroup.add(Powerup.Snowflake('assets/snowflake.png',random.randint(1,30)*20,random.randint(1,22)*20))
+                    if choice == 2:
+                        self.bananaGroup.add(Powerup.Banana('assets/banana.png',random.randint(1,30)*20,random.randint(1,22)*20))
 
                 #Powerup fucntionality
                 cherryCol = pygame.sprite.spritecollide(self.pacman, self.cherryGroup, True)
@@ -154,46 +199,129 @@ class Controller:
 
 
                 ## Ghost bouncing
-                ########Get ghosts to bounce on corners########
                 if (inkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.inkyGroup,self.boxes,False, False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
+                            #If a ghost hits a side
+                            sidehit = False
                             if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1:
                                 ghost.ymultiplier = -1
+                                sidehit = True
                             elif  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
                                 ghost.ymultiplier = 1
+                                sidehit = True
                             if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1:
                                 ghost.xmultiplier = -1
+                                sidehit = True
                             elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
                                 ghost.xmultiplier = 1
+                                sidehit = True
+
+
+                            #If the ghost hits a corner
+                            if sidehit == False:
+                                if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20+1] == 1:
+                                    ghost.xmultiplier = -1
+                                    ghost.ymultiplier = -1
+                                elif self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20-1] == 1:
+                                    ghost.xmultiplier = 1
+                                    ghost.ymultiplier = -1
+                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20+1] == 1:
+                                    ghost.xmultiplier = -1
+                                    ghost.ymultiplier = 1
+                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20-1] == 1:
+                                    ghost.xmultiplier = 1
+                                    ghost.ymultiplier = 1
+
                     self.inkyGroup.update()
                     ########Make ghost bounce inside filled in area########
 
                 if (blinkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.blinkyGroup,self.boxes,False,False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
+                            #If a ghost hits a side
+                            sidehit = False
+
                             if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1:
                                 ghost.ymultiplier = -1
+                                sidehit = True
+                                if ghost.rect.y//20 != 22:
+                                    self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] = 0
                             elif  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
                                 ghost.ymultiplier = 1
+                                sidehit = True
+                                if ghost.rect.y//20 != 1:
+                                    self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] = 0
                             if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1:
                                 ghost.xmultiplier = -1
+                                sidehit = True
+                                if ghost.rect.x//20 != 30:
+                                    self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] = 0
                             elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
                                 ghost.xmultiplier = 1
+                                sidehit = True
+                                if ghost.rect.x//20 != 1:
+                                    self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] = 0
+
+
+                            #If the ghost hits a corner
+                            if sidehit == False:
+                                if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20+1] == 1:
+                                    ghost.xmultiplier = -1
+                                    ghost.ymultiplier = -1
+                                    if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30:
+                                        self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20+1] = 0
+                                elif self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20-1] == 1:
+                                    ghost.xmultiplier = -1
+                                    ghost.ymultiplier = 1
+                                    if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30:
+                                        self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20-1] = 0
+                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20+1] == 1:
+                                    ghost.xmultiplier = 1
+                                    ghost.ymultiplier = -1
+                                    if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30:
+                                        self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20+1] = 0
+                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20-1] == 1:
+                                    ghost.xmultiplier = 1
+                                    ghost.ymultiplier = 1
+                                    if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30:
+                                        self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20-1] = 0
+                    self.boxes.update(self.screenmatrix)
                     self.blinkyGroup.update()
-                    ########Make ghost break blocks it collides with########
 
                 if (pinkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.pinkyGroup,self.boxes,False, False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
+                            #If a ghost hits a side
+                            sidehit = False
                             if self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 1:
                                 ghost.ymultiplier = -1
+                                sidehit = True
                             elif  self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 1:
                                 ghost.ymultiplier = 1
+                                sidehit = True
                             if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 1:
                                 ghost.xmultiplier = -1
+                                sidehit = True
                             elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 1:
                                 ghost.xmultiplier = 1
+                                sidehit = True
+
+
+                            #If the ghost hits a corner
+                            if sidehit == False:
+                                if self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20+1] == 1:
+                                    ghost.xmultiplier = -1
+                                    ghost.ymultiplier = -1
+                                elif self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20-1] == 1:
+                                    ghost.xmultiplier = 1
+                                    ghost.ymultiplier = -1
+                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20+1] == 1:
+                                    ghost.xmultiplier = -1
+                                    ghost.ymultiplier = 1
+                                elif self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20-1] == 1:
+                                    ghost.xmultiplier = 1
+                                    ghost.ymultiplier = 1
                     self.pinkyGroup.update()
 
                 ########Add orange ghost bounce########
@@ -217,7 +345,8 @@ class Controller:
                             self.screenmatrix.fillMatrix(self.ghostGroupList)
                             self.boxes.update(self.screenmatrix)
                             notOnFilled = False
-                            ########Update Score########
+                            self.bottombar.score += 3
+                            self.bottombar.percent = self.screenmatrix.getPercent()
 
                 #If pacman's trail is collided with by a ghost, let pacman lose a life and reset to the top left.
                 for ghostGroup in self.ghostGroupList:
@@ -251,6 +380,7 @@ class Controller:
                         self.pacman.moveRight()
                 elif keys[pygame.K_q]:
                     done = True
+                    self.bottombar.level = 100
 
                 if frame % pacmanSpeed == 0 and notOnFilled:
                     if self.pacDirection == "U":
@@ -267,24 +397,60 @@ class Controller:
                 frame += 1
 
 
-                ########Add loss functionality here########
-                #If pacman has 0 lives, set done = true, and level = 100
-                    ########Add Game Over Screen########
-                # if self.bottombar.lives == 0:
-                #     done = True
-                #     self.level = 1
-                #     self.gameoverscreen = pygame.display.set_mode((width,height))
-                #     self.gameoverscreenbackground = pygame.Surface(self.menuscreen.get_size()).convert()
-                #     gameoverText = self.myfont.render("Game Over!",False,(255,0,0))
-                #     self.gameoverscreen.blit(self.levelbackground,(0,0))
-                #     self.gameoverscreen.blit(gameoverText,(205,125))
+                ########PRINT HIGH SCORE WHEN LOSE########
+                #If pacman has 0 lives, show GAMEOVER screen
+                if self.bottombar.lives == 0:
+                    done = True
+                    self.bottombar.level = 1
+                    #Gameover Screen
+                    gameoverdone = False
+                    gameoverframe = 0
+                    gameoverTop = self.myfont.render("GAMEOVER!",False,(255,255,50))
+                    gameoverHelp = self.subfont.render("Press SPACEBAR to restart, Q to quit",False,(255,255,50))
+                    while not gameoverdone:
+                        for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                done = True
+                                gameoverdone = True
+                            keys = pygame.key.get_pressed()
+
+                        if gameoverframe >= 10: #This ensures that the text is displayed for 10 frames
+                            if keys[pygame.K_SPACE]: # space to start
+                                gameoverdone = True
+                                self.bottombar.level = 1
+                                self.bottombar.score = 0
+                                self.screenmatrix.reset()
+                                self.pacman.setPos(0,0)
+                                for ghostGroup in self.ghostGroupList:
+                                    ghostGroup.empty()
+                                done = True
+                                self.boxes.update(self.screenmatrix)
+                                self.bottombar.lives += 3
+                                leveldone = False
+                            elif keys[pygame.K_q]: # q to quit
+                                gameoverdone = True
+                                done = True
+                                self.bottombar.level = 100
+                        self.gameoverscreen.blit(self.gameoverbackground,(0,0))
+                        self.gameoverscreen.blit(gameoverTop,(205,75))
+                        self.gameoverscreen.blit(gameoverHelp,(180,210))
+                        ###### fix the spacing for the text ######
+                        pygame.display.flip()
+                        gameoverframe += 1
+
                 ########Update High Score########
 
-                ########Add win functionality here########
-                #If the screen is >= 80% full, set done = true, level += 1
-                # if self.screen.getPercent() > 80:
-                #     done = True
-                #     level += 1
+
+                if self.screenmatrix.getPercent() > 10:
+                    self.bottombar.level += 1
+                    self.screenmatrix.reset()
+                    self.pacman.setPos(0,0)
+                    for ghostGroup in self.ghostGroupList:
+                        ghostGroup.empty()
+                    done = True
+                    self.boxes.update(self.screenmatrix)
+                    self.bottombar.lives += 1
+                    leveldone = False
 
 
                 bottombar = self.barfont.render(self.bottombar.data(),False,(255,255,50))

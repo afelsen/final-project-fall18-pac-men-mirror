@@ -73,27 +73,27 @@ class Screen:
                 for i in currentPoints:
                     self.matrix[i[0]][i[1]] = 1
     def reset(self):
-        pass
-        # for i in range(self.height):
-        #     for j in range(self.width):
-        #         self.matrix[j][i] = 0
+        for i in range(1,self.height-1):
+            for j in range(1,self.width-1):
+                self.matrix[j][i] = 0
 
     def getPercent(self):
-        pass
-        # accum = 0
-        # total = 0
-        # for i in range(self.width):
-        #     for j in range(self.width):
-        #         if self.matrix[j][i] == 1:
-        #             accum += 1
-        #             total += 1
-        #         else:
-        #             total += 1
-        # final = (accum/total)*100
-        # return final
+        accum = 0
+        total = 0
+        for i in range(1,self.height-1):
+            for j in range(1,self.width-1):
+                if self.matrix[j][i] == 1:
+                    accum += 1
+                total += 1
+        final = int((accum/total)*100)
+        return final
 
     def removeTrack(self):
         '''Removes any lines that the Pacman has made'''
+        for i in range(1,self.height-1):
+            for j in range(1,self.width-1):
+                if self.matrix[j][i] == .5:
+                    self.matrix[j][i] = 0
 
 class Box(pygame.sprite.Sprite):
     def __init__(self,x,y,filename):
