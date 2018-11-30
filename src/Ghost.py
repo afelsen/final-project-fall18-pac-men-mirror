@@ -35,7 +35,7 @@ class Inky(pygame.sprite.Sprite): #Light blue; Bounces in fenced in areas
         self.xmultiplier = random.choice([-1,1])
         self.ymultiplier = random.choice([-1,1])
 
-    def update(self):        
+    def update(self):
         self.rect.x += self.xmultiplier*self.speed/2
         self.rect.y += self.ymultiplier*self.speed/2
 
@@ -69,18 +69,31 @@ class Clyde(pygame.sprite.Sprite): #Orange; Follows the edges of the fences
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
         self.rect = self.image.get_rect()
-
+        self.clydeState = 0
         self.rect.x = x
         self.rect.y = y
         self.speed = speed
-        self.direction = 45
         self.xmultiplier = random.choice([-1,1])
         self.ymultiplier = random.choice([-1,1])
 
     def update(self):
-        self.rect.x += self.xmultiplier*self.speed/2
-        self.rect.y += self.ymultiplier*self.speed/2
-
+        if self.clydeState == 0:
+            self.clydeState += 1
+            self.rect.x += 20
+            self.rect.y += 20
+        elif self.clydeState == 1:
+            self.clydeState += 1
+            self.rect.x += 20
+            self.rect.y -= 20
+        elif self.clydeState == 2:
+            self.clydeState += 1
+            self.rect.x -= 20
+            self.rect.y -= 20
+        elif self.clydeState == 3:
+            self.clydeState = 0
+            self.rect.x -= 20
+            self.rect.y += 20
+        print(self.rect.x)
 
     def getCoordinates(self):
         return self.x,self.y

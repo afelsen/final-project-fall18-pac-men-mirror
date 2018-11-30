@@ -23,7 +23,6 @@ class Controller:
         self.bananaGroup = pygame.sprite.Group()
         self.snowflakeGroup = pygame.sprite.Group()
         self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup]
-
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-80)//20)
         self.lives = TopBar.Lives('assets/PacmanMiddle.png',5,5)
@@ -293,6 +292,8 @@ class Controller:
                     self.pinkyGroup.update()
 
                 ########Add orange ghost bounce########
+                if frame % (ghostSpeed*3) == 0:
+                    self.clydeGroup.update()
 
 
                 #Pacman-box collision
