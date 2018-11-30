@@ -371,6 +371,26 @@ class Controller:
                 frame += 1
 
 
+
+                bottombar1 = self.barfont.render(self.bottombar.data()[0],False,(255,255,50))
+                bottombar2 = self.barfont.render(self.bottombar.data()[1],False,(255,255,50))
+                bottombar3 = pygame.transform.scale(pygame.image.load("assets/pacxon.png"),(640-250, 320))
+                self.screen.blit(self.background,(0,0))
+                self.screen.blit(bottombar1,(0,height-85))
+                self.screen.blit(bottombar2,(0,height-45))
+                self.screen.blit(bottombar3,(335,height-176))
+
+
+
+                self.boxes.draw(self.screen)
+                self.pacGroup.draw(self.screen)
+                for powerupGroup in self.powerupGroupList:
+                    powerupGroup.draw(self.screen)
+                for ghostGroup in self.ghostGroupList:
+                    ghostGroup.draw(self.screen)
+                pygame.display.flip()
+
+
                 ########PRINT HIGH SCORE WHEN LOSE########
                 #If pacman has 0 lives, show GAMEOVER screen
                 if self.bottombar.lives == 0:
@@ -433,24 +453,7 @@ class Controller:
                         ghostGroup.empty()
                     done = True
                     self.boxes.update(self.screenmatrix)
-                    self.bottombar.lives += 3
+                    self.bottombar.lives += 2
                     leveldone = False
                     self.bottombar.percent = 0
                     self.bottombar.score += 100
-
-
-                bottombar1 = self.barfont.render(self.bottombar.data()[0],False,(255,255,50))
-                bottombar2 = self.barfont.render(self.bottombar.data()[1],False,(255,255,50))
-                self.screen.blit(self.background,(0,0))
-                self.screen.blit(bottombar1,(0,height-85))
-                self.screen.blit(bottombar2,(0,height-45))
-
-
-
-                self.boxes.draw(self.screen)
-                self.pacGroup.draw(self.screen)
-                for powerupGroup in self.powerupGroupList:
-                    powerupGroup.draw(self.screen)
-                for ghostGroup in self.ghostGroupList:
-                    ghostGroup.draw(self.screen)
-                pygame.display.flip()
