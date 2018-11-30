@@ -317,6 +317,11 @@ class Controller:
                 for ghostGroup in self.ghostGroupList:
                     for box in pygame.sprite.groupcollide(ghostGroup, self.boxes,False, False):
                         if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5 or pygame.sprite.spritecollide(self.pacman, ghostGroup,False, False):
+                            deathFrame = 0
+                            while deathFrame <=14*100:
+                                if deathFrame%100 ==0:
+                                    self.pacman.animateDeath()
+                                deathFrame +=1
                             self.bottombar.lives -= 1
                             self.pacman.setPos(0,0)
                             self.screenmatrix.removeTrack()
