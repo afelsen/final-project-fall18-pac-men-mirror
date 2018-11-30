@@ -48,7 +48,6 @@ class Controller:
         snowflakeTime = -100
         notOnFilled = False
         self.pacDirection = ""
-        self.pinkyangle = 45
 
         self.menuscreen = pygame.display.set_mode((width,height))
         self.menubackground = pygame.Surface(self.menuscreen.get_size()).convert()
@@ -140,8 +139,8 @@ class Controller:
                 #Inky spawning
                 if self.screenmatrix.getPercent() > 5 and inkysSpawned < self.bottombar.level + 3 and frame % 50 == 0: #Spawn an inky if more than 5% of the screen is filled, every fifty frames until level+3 ghosts have been spawned
                     threebythreeList = [] #List of all possible places that inky can spawn (surrounded by 3x3 solid)
-                    for i in range(1,23):
-                        for j in range(1,31):
+                    for i in range(1,(height-40)//20-1):
+                        for j in range(1,width//20-1):
                             if self.screenmatrix.matrix[j+1][i+1] == 1 and self.screenmatrix.matrix[j+1][i] == 1 and self.screenmatrix.matrix[j+1][i-1] == 1 and self.screenmatrix.matrix[j-1][i+1] == 1 and self.screenmatrix.matrix[j-1][i] == 1 and self.screenmatrix.matrix[j-1][i-1] == 1 and self.screenmatrix.matrix[j][i+1] == 1 and self.screenmatrix.matrix[j][i-1] == 1: #Checks to see if there is a 3x3 area for inky to spawn
                                 threebythreeList += [(j,i)]
                     spawnLocation = random.choice(threebythreeList)
@@ -191,18 +190,19 @@ class Controller:
 
 
                 ## Ghost bouncing
+
                 if (inkyCol and (frame % ghostSpeed) == 0):
                     for ghost in pygame.sprite.groupcollide(self.inkyGroup,self.boxes,False, False):
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
                             #If a ghost hits a side
                             sidehit = False
-                            if ghost.rect.y >= height-40 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 0:
+                            if ghost.rect.y >= height-40-20 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 0:
                                 ghost.ymultiplier = -1
                                 sidehit = True
                             elif ghost.rect.y <= 0 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 0:
                                 ghost.ymultiplier = 1
                                 sidehit = True
-                            if ghost.rect.x >= width or self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 0:
+                            if ghost.rect.x >= width - 20 or self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 0:
                                 ghost.xmultiplier = -1
                                 sidehit = True
                             elif ghost.rect.x <= 0 or self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 0:
@@ -426,7 +426,7 @@ class Controller:
 
                 bottombar = self.barfont.render(self.bottombar.data(),False,(255,255,50))
                 self.screen.blit(self.background,(0,0))
-                self.screen.blit(bottombar,(0,475))
+                self.screen.blit(bottombar,(0,height-45))
 
 
                 self.boxes.draw(self.screen)

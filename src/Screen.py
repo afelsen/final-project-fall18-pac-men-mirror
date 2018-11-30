@@ -22,8 +22,8 @@ class Screen:
     def fillMatrix(self,ghostGroupList):
 
         #fills in the current line
-        for i in range(24):
-            for j in range(32):
+        for i in range(self.height):
+            for j in range(self.width):
                 if self.matrix[j][i] == .5:
                     self.matrix[j][i] = 1
 
@@ -33,8 +33,8 @@ class Screen:
         while not done:
             #find a starting point
             startingPoint = None
-            for c in range(24):
-                for r in range(32):
+            for c in range(self.height):
+                for r in range(self.width):
                     if self.matrix[r][c] == 0 and (r,c) not in ultimateAreaPoints:
                         startingPoint = (r,c)
                         break
@@ -46,13 +46,13 @@ class Screen:
             currentPoints = [startingPoint]
             #Check adjacent points to currentPoints. If those points have the matrix value of 0, append it to currentPoints.
             for p in currentPoints:
-                if p[0] != 31 and (p[0]+1,p[1]) not in currentPoints:
+                if p[0] != self.width-1 and (p[0]+1,p[1]) not in currentPoints:
                     if self.matrix[p[0]+1][p[1]] == 0:
                         currentPoints.append((p[0]+1,p[1]))
                 if p[0] != 0 and (p[0]-1,p[1]) not in currentPoints:
                     if self.matrix[p[0]-1][p[1]] == 0:
                         currentPoints.append((p[0]-1,p[1]))
-                if p[1] != 23 and (p[0],p[1]+1) not in currentPoints:
+                if p[1] != self.height-1 and (p[0],p[1]+1) not in currentPoints:
                     if self.matrix[p[0]][p[1]+1] == 0:
                         currentPoints.append((p[0],p[1]+1))
                 if p[1] != 0 and (p[0],p[1]-1) not in currentPoints:
