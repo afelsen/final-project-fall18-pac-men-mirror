@@ -145,9 +145,10 @@ class Controller:
                         for j in range(1,width//20-1):
                             if self.screenmatrix.matrix[j+1][i+1] == 1 and self.screenmatrix.matrix[j+1][i] == 1 and self.screenmatrix.matrix[j+1][i-1] == 1 and self.screenmatrix.matrix[j-1][i+1] == 1 and self.screenmatrix.matrix[j-1][i] == 1 and self.screenmatrix.matrix[j-1][i-1] == 1 and self.screenmatrix.matrix[j][i+1] == 1 and self.screenmatrix.matrix[j][i-1] == 1: #Checks to see if there is a 3x3 area for inky to spawn
                                 threebythreeList += [(j,i)]
-                    spawnLocation = random.choice(threebythreeList)
-                    self.inkyGroup.add(Ghost.Inky('assets/inky.png',spawnLocation[0]*20,spawnLocation[1]*20,20))
-                    inkysSpawned += 1
+                    if threebythreeList != []:
+                        spawnLocation = random.choice(threebythreeList)
+                        self.inkyGroup.add(Ghost.Inky('assets/inky.png',spawnLocation[0]*20,spawnLocation[1]*20,20))
+                        inkysSpawned += 1
 
                 #Random powerup spawning
                 if frame%200 == 0:
@@ -331,7 +332,6 @@ class Controller:
                             self.screenmatrix.fillMatrix(self.ghostGroupList)
                             self.boxes.update(self.screenmatrix)
                             notOnFilled = False
-                            self.bottombar.score +=  int(self.screenmatrix.getNumLastFilled()**1.5/100+1) #Score increases with an exponential function based on boxes filled. Rewards taking risks. (max of 170 if every box is filled)
                             self.bottombar.percent = self.screenmatrix.getPercent()
 
                 #Pacman moving functionality
