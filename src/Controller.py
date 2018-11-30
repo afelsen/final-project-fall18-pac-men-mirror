@@ -22,7 +22,8 @@ class Controller:
         self.cherryGroup = pygame.sprite.Group()
         self.bananaGroup = pygame.sprite.Group()
         self.snowflakeGroup = pygame.sprite.Group()
-        self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup]
+        self.heartGroup = pygame.sprite.Group()
+        self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup, self.heartGroup]
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-80)//20)
         self.lives = TopBar.Lives('assets/PacmanMiddle.png',5,5)
@@ -152,18 +153,22 @@ class Controller:
 
                 #Random powerup spawning
                 if frame%200 == 0:
-                    choice = random.randint(0,2)
+                    choice = random.randint(0,3)
                     if choice == 0:
                         self.cherryGroup.add(Powerup.Cherry('assets/cherry.png',random.randint(1,30)*20,random.randint(1,22)*20))
                     if choice == 1:
                         self.snowflakeGroup.add(Powerup.Snowflake('assets/snowflake.png',random.randint(1,30)*20,random.randint(1,22)*20))
                     if choice == 2:
                         self.bananaGroup.add(Powerup.Banana('assets/banana.png',random.randint(1,30)*20,random.randint(1,22)*20))
+                    if choice == 3:
+                        self.heartGroup.add(Powerup.Heart('assets/Heart.png',random.randint(1,30)*20,random.randint(1,22)*20))
 
                 #Powerup fucntionality
                 cherryCol = pygame.sprite.spritecollide(self.pacman, self.cherryGroup, True)
                 snowflakeCol = pygame.sprite.spritecollide(self.pacman, self.snowflakeGroup, True)
                 bananaCol = pygame.sprite.spritecollide(self.pacman, self.bananaGroup, True)
+                heartCol = pygame.sprite.spritecollide(self.pacman, self.heartGroup, True)
+
 
                 #Deleting powerups when ghost collide with them
                 for ghostGroup in self.ghostGroupList:
@@ -179,6 +184,8 @@ class Controller:
                 if bananaCol and frame > bananaTime + 50: #Prevents two bananas from being collected in the same time period
                     bananaTime = frame
                     ghostSpeed *= 2
+                if heartCol:
+                    self.bottombar.lives += 1
 
                 if frame == cherryTime + 50:
                     pacmanSpeed *= 2
