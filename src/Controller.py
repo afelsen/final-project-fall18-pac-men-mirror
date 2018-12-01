@@ -165,7 +165,7 @@ class Controller:
                     if choice == 2:
                         self.bananaGroup.add(Powerup.Banana('assets/banana.png',random.randint(1,30)*20,random.randint(1,22)*20))
                     if choice == 3:
-                        self.heartGroup.add(Powerup.Heart('assets/Heart.png',random.randint(1,30)*20,random.randint(1,22)*20))
+                        self.heartGroup.add(Powerup.Heart('assets/heart.png',random.randint(1,30)*20,random.randint(1,22)*20))
 
                 #Powerup fucntionality
                 cherryCol = pygame.sprite.spritecollide(self.pacman, self.cherryGroup, True)
