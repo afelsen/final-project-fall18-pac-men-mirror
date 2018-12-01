@@ -37,10 +37,8 @@ PacXon is a game where a player controls a Pacman character to fence portions of
 
    This screen appears if Pacman has zero lives. The screen displays the current score and the high score. This screen gives the user the option to press SPACEBAR to restart or "q" to quit.
 
-![Screenshot](assets/Startscreen.png)
-![Screenshot](assets/Instructionsscreen.png)
-![Screenshot](assets/Gamescreen.png)
-![Screenshot](assets/Levelscreen.png)
+![Screenshot](assets/Startscreen.png) ![Screenshot](assets/Instructionsscreen.png)
+![Screenshot](assets/Gamescreen.png) ![Screenshot](assets/Levelscreen.png)
 ![Screenshot](assets/Gameoverscreen.png)
 
 ***        
@@ -57,10 +55,11 @@ PacXon is a game where a player controls a Pacman character to fence portions of
 * **Inky** - the light-blue ghost that Pacman needs to avoid. This ghost bounces off the walls of fenced in areas of the screen. If Inky collides with Pacman, Pacman loses a life.
 * **Binky** - the red ghost that Pacman needs to avoid. This ghost bounces off the walls of the non-fenced in areas of the screen and breaks any block it hits into (excluding the borders). If Blinky collides with Pacman or one of the fences he is currently drawing, Pacman loses a life.
 * **Clyde** - the orange ghost that Pacman needs to avoid. This ghost moves along the edge of a fenced in area. If Clyde collides with Pacman, Pacman loses a life.
-* **Banana** - one of the powerups that Pacman can collide with. Once collided with, Pacman's speed will double for <some period of time>.
-* **Snowflake** - one of the powerups that Pacman can collide with. Once collided with, the speed of the ghosts is set to zero for <some period of time>.
-* **Powerpellet** - one of the powerups that Pacman can collide with. Once collided with, Pacman is no longer affected by the ghosts for <some period of time>. During this time, if Pacman collides with a ghost, the ghost's location is reset.
-* **Screen** - this class holds the matrix which includes the state of each box on the grid - filled (state = 1), unfilled (state = 0) or in the process of being drawn (state = .5). This class also has a method to fill in areas of the screen not containing a ghost.
+* **Banana** - one of the powerups that Pacman can collide with. Once collided with, Pacman's speed will double for 50 frames.
+* **Banana** - one of the powerups that Pacman can collide with. Once collided with, all ghost speed is halved for 50 frames.
+* **Snowflake** - one of the powerups that Pacman can collide with. Once collided with, the speed of the ghosts is set to zero for 50 frames.
+* **Heart** - one of the powerups that Pacman can collide with. Once collided with, Pacman gets an extra life.
+* **Screen** - this class holds the matrix which includes the state of each box on the grid - filled (state = 1), unfilled (state = 0) or in the process of being drawn (state = .5). This class also has methods to fill in areas of the screen not containing a ghost, reset the matrix, track the Pacman (and remove it), get the percent of the screen filled and get the number of boxes last filled.
 * **Box** - this class defines each "box" object of the grid background. This class references the matrix in the Screen class for changing the images of the objects.  
 * **bottomBar** - this class holds all of the data that is displayed to the user (Lives, Level, Percent, Highscore and Score). A method called data() returns the two lines that are displayed to the user.
 ***
