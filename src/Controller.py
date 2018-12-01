@@ -70,7 +70,7 @@ class Controller:
                 self.pinkyGroup.add(Ghost.Pinky('assets/pinky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
             for i in range(self.bottombar.level//3):
                 self.blinkyGroup.add(Ghost.Blinky('assets/blinky.png',random.randint(2,29)*20,random.randint(2,21)*20,10))
-            for i in range(self.bottombar.level//2):
+            for i in range(self.bottombar.level//3):
                 self.clydeGroup.add(Ghost.Clyde('assets/clyde.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
             inkysSpawned = 0
 
@@ -139,7 +139,7 @@ class Controller:
 
 
                 #Inky spawning
-                if self.screenmatrix.getPercent() > 5 and inkysSpawned < self.bottombar.level//3+1 and frame % 50 == 0: #Spawn an inky if more than 5% of the screen is filled, every fifty frames until level+3 ghosts have been spawned
+                if self.screenmatrix.getPercent() > 5 and inkysSpawned < (self.bottombar.level+1)//3+1 and frame % 50 == 0: #Spawn an inky if more than 5% of the screen is filled, every fifty frames until level+3 ghosts have been spawned
                     threebythreeList = [] #List of all possible places that inky can spawn (surrounded by 3x3 solid)
                     for i in range(1,(height-80)//20-1):
                         for j in range(1,width//20-1):
@@ -265,6 +265,8 @@ class Controller:
                                             if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30 and ghost.rect.x//20 != 1 and ghost.rect.y//20 != 1:
                                                 self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] = 0
                                                 self.boxes.update(self.screenmatrix)
+
+                            self.bottombar.percent = self.screenmatrix.getPercent()
                     self.blinkyGroup.update()
 
                 if (pinkyCol and (frame % ghostSpeed) == 0):
