@@ -38,13 +38,13 @@ PacXon is a game where a player controls a Pacman character to fence portions of
    This screen appears if Pacman has zero lives. The screen displays the current score and the high score. This screen gives the user the option to press SPACEBAR to restart or "q" to quit.
 
 <br>
-<img src="assets/Startscreen.png" width="48%"/>
-<img src="assets/Instructionsscreen.png" width="48%" align = "right"/>
+<img src="assets/Startscreen.png" width="47%"/>
+<img src="assets/Instructionsscreen.png" width="47%" align = "right"/>
 <br>
-<img src="assets/Gamescreen.png" width="48%" style=" margin-top: 5%"/>
-<img src="assets/Levelscreen.png" width="48%" align = "right" style=" margin-top: 5%"/>
+<img src="assets/Gamescreen.png" width="47%" style=" margin-top: 3%"/>
+<img src="assets/Levelscreen.png" width="47%" align = "right" style=" margin-top: 3%"/>
 <br>
-<center><img src="assets/Gameoverscreen.png" width="48%" align= "" style=" margin-top: 5%"></center>
+<center><img src="assets/Gameoverscreen.png" width="47%" align= "" style=" margin-top: 3%"></center>
 
 ***        
 
