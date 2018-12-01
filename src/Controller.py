@@ -26,7 +26,7 @@ class Controller:
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-80)//20)
         self.lives = TopBar.Lives('assets/PacmanMiddle.png',5,5)
-        self.bottombar = BottomBar.bottomBar(3,1,0,0,0)
+        self.bottombar = BottomBar.bottomBar(3,99,0,0,0)
         fptr = open("assets/highscore.txt", "r")
         self.bottombar.highScore = int(fptr.read())
         fptr.close()
@@ -40,6 +40,7 @@ class Controller:
         done = False
         leveldone = False
         introdone = False
+        instructionsdone = False
         pacmanSpeed = 2
         ghostSpeed = 2
         generalSpeed = 2
@@ -97,6 +98,38 @@ class Controller:
                             done = True
                             self.bottombar.level = 100
                             leveldone = True
+                        elif keys[pygame.K_i]: # i for instructions
+                            instructionsframe = 0
+                            textTop = self.myfont.render("Instructions:",False,(255,255,50))
+                            # textBottom = self.subfont.render("Created by the PacMen",False,(255,255,50))
+                            # textHelp = self.subfont.render("Press SPACEBAR to start!",False,(255,255,50))
+                            # textControls = self.subfont.render("Controls: Arrow keys to move and Q to quit",False,(255,255,50))
+                            while not instructionsdone:
+                                for event in pygame.event.get():
+                                    if event.type == pygame.QUIT:
+                                        introdone = True
+                                        done = True
+                                        self.bottombar.level = 100
+                                        leveldone = True
+                                        instructionsdone = True
+                                    keys = pygame.key.get_pressed()
+
+                                if instructionsframe >= 5: #This ensures that the text is displayed for 10 frames
+                                    if keys[pygame.K_SPACE]: # space to go back
+                                        instructionsdone = True
+                                    elif keys[pygame.K_q]: # q to quit
+                                        introdone = True
+                                        done = True
+                                        self.bottombar.level = 100
+                                        leveldone = True
+                                        instructionsdone = True
+                                self.menuscreen.blit(self.menubackground,(0,0))
+                                self.menuscreen.blit(textTop,(120,0))
+                                # self.menuscreen.blit(textBottom,(200,300))
+                                # self.menuscreen.blit(textHelp,(180,210))
+                                # self.menuscreen.blit(textControls,(0,525))
+                                pygame.display.flip()
+                                instructionsframe += 1
                     self.menuscreen.blit(self.menubackground,(0,0))
                     self.menuscreen.blit(textTop,(205,75))
                     self.menuscreen.blit(textBottom,(200,300))
@@ -306,11 +339,6 @@ class Controller:
                 for ghostGroup in self.ghostGroupList:
                     for box in pygame.sprite.groupcollide(ghostGroup, self.boxes,False, False):
                         if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5 or pygame.sprite.spritecollide(self.pacman, ghostGroup,False, False):
-                            deathFrame = 0
-                            while deathFrame <=14*100:
-                                if deathFrame%100 ==0:
-                                    self.pacman.animateDeath()
-                                deathFrame +=1
                             self.bottombar.lives -= 1
                             self.pacman.setPos(0,0)
                             self.screenmatrix.removeTrack()
@@ -335,7 +363,7 @@ class Controller:
                             self.boxes.update(self.screenmatrix)
                             notOnFilled = False
                             boxesfilled = self.screenmatrix.getNumLastFilled()
-                            self.bottombar.score +=  int(boxesfilled**1.5/100 + boxesfilled)#Score increases with an exponential function based on boxes filled. Rewards taking risks. (max of 170 if every box is filled
+                            self.bottombar.score +=  int(boxesfilled**1.6/200 + boxesfilled//2)#Score increases with an exponential function based on boxes filled. Rewards taking risks. (max of 170 if every box is filled
 
                             print (self.bottombar.score)
                             self.bottombar.percent = self.screenmatrix.getPercent()
