@@ -1,6 +1,10 @@
 import pygame
 class Screen:
     def __init__(self, width, height):
+        '''
+        initializes the Screen class
+        self, width, and height parameters
+        '''
         self.width = width
         self.height = height
         self.matrix = [[0]*self.height for i in range (self.width)]
@@ -14,16 +18,24 @@ class Screen:
         self.numpointsfilled = 0
 
     def getMatrix(self):
+        '''
+        returns the matrix
+        '''
         return self.matrix
     def trackPacman(self,pacmanPos):
-        #Pacman pos in the format (x,y)
+        '''
+        tracks pacman's position
+        Pacman pos in the format (x,y)
+        '''
         if self.matrix[pacmanPos[0]][pacmanPos[1]] == 0:
             self.matrix[pacmanPos[0]][pacmanPos[1]] = .5
             self.numpointsfilled +=1
 
     def fillMatrix(self,ghostGroupList):
-
-        #fills in the current line
+        '''
+        fills in the matrix
+        list of ghostGroup as a parameters
+        '''
         for i in range(self.height):
             for j in range(self.width):
                 if self.matrix[j][i] == .5:
@@ -76,17 +88,28 @@ class Screen:
                     self.matrix[i[0]][i[1]] = 1
                     self.numpointsfilled += 1
     def reset(self):
+        '''
+        resets the matrix
+        '''
         for i in range(1,self.height-1):
             for j in range(1,self.width-1):
                 self.matrix[j][i] = 0
 
     def getNumLastFilled(self):
+        '''
+        gets the last number of filled boxes
+        returns the final number of filled boxes
+        '''
         final = self.numpointsfilled
         self.numpointsfilled = 0
         return final
 
 
     def getPercent(self):
+        '''
+        gets the percent of the screen that is filled
+        returns the final percent
+        '''
         accum = 0
         total = 0
         for i in range(1,self.height-1):
@@ -106,12 +129,20 @@ class Screen:
 
 class Box(pygame.sprite.Sprite):
     def __init__(self,x,y,filename):
+        '''
+        Initializes the Box class
+        self, x position, y position, and filename parameters
+        '''
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
     def update(self, screen):
+        '''
+        updates the boxes
+        self and screen parameters
+        '''
         if screen.matrix[self.rect.x//20][self.rect.y//20] == 1:
             self.image = pygame.transform.scale(pygame.image.load('assets/Bluebox.png'),(20,20))
         if screen.matrix[self.rect.x//20][self.rect.y//20] == .5:
