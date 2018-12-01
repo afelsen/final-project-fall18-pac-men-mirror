@@ -1,4 +1,4 @@
-class bottomBar:
+class Bottombar:
     def __init__(self, lives, level, highScore, score, percent):
         '''
         initializes the bottomBar class

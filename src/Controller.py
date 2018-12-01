@@ -31,7 +31,7 @@ class Controller:
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-80)//20)
         self.lives = TopBar.Lives('assets/PacmanMiddle.png',5,5)
-        self.bottombar = BottomBar.bottomBar(3,1,0,0,0)
+        self.bottombar = BottomBar.Bottombar(3,1,0,0,0)
         fptr = open("assets/highscore.txt", "r")
         self.bottombar.highScore = int(fptr.read())
         fptr.close()
@@ -130,6 +130,7 @@ class Controller:
                                 if instructionsframe >= 5: #This ensures that the text is displayed for 10 frames
                                     if keys[pygame.K_SPACE]: # space to go back
                                         instructionsdone = True
+                                        introframe = 0
                                     elif keys[pygame.K_q]: # q to quit
                                         introdone = True
                                         done = True
@@ -230,7 +231,7 @@ class Controller:
                 if cherryCol and frame > cherryTime + 50: #Prevents two cherrys from being collected in the same time period
                     cherryTime = frame
                     pacmanSpeed /= 2
-                if snowflakeCol:
+                if snowflakeCol and frame > snowflakeTime + 50:
                     snowflakeTime = frame
                     ghostSpeed *= 1000
                 if bananaCol and frame > bananaTime + 50: #Prevents two bananas from being collected in the same time period
@@ -258,16 +259,16 @@ class Controller:
                         if (ghost.rect.x/20).is_integer() and (ghost.rect.y/20).is_integer():
                             #If a ghost hits a side
                             sidehit = False
-                            if ghost.rect.y >= height-80-20 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] == 0:
+                            if ghost.rect.y >= height-80-20 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20+1] != 1: #If the next block is 1 or .5
                                 ghost.ymultiplier = -1
                                 sidehit = True
-                            elif ghost.rect.y <= 0 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] == 0:
+                            elif ghost.rect.y <= 0 or self.screenmatrix.matrix[ghost.rect.x//20][ghost.rect.y//20-1] != 1:
                                 ghost.ymultiplier = 1
                                 sidehit = True
-                            if ghost.rect.x >= width - 20 or self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] == 0:
+                            if ghost.rect.x >= width - 20 or self.screenmatrix.matrix[ghost.rect.x//20+1][ghost.rect.y//20] != 1:
                                 ghost.xmultiplier = -1
                                 sidehit = True
-                            elif ghost.rect.x <= 0 or self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] == 0:
+                            elif ghost.rect.x <= 0 or self.screenmatrix.matrix[ghost.rect.x//20-1][ghost.rect.y//20] != 1:
                                 ghost.xmultiplier = 1
                                 sidehit = True
 
@@ -275,7 +276,7 @@ class Controller:
                             if sidehit == False:
                                 for xadd in [-1,1]:
                                     for yadd in [-1,1]:
-                                        if self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] == 0 and ghost.xmultiplier == xadd and ghost.ymultiplier == yadd:
+                                        if self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] != 1 and ghost.xmultiplier == xadd and ghost.ymultiplier == yadd:
                                             ghost.xmultiplier = -xadd
                                             ghost.ymultiplier = -yadd
 
