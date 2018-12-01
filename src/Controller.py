@@ -103,6 +103,38 @@ class Controller:
                             done = True
                             self.bottombar.level = 100
                             leveldone = True
+                        elif keys[pygame.K_i]: # i for instructions
+                            instructionsframe = 0
+                            instructionsTop = self.myfont.render("Instructions:",False,(255,255,50))
+                            # textBottom = self.subfont.render("Created by the PacMen",False,(255,255,50))
+                            # textHelp = self.subfont.render("Press SPACEBAR to start!",False,(255,255,50))
+                            # textControls = self.subfont.render("Controls: Arrow keys to move and Q to quit",False,(255,255,50))
+                            while not instructionsdone:
+                                for event in pygame.event.get():
+                                    if event.type == pygame.QUIT:
+                                        introdone = True
+                                        done = True
+                                        self.bottombar.level = 100
+                                        leveldone = True
+                                        instructionsdone = True
+                                    keys = pygame.key.get_pressed()
+
+                                if instructionsframe >= 5: #This ensures that the text is displayed for 10 frames
+                                    if keys[pygame.K_SPACE]: # space to go back
+                                        instructionsdone = True
+                                    elif keys[pygame.K_q]: # q to quit
+                                        introdone = True
+                                        done = True
+                                        self.bottombar.level = 100
+                                        leveldone = True
+                                        instructionsdone = True
+                                self.menuscreen.blit(self.menubackground,(0,0))
+                                self.menuscreen.blit(instructionsTop,(120,0))
+                                # self.menuscreen.blit(textBottom,(200,300))
+                                # self.menuscreen.blit(textHelp,(180,210))
+                                # self.menuscreen.blit(textControls,(0,525))
+                                pygame.display.flip()
+                                instructionsframe += 1
                     self.menuscreen.blit(self.menubackground,(0,0))
                     self.menuscreen.blit(textTop,(205,75))
                     self.menuscreen.blit(textBottom,(200,300))
