@@ -4,7 +4,6 @@ from src import Pacman
 from src import Ghost
 from src import Powerup
 from src import Screen
-from src import TopBar
 from src import BottomBar
 
 class Controller:
@@ -29,7 +28,6 @@ class Controller:
         self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup, self.heartGroup]
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-80)//20)
-        self.lives = TopBar.Lives('assets/PacmanMiddle.png',5,5)
         self.bottombar = BottomBar.Bottombar(3,1,0,0,0)
         fptr = open("assets/highscore.txt", "r")
         self.bottombar.highScore = int(fptr.read())
