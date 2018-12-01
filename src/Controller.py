@@ -189,7 +189,7 @@ class Controller:
                         inkysSpawned += 1
 
                 #Random powerup spawning
-                if frame%2 == 0:
+                if frame%200 == 0:
                     choice = random.randint(0,3)
                     if choice == 0:
                         self.cherryGroup.add(Powerup.Cherry('assets/cherry.png',random.randint(1,30)*20,random.randint(1,22)*20))
