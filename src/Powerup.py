@@ -1,85 +1,34 @@
 import pygame
 
-class Pacman(pygame.sprite.Sprite):
-    def __init__(self, filename, x, y, speed):
-        '''
-        initializes the pacman class
-        self, filename, x, y, speed
-        '''
+class Cherry(pygame.sprite.Sprite):
+    def __init__(self, filename, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.imageorig = pygame.transform.scale(pygame.image.load(filename),(20,20))
-        self.image = self.imageorig
+        self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.lives = 3
-        self.speed = speed
-        self.mouthState = 0
-        self.angle = 0
-    def __str__(self):
-        '''
 
-
-
-        '''
-        string = "(x:" + str(self.rect.x) + ", y:" + str(self.rect.y) + ")" + " Speed" + self.speed
-        return string
-    def moveLeft(self):
-        '''
-        moves pacman left
-        '''
-        self.rect.x -= self.speed
-        if self.rect.x < 0:
-            self.rect.x = 0
-    def moveRight(self):
-        '''
-        moves pacman right
-        '''
-        self.rect.x += self.speed
-        if self.rect.x > 640-20:
-            self.rect.x = 640-20
-    def moveDown(self):
-        '''
-        moves pacman down
-        '''
-        self.rect.y += self.speed
-        if self.rect.y > 480-20:
-            self.rect.y = 480-20
-    def moveUp(self):
-        '''
-        moves pacman up
-        '''
-        self.rect.y -= self.speed
-        if self.rect.y < 0:
-            self.rect.y = 0
-    def setPos(self,x,y):
-        '''
-        sets pacman's position
-        x, y
-        '''
         self.rect.x = x
         self.rect.y = y
     def getCoordinates(self):
-        '''
-        gets pacman's coordinates
-        returns x and y positions of pacman
-        '''
         return self.rect.x,self.rect.y
-    def animate(self):
-        '''
-        pacman's moving animation
-        '''
-        if self.mouthState == 0:
-            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/PacmanOpen.png'),(20,20)),self.angle)
-            self.mouthState += 1
-        elif self.mouthState == 1:
-            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/PacmanMiddle.png'),(20,20)),self.angle)
-            self.mouthState += 1
-        else:
-            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/PacmanClosed.png'),(20,20)),self.angle)
-            self.mouthState = 0
-    def animateDeath(self):
-        '''
-        pacman's death animation
-        '''
-        pass
+
+class Banana(pygame.sprite.Sprite):
+    def __init__(self, filename, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
+        self.rect = self.image.get_rect()
+
+        self.rect.x = x
+        self.rect.y = y
+    def getCoordinates(self):
+        return self.rect.x,self.rect.y
+
+class Snowflake(pygame.sprite.Sprite):
+    def __init__(self, filename, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
+        self.rect = self.image.get_rect()
+
+        self.rect.x = x
+        self.rect.y = y
+    def getCoordinates(self):
+        return self.rect.x,self.rect.y
