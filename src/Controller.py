@@ -45,6 +45,7 @@ class Controller:
         done = False
         leveldone = False
         introdone = False
+        instructionsdone = False
         pacmanSpeed = 2
         ghostSpeed = 2
         generalSpeed = 2
@@ -75,7 +76,7 @@ class Controller:
                 self.pinkyGroup.add(Ghost.Pinky('assets/pinky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
             for i in range(self.bottombar.level//3):
                 self.blinkyGroup.add(Ghost.Blinky('assets/blinky.png',random.randint(2,29)*20,random.randint(2,21)*20,10))
-            for i in range(self.bottombar.level//2):
+            for i in range(self.bottombar.level//3):
                 self.clydeGroup.add(Ghost.Clyde('assets/clyde.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
             inkysSpawned = 0
 
@@ -102,6 +103,38 @@ class Controller:
                             done = True
                             self.bottombar.level = 100
                             leveldone = True
+                        elif keys[pygame.K_i]: # i for instructions
+                            instructionsframe = 0
+                            instructionsTop = self.myfont.render("Instructions:",False,(255,255,50))
+                            # textBottom = self.subfont.render("Created by the PacMen",False,(255,255,50))
+                            # textHelp = self.subfont.render("Press SPACEBAR to start!",False,(255,255,50))
+                            # textControls = self.subfont.render("Controls: Arrow keys to move and Q to quit",False,(255,255,50))
+                            while not instructionsdone:
+                                for event in pygame.event.get():
+                                    if event.type == pygame.QUIT:
+                                        introdone = True
+                                        done = True
+                                        self.bottombar.level = 100
+                                        leveldone = True
+                                        instructionsdone = True
+                                    keys = pygame.key.get_pressed()
+
+                                if instructionsframe >= 5: #This ensures that the text is displayed for 10 frames
+                                    if keys[pygame.K_SPACE]: # space to go back
+                                        instructionsdone = True
+                                    elif keys[pygame.K_q]: # q to quit
+                                        introdone = True
+                                        done = True
+                                        self.bottombar.level = 100
+                                        leveldone = True
+                                        instructionsdone = True
+                                self.menuscreen.blit(self.menubackground,(0,0))
+                                self.menuscreen.blit(instructionsTop,(120,0))
+                                # self.menuscreen.blit(textBottom,(200,300))
+                                # self.menuscreen.blit(textHelp,(180,210))
+                                # self.menuscreen.blit(textControls,(0,525))
+                                pygame.display.flip()
+                                instructionsframe += 1
                     self.menuscreen.blit(self.menubackground,(0,0))
                     self.menuscreen.blit(textTop,(205,75))
                     self.menuscreen.blit(textBottom,(200,300))
@@ -144,7 +177,7 @@ class Controller:
 
 
                 #Inky spawning
-                if self.screenmatrix.getPercent() > 5 and inkysSpawned < self.bottombar.level//3+1 and frame % 50 == 0: #Spawn an inky if more than 5% of the screen is filled, every fifty frames until level+3 ghosts have been spawned
+                if self.screenmatrix.getPercent() > 5 and inkysSpawned < (self.bottombar.level+1)//3+1 and frame % 50 == 0: #Spawn an inky if more than 5% of the screen is filled, every fifty frames until level+3 ghosts have been spawned
                     threebythreeList = [] #List of all possible places that inky can spawn (surrounded by 3x3 solid)
                     for i in range(1,(height-80)//20-1):
                         for j in range(1,width//20-1):
@@ -276,6 +309,8 @@ class Controller:
                                             if ghost.rect.x//20 != 22 and ghost.rect.y//20 != 30 and ghost.rect.x//20 != 1 and ghost.rect.y//20 != 1:
                                                 self.screenmatrix.matrix[ghost.rect.x//20+xadd][ghost.rect.y//20+yadd] = 0
                                                 self.boxes.update(self.screenmatrix)
+
+                            self.bottombar.percent = self.screenmatrix.getPercent()
                     self.blinkyGroup.update()
 
                 if (pinkyCol and (frame % ghostSpeed) == 0):
@@ -315,11 +350,6 @@ class Controller:
                 for ghostGroup in self.ghostGroupList:
                     for box in pygame.sprite.groupcollide(ghostGroup, self.boxes,False, False):
                         if self.screenmatrix.matrix[box.rect.x//20][box.rect.y//20] == .5 or pygame.sprite.spritecollide(self.pacman, ghostGroup,False, False):
-                            deathFrame = 0
-                            while deathFrame <=14*100:
-                                if deathFrame%100 ==0:
-                                    self.pacman.animateDeath()
-                                deathFrame +=1
                             self.bottombar.lives -= 1
                             self.pacman.setPos(0,0)
                             self.screenmatrix.removeTrack()
@@ -343,7 +373,8 @@ class Controller:
                             self.screenmatrix.fillMatrix(self.ghostGroupList)
                             self.boxes.update(self.screenmatrix)
                             notOnFilled = False
-                            self.bottombar.score +=  int(self.screenmatrix.getNumLastFilled()**1.5/100+1) #Score increases with an exponential function based on boxes filled. Rewards taking risks. (max of 170 if every box is filled)
+                            boxesfilled = self.screenmatrix.getNumLastFilled()
+                            self.bottombar.score +=  int(boxesfilled**1.6/200 + boxesfilled//2)#Score increases with an exponential function based on boxes filled. Rewards taking risks. (max of 170 if every box is filled
                             self.bottombar.percent = self.screenmatrix.getPercent()
 
                 #Pacman moving functionality

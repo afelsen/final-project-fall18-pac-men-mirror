@@ -78,8 +78,3 @@ class Pacman(pygame.sprite.Sprite):
         else:
             self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/PacmanClosed.png'),(20,20)),self.angle)
             self.mouthState = 0
-    def animateDeath(self):
-        '''
-        pacman's death animation
-        '''
-        pass

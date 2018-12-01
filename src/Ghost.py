@@ -15,7 +15,6 @@ class Pinky(pygame.sprite.Sprite): #Pink; normal bouncing ghost
         self.rect.x = x
         self.rect.y = y
         self.speed = speed
-        self.direction = 45
         self.xmultiplier = random.choice([-1,1])
         self.ymultiplier = random.choice([-1,1])
 
@@ -115,12 +114,10 @@ class Clyde(pygame.sprite.Sprite): #Orange; Follows the edges of the fences
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
         self.rect = self.image.get_rect()
-        self.clydeState = 0
         self.rect.x = x
         self.rect.y = y
         self.speed = speed
-        self.xmultiplier = random.choice([-1,1])
-        self.ymultiplier = random.choice([-1,1])
+        self.clydeState = random.choice(range(4))
 
     def update(self):
         '''
@@ -130,20 +127,20 @@ class Clyde(pygame.sprite.Sprite): #Orange; Follows the edges of the fences
         '''
         if self.clydeState == 0:
             self.clydeState += 1
-            self.rect.x += 20
-            self.rect.y += 20
+            self.rect.x += self.speed
+            self.rect.y += self.speed
         elif self.clydeState == 1:
             self.clydeState += 1
-            self.rect.x += 20
-            self.rect.y -= 20
+            self.rect.x += self.speed
+            self.rect.y -= self.speed
         elif self.clydeState == 2:
             self.clydeState += 1
-            self.rect.x -= 20
-            self.rect.y -= 20
+            self.rect.x -= self.speed
+            self.rect.y -= self.speed
         elif self.clydeState == 3:
             self.clydeState = 0
-            self.rect.x -= 20
-            self.rect.y += 20
+            self.rect.x -= self.speed
+            self.rect.y += self.speed
         print(self.rect.x)
 
     def getCoordinates(self):
