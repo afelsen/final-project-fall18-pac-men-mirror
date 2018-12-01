@@ -2,8 +2,10 @@ import pygame
 class Screen:
     def __init__(self, width, height):
         '''
-        initializes the Screen class
-        self, width, and height parameters
+        Initializes the Screen class
+        args:
+            width (int) - width of screen
+            height (int) - height of screen
         '''
         self.width = width
         self.height = height
@@ -19,13 +21,14 @@ class Screen:
 
     def getMatrix(self):
         '''
-        returns the matrix
+        Gets the matrix
+        Returns: self.matrix (list) - the matrix
         '''
         return self.matrix
     def trackPacman(self,pacmanPos):
         '''
-        tracks pacman's position
-        Pacman pos in the format (x,y)
+        Tracks pacman's position - turns the matrix value of his position to .5
+        Args: pacmanPos (tup) - Pacman's current position
         '''
         if self.matrix[pacmanPos[0]][pacmanPos[1]] == 0:
             self.matrix[pacmanPos[0]][pacmanPos[1]] = .5
@@ -33,8 +36,8 @@ class Screen:
 
     def fillMatrix(self,ghostGroupList):
         '''
-        fills in the matrix
-        list of ghostGroup as a parameters
+        Fills in the matrix in areas without a ghost that are fenced in
+        Args: ghostGroupList - List of each ghost group
         '''
         for i in range(self.height):
             for j in range(self.width):
@@ -89,7 +92,7 @@ class Screen:
                     self.numpointsfilled += 1
     def reset(self):
         '''
-        resets the matrix
+        Resets the middle of the matrix to zero
         '''
         for i in range(1,self.height-1):
             for j in range(1,self.width-1):
@@ -97,8 +100,8 @@ class Screen:
 
     def getNumLastFilled(self):
         '''
-        gets the last number of filled boxes
-        returns the final number of filled boxes
+        Gets the number of boxes filled during last matrix fill
+        Returns: final (int) - the number of filled boxes
         '''
         final = self.numpointsfilled
         self.numpointsfilled = 0
@@ -107,8 +110,8 @@ class Screen:
 
     def getPercent(self):
         '''
-        gets the percent of the screen that is filled
-        returns the final percent
+        Gets the percent of the screen that is filled in
+        Returns: Final (int) - the percent of screen filled
         '''
         accum = 0
         total = 0
@@ -121,7 +124,9 @@ class Screen:
         return final
 
     def removeTrack(self):
-        '''Removes any lines that the Pacman has made'''
+        '''
+        Removes any trail that the Pacman has made
+        '''
         for i in range(1,self.height-1):
             for j in range(1,self.width-1):
                 if self.matrix[j][i] == .5:
@@ -131,7 +136,6 @@ class Box(pygame.sprite.Sprite):
     def __init__(self,x,y,filename):
         '''
         Initializes the Box class
-        self, x position, y position, and filename parameters
         '''
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
@@ -140,8 +144,8 @@ class Box(pygame.sprite.Sprite):
         self.rect.y = y
     def update(self, screen):
         '''
-        updates the boxes
-        self and screen parameters
+        Updates the each box's image
+        Args: screen (src.Screen.Screen) - The Screen object
         '''
         if screen.matrix[self.rect.x//20][self.rect.y//20] == 1:
             self.image = pygame.transform.scale(pygame.image.load('assets/Bluebox.png'),(20,20))

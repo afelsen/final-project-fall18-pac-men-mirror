@@ -10,8 +10,7 @@ from src import BottomBar
 class Controller:
     def __init__(self, width = 640, height = 560):
         '''
-        initializes the Controller class
-        self, width, and height parameters
+        Initializes the Controller class and creates the game loop
         '''
         self.screen = pygame.display.set_mode((width,height))
         self.background = pygame.Surface(self.screen.get_size()).convert()

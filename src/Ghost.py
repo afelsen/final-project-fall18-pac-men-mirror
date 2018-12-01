@@ -5,8 +5,12 @@ import random
 class Pinky(pygame.sprite.Sprite): #Pink; normal bouncing ghost
     def __init__(self, filename, x, y, speed):
         '''
-        initializes the Pinky class
-        self, file name, x position, y position, and speed parameters
+        Initializes the Pinky class
+        args:
+            filename (str) - image filename
+            x (int) - initial x position
+            y (int) - initial y position
+            speed (int) - ghost speed
         '''
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
@@ -20,26 +24,27 @@ class Pinky(pygame.sprite.Sprite): #Pink; normal bouncing ghost
 
     def update(self):
         '''
-        updates the Pinky class's positon
-        self
-
+        Updates the each Pinky object's positon
         '''
         self.rect.x += self.xmultiplier*self.speed/2
         self.rect.y += self.ymultiplier*self.speed/2
 
     def getCoordinates(self):
         '''
-        gets the coordinates of the Pinky class
-        self
-        returns x and y position
+        Gets the coordinates of the Pinky ghosts
+        Returns: self.x,self.y (tup) - x and y position
         '''
         return self.x,self.y
 
 class Inky(pygame.sprite.Sprite): #Light blue; Bounces in fenced in areas
     def __init__(self, filename, x, y, speed):
         '''
-        initializes the Inky class
-        self, file name, x position, y position, and speed parameters
+        Initializes the Inky class
+        args:
+            filename (str) - image filename
+            x (int) - initial x position
+            y (int) - initial y position
+            speed (int) - ghost speed
         '''
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
@@ -54,9 +59,7 @@ class Inky(pygame.sprite.Sprite): #Light blue; Bounces in fenced in areas
 
     def update(self):
         '''
-        updates the Inky class's positon
-        self
-
+        Updates each Inky object's positon
         '''
         self.rect.x += self.xmultiplier*self.speed/2
         self.rect.y += self.ymultiplier*self.speed/2
@@ -64,17 +67,20 @@ class Inky(pygame.sprite.Sprite): #Light blue; Bounces in fenced in areas
 
     def getCoordinates(self):
         '''
-        gets the coordinates of the Inky class
-        self
-        returns x and y position
+        Gets the coordinates of each Inky ghost
+        Returns: x and y position
         '''
         return self.x,self.y
 
 class Blinky(pygame.sprite.Sprite): #Red; Breaks any block it hits - moves at 1/2 speed
     def __init__(self, filename, x, y, speed):
         '''
-        initializes the Blinky class
-        self, file name, x position, y position, and speed parameters
+        Initializes the Blinky class
+        args:
+            filename (str) - image filename
+            x (int) - initial x position
+            y (int) - initial y position
+            speed (int) - ghost speed
         '''
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
@@ -89,9 +95,7 @@ class Blinky(pygame.sprite.Sprite): #Red; Breaks any block it hits - moves at 1/
 
     def update(self):
         '''
-        updates the Blinky class's positon
-        self
-
+        Updates each Blinky object's positon
         '''
         self.rect.x += self.xmultiplier*self.speed/2
         self.rect.y += self.ymultiplier*self.speed/2
@@ -99,17 +103,20 @@ class Blinky(pygame.sprite.Sprite): #Red; Breaks any block it hits - moves at 1/
 
     def getCoordinates(self):
         '''
-        gets the coordinates of the Blinky class
-        self
-        returns x and y position
+        Gets the coordinates of each Blinky ghost
+        Returns: self.x,self.y (tup) - x and y position
         '''
         return self.x,self.y
 
 class Clyde(pygame.sprite.Sprite): #Orange; Follows the edges of the fences
     def __init__(self, filename, x, y, speed):
         '''
-        initializes the Clyde class
-        self, file name, x position, y position, and speed parameters
+        Initializes the Clyde class
+        args:
+            filename (str) - image filename
+            x (int) - initial x position
+            y (int) - initial y position
+            speed (int) - ghost speed
         '''
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(pygame.image.load(filename),(20,20))
@@ -121,9 +128,7 @@ class Clyde(pygame.sprite.Sprite): #Orange; Follows the edges of the fences
 
     def update(self):
         '''
-        updates the Clyde class's positon
-        self
-
+        Updates each Clyde object's positon (moves in a diamond shape)
         '''
         if self.clydeState == 0:
             self.clydeState += 1
@@ -144,8 +149,7 @@ class Clyde(pygame.sprite.Sprite): #Orange; Follows the edges of the fences
 
     def getCoordinates(self):
         '''
-        gets the coordinates of the Clyde class
-        self
-        returns x and y position
+        Gets the coordinates of the Clyde class
+        Returns: self.x,self.y (tup) - x and y position
         '''
         return self.x,self.y

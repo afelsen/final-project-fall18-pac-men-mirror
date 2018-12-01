@@ -69,15 +69,15 @@ PacXon is a game where a player controls a Pacman character to fence portions of
 
 ### Software Lead - Adiel Felsen
 
-TBD
+Worked with back end on the creation of some classes. Specifically worked on the fillMatrix functionality of the Screen class. Worked closely with front end specialist on the bouncing of ghosts and Pacman collisions. Added Pacman's animation and changed the scoring system. Also cleaned up much of the code to follow the DRY rule. Generally worked through many issues on the front end and the back end to get the code to work properly and commented much of the code to make it clear to understand.
 
 ### Front End Specialist - Matt Damiata
 
-TBD
+Used pygame to create most of the visual aspects of the game. Created the Start Screen, Instructions Screen, Next Level Screen and Game Over Screen and the display of the Bottombar class. Worked closely with software lead on the bouncing and abilities of the Ghosts and worked on Pacman collisions. Worked on generating ghost objects and implemented the "Heart" powerup. Also generally worked on fixing the code to make it work properly.
 
 ### Back End Specialist - Jack Stanley
 
-TBD
+Worked on creating many of the major classes to be used in the game and wrote docstrings to make each methods' functionality clear. Created Botttombar class which displays relevant information to the user. Worked with Software Lead and Front End on finishing the project and implementing object functionality in the Controller class.
 
 ***
 
