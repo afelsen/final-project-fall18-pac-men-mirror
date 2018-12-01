@@ -141,7 +141,6 @@ class Clyde(pygame.sprite.Sprite): #Orange; Follows the edges of the fences
             self.clydeState = 0
             self.rect.x -= self.speed
             self.rect.y += self.speed
-        print(self.rect.x)
 
     def getCoordinates(self):
         '''
