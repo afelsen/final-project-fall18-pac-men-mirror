@@ -94,7 +94,6 @@ class Controller:
                             self.bottombar.level = 100
                             leveldone = True
                         keys = pygame.key.get_pressed()
-
                     if introframe >= 5: #This ensures that the text is displayed for 10 frames
                         if keys[pygame.K_SPACE]: # space to start
                             introdone = True
@@ -104,6 +103,7 @@ class Controller:
                             self.bottombar.level = 100
                             leveldone = True
                         elif keys[pygame.K_i]: # i for instructions
+                            instructionsdone = False
                             instructionsframe = 0
                             instructionsTop = self.myfont.render("Instructions:",False,(255,255,50))
                             instructionsCont = self.subfont.render("Use the arrows keys to move",False,(255,255,50))
@@ -111,7 +111,7 @@ class Controller:
                             instructionsP2 = self.subfont.render("Decreases Ghost speed",False,(0,192,0))
                             instructionsP3 = self.subfont.render("Freezes all Ghosts",False,(0,50,255))
                             instructionsP4 = self.subfont.render("Gives Pacman an extra life",False,(255,0,0))
-                            instructionsQ = self.subfont.render("Press SPACEBAR to start, and Q to quit",False,(255,255,50))
+                            instructionsQ = self.subfont.render("Press SPACEBAR to return to menu, and Q to quit",False,(255,255,50))
                             instructionsLev = self.subfont.render("To complete each level, you must fill in 80% of the screen",False,(255,255,50))
                             instructionsHeart = pygame.transform.scale(pygame.image.load("assets/heart.png"),(40, 40))
                             instructionsCherry = pygame.transform.scale(pygame.image.load("assets/cherry.png"),(40, 40))
@@ -143,8 +143,8 @@ class Controller:
                                 self.menuscreen.blit(instructionsP2,(200,290))
                                 self.menuscreen.blit(instructionsP3,(200,360))
                                 self.menuscreen.blit(instructionsP4,(200,430))
-                                self.menuscreen.blit(instructionsQ,(100,150))
-                                self.menuscreen.blit(instructionsLev,(40,500))
+                                self.menuscreen.blit(instructionsQ,(65,500))
+                                self.menuscreen.blit(instructionsLev,(40,150))
                                 self.menuscreen.blit(instructionsCherry,(150,220))
                                 self.menuscreen.blit(instructionsBanana,(150,290))
                                 self.menuscreen.blit(instructionsSnowflake,(150,360))
