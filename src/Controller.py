@@ -9,6 +9,10 @@ from src import BottomBar
 
 class Controller:
     def __init__(self, width = 640, height = 560):
+        '''
+        initializes the Controller class
+        self, width, and height parameters
+        '''
         self.screen = pygame.display.set_mode((width,height))
         self.background = pygame.Surface(self.screen.get_size()).convert()
         self.pacman = Pacman.Pacman('assets/PacmanOpen.png',0,0,20)
@@ -22,7 +26,8 @@ class Controller:
         self.cherryGroup = pygame.sprite.Group()
         self.bananaGroup = pygame.sprite.Group()
         self.snowflakeGroup = pygame.sprite.Group()
-        self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup]
+        self.heartGroup = pygame.sprite.Group()
+        self.powerupGroupList = [self.cherryGroup,self.bananaGroup,self.snowflakeGroup, self.heartGroup]
         self.boxes = pygame.sprite.Group()
         self.screenmatrix = Screen.Screen(width//20,(height-80)//20)
         self.lives = TopBar.Lives('assets/PacmanMiddle.png',5,5)
@@ -152,18 +157,22 @@ class Controller:
 
                 #Random powerup spawning
                 if frame%200 == 0:
-                    choice = random.randint(0,2)
+                    choice = random.randint(0,3)
                     if choice == 0:
                         self.cherryGroup.add(Powerup.Cherry('assets/cherry.png',random.randint(1,30)*20,random.randint(1,22)*20))
                     if choice == 1:
                         self.snowflakeGroup.add(Powerup.Snowflake('assets/snowflake.png',random.randint(1,30)*20,random.randint(1,22)*20))
                     if choice == 2:
                         self.bananaGroup.add(Powerup.Banana('assets/banana.png',random.randint(1,30)*20,random.randint(1,22)*20))
+                    if choice == 3:
+                        self.heartGroup.add(Powerup.Heart('assets/Heart.png',random.randint(1,30)*20,random.randint(1,22)*20))
 
                 #Powerup fucntionality
                 cherryCol = pygame.sprite.spritecollide(self.pacman, self.cherryGroup, True)
                 snowflakeCol = pygame.sprite.spritecollide(self.pacman, self.snowflakeGroup, True)
                 bananaCol = pygame.sprite.spritecollide(self.pacman, self.bananaGroup, True)
+                heartCol = pygame.sprite.spritecollide(self.pacman, self.heartGroup, True)
+
 
                 #Deleting powerups when ghost collide with them
                 for ghostGroup in self.ghostGroupList:
@@ -179,6 +188,8 @@ class Controller:
                 if bananaCol and frame > bananaTime + 50: #Prevents two bananas from being collected in the same time period
                     bananaTime = frame
                     ghostSpeed *= 2
+                if heartCol:
+                    self.bottombar.lives += 1
 
                 if frame == cherryTime + 50:
                     pacmanSpeed *= 2
@@ -332,10 +343,7 @@ class Controller:
                             self.screenmatrix.fillMatrix(self.ghostGroupList)
                             self.boxes.update(self.screenmatrix)
                             notOnFilled = False
-                            boxesfilled = self.screenmatrix.getNumLastFilled()
-                            self.bottombar.score +=  int(boxesfilled**1.5/100 + boxesfilled)#Score increases with an exponential function based on boxes filled. Rewards taking risks. (max of 170 if every box is filled
-
-                            print (self.bottombar.score)
+                            self.bottombar.score +=  int(self.screenmatrix.getNumLastFilled()**1.5/100+1) #Score increases with an exponential function based on boxes filled. Rewards taking risks. (max of 170 if every box is filled)
                             self.bottombar.percent = self.screenmatrix.getPercent()
 
                 #Pacman moving functionality
