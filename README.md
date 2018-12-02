@@ -71,17 +71,17 @@ PacXon is a game where a player controls a Pacman character to fence portions of
 
 **Final GUI Interface**
  <p float="center">
- <img src="assets/Startscreen.png" width="49%"/>
- <img src="assets/Instructionsscreen.png" width="49%"/>
+ <img src="assets/gamescreenshots/Startscreen.png" width="49%"/>
+ <img src="assets/gamescreenshots/Instructionsscreen.png" width="49%"/>
  </p>
  <p float="center">
- <img src="assets/Gamescreen.png" width="49%" />
- <img src="assets/Levelscreen.png" width="49%" />
+ <img src="assets/gamescreenshots/Gamescreen.png" width="49%" />
+ <img src="assets/gamescreenshots/Levelscreen.png" width="49%" />
  </p>
 
  <p float="center">
  <center>
- <img src="assets/Gameoverscreen.png" width="49%"/>
+ <img src="assets/gamescreenshots/Gameoverscreen.png" width="49%"/>
  </center>
  </p>
 
