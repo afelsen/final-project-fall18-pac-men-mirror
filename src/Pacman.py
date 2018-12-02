@@ -75,11 +75,11 @@ class Pacman(pygame.sprite.Sprite):
         Pacman's animation
         '''
         if self.mouthState == 0:
-            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/PacmanOpen.png'),(20,20)),self.angle)
+            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/pacmanimages/PacmanOpen.png'),(20,20)),self.angle)
             self.mouthState += 1
         elif self.mouthState == 1:
-            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/PacmanMiddle.png'),(20,20)),self.angle)
+            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/pacmanimages/PacmanMiddle.png'),(20,20)),self.angle)
             self.mouthState += 1
         else:
-            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/PacmanClosed.png'),(20,20)),self.angle)
+            self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load('assets/pacmanimages/PacmanClosed.png'),(20,20)),self.angle)
             self.mouthState = 0

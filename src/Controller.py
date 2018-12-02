@@ -13,7 +13,7 @@ class Controller:
         '''
         self.screen = pygame.display.set_mode((width,height))
         self.background = pygame.Surface(self.screen.get_size()).convert()
-        self.pacman = Pacman.Pacman('assets/PacmanOpen.png',0,0,20)
+        self.pacman = Pacman.Pacman('assets/pacmanimages/PacmanOpen.png',0,0,20)
         self.pacGroup = pygame.sprite.Group(self.pacman)
         self.pinkyGroup = pygame.sprite.Group()
         self.inkyGroup = pygame.sprite.Group()
@@ -36,7 +36,7 @@ class Controller:
 
         for i in range(0,width,20):
             for j in range(0,height-80,20):
-                self.boxes.add(Screen.Box(i,j,'assets/EmptyBox.png'))
+                self.boxes.add(Screen.Box(i,j,'assets/screenimages/EmptyBox.png'))
         self.boxes.update(self.screenmatrix)
 
         done = False
@@ -70,11 +70,11 @@ class Controller:
             done = False
             # Ghost spawning
             for i in range(self.bottombar.level//2+1):
-                self.pinkyGroup.add(Ghost.Pinky('assets/pinky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
+                self.pinkyGroup.add(Ghost.Pinky('assets/ghostimages/pinky.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
             for i in range(self.bottombar.level//3):
-                self.blinkyGroup.add(Ghost.Blinky('assets/blinky.png',random.randint(2,29)*20,random.randint(2,21)*20,10))
+                self.blinkyGroup.add(Ghost.Blinky('assets/ghostimages/blinky.png',random.randint(2,29)*20,random.randint(2,21)*20,10))
             for i in range(self.bottombar.level//3):
-                self.clydeGroup.add(Ghost.Clyde('assets/clyde.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
+                self.clydeGroup.add(Ghost.Clyde('assets/ghostimages/clyde.png',random.randint(2,29)*20,random.randint(2,21)*20,20))
             inkysSpawned = 0
 
             while not done:
@@ -110,10 +110,10 @@ class Controller:
                             instructionsP4 = self.subfont.render("Gives Pacman an extra life",False,(255,0,0))
                             instructionsQ = self.subfont.render("Press SPACEBAR to return to menu, and Q to quit",False,(255,255,50))
                             instructionsLev = self.subfont.render("To complete each level, you must fill in 80% of the screen",False,(255,255,50))
-                            instructionsHeart = pygame.transform.scale(pygame.image.load("assets/heart.png"),(40, 40))
-                            instructionsCherry = pygame.transform.scale(pygame.image.load("assets/cherry.png"),(40, 40))
-                            instructionsBanana = pygame.transform.scale(pygame.image.load("assets/banana.png"),(40, 40))
-                            instructionsSnowflake = pygame.transform.scale(pygame.image.load("assets/snowflake.png"),(40, 40))
+                            instructionsHeart = pygame.transform.scale(pygame.image.load("assets/powerupimages/heart.png"),(40, 40))
+                            instructionsCherry = pygame.transform.scale(pygame.image.load("assets/powerupimages/cherry.png"),(40, 40))
+                            instructionsBanana = pygame.transform.scale(pygame.image.load("assets/powerupimages/banana.png"),(40, 40))
+                            instructionsSnowflake = pygame.transform.scale(pygame.image.load("assets/powerupimages/snowflake.png"),(40, 40))
                             while not instructionsdone:
                                 for event in pygame.event.get():
                                     if event.type == pygame.QUIT:
@@ -198,20 +198,20 @@ class Controller:
                                 threebythreeList += [(j,i)]
                     if threebythreeList != []:
                         spawnLocation = random.choice(threebythreeList)
-                        self.inkyGroup.add(Ghost.Inky('assets/inky.png',spawnLocation[0]*20,spawnLocation[1]*20,20))
+                        self.inkyGroup.add(Ghost.Inky('assets/ghostimages/inky.png',spawnLocation[0]*20,spawnLocation[1]*20,20))
                         inkysSpawned += 1
 
                 #Random powerup spawning
                 if frame%200 == 0:
                     choice = random.randint(0,3)
                     if choice == 0:
-                        self.cherryGroup.add(Powerup.Cherry('assets/cherry.png',random.randint(1,30)*20,random.randint(1,22)*20))
+                        self.cherryGroup.add(Powerup.Cherry('assets/powerupimages/cherry.png',random.randint(1,30)*20,random.randint(1,22)*20))
                     if choice == 1:
-                        self.snowflakeGroup.add(Powerup.Snowflake('assets/snowflake.png',random.randint(1,30)*20,random.randint(1,22)*20))
+                        self.snowflakeGroup.add(Powerup.Snowflake('assets/powerupimages/snowflake.png',random.randint(1,30)*20,random.randint(1,22)*20))
                     if choice == 2:
-                        self.bananaGroup.add(Powerup.Banana('assets/banana.png',random.randint(1,30)*20,random.randint(1,22)*20))
+                        self.bananaGroup.add(Powerup.Banana('assets/powerupimages/banana.png',random.randint(1,30)*20,random.randint(1,22)*20))
                     if choice == 3:
-                        self.heartGroup.add(Powerup.Heart('assets/heart.png',random.randint(1,30)*20,random.randint(1,22)*20))
+                        self.heartGroup.add(Powerup.Heart('assets/powerupimages/heart.png',random.randint(1,30)*20,random.randint(1,22)*20))
 
                 #Powerup fucntionality
                 cherryCol = pygame.sprite.spritecollide(self.pacman, self.cherryGroup, True)

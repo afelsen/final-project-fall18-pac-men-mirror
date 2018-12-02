@@ -148,8 +148,8 @@ class Box(pygame.sprite.Sprite):
         Args: screen (src.Screen.Screen) - The Screen object
         '''
         if screen.matrix[self.rect.x//20][self.rect.y//20] == 1:
-            self.image = pygame.transform.scale(pygame.image.load('assets/Bluebox.png'),(20,20))
+            self.image = pygame.transform.scale(pygame.image.load('assets/screenimages/Bluebox.png'),(20,20))
         if screen.matrix[self.rect.x//20][self.rect.y//20] == .5:
-            self.image = pygame.transform.scale(pygame.image.load('assets/Halfwaybox.png'),(20,20))
+            self.image = pygame.transform.scale(pygame.image.load('assets/screenimages/Halfwaybox.png'),(20,20))
         if screen.matrix[self.rect.x//20][self.rect.y//20] == 0:
-            self.image = pygame.transform.scale(pygame.image.load('assets/EmptyBox.png'),(20,20))
+            self.image = pygame.transform.scale(pygame.image.load('assets/screenimages/EmptyBox.png'),(20,20))
