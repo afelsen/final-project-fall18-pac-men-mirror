@@ -79,7 +79,7 @@ PacXon is a game where a player controls a Pacman character to fence portions of
 * **Heart** - one of the powerups that Pacman can collide with. Once collided with, Pacman gets an extra life.
 * **Screen** - this class holds the matrix which includes the state of each box on the grid - filled (state = 1), unfilled (state = 0) or in the process of being drawn (state = .5). This class also has methods to fill in areas of the screen not containing a ghost, reset the matrix, track the Pacman (and remove it), get the percent of the screen filled and get the number of boxes last filled.
 * **Box** - this class defines each "box" object of the grid background. This class references the matrix in the Screen class for changing the images of the objects.  
-* **bottomBar** - this class holds all of the data that is displayed to the user (Lives, Level, Percent, Highscore and Score). A method called data() returns the two lines that are displayed to the user.
+* **Bottombar** - this class holds all of the data that is displayed to the user (Lives, Level, Percent, Highscore and Score). A method called data() returns the two lines that are displayed to the user.
 ***
 
 ## Tasks and Responsibilities
