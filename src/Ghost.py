@@ -34,7 +34,7 @@ class Pinky(pygame.sprite.Sprite): #Pink; normal bouncing ghost
         Gets the coordinates of the Pinky ghosts
         Returns: self.x,self.y (tup) - x and y position
         '''
-        return self.x,self.y
+        return self.rect.x,self.rect.y
 
 class Inky(pygame.sprite.Sprite): #Light blue; Bounces in fenced in areas
     def __init__(self, filename, x, y, speed):
@@ -70,7 +70,7 @@ class Inky(pygame.sprite.Sprite): #Light blue; Bounces in fenced in areas
         Gets the coordinates of each Inky ghost
         Returns: x and y position
         '''
-        return self.x,self.y
+        return self.rect.x,self.rect.y
 
 class Blinky(pygame.sprite.Sprite): #Red; Breaks any block it hits - moves at 1/2 speed
     def __init__(self, filename, x, y, speed):
@@ -106,7 +106,7 @@ class Blinky(pygame.sprite.Sprite): #Red; Breaks any block it hits - moves at 1/
         Gets the coordinates of each Blinky ghost
         Returns: self.x,self.y (tup) - x and y position
         '''
-        return self.x,self.y
+        return self.rect.x,self.rect.y
 
 class Clyde(pygame.sprite.Sprite): #Orange; Follows the edges of the fences
     def __init__(self, filename, x, y, speed):
@@ -152,4 +152,4 @@ class Clyde(pygame.sprite.Sprite): #Orange; Follows the edges of the fences
         Gets the coordinates of the Clyde class
         Returns: self.x,self.y (tup) - x and y position
         '''
-        return self.x,self.y
+        return self.rect.x,self.rect.y
