@@ -130,14 +130,23 @@ def main():
         test_screen.fillMatrix(ghostGroupList)
         assert test_screen.getMatrix() == [[1,1,1,1,1,1,1],[1,0,0,0,0,0,1],[1,0,1,1,1,1,1],[1,0,1,1,1,1,1],[1,0,1,1,1,1,1],[1,0,1,1,1,1,1],[1,0,0,0,0,0,1],[1,1,1,1,1,1,1]]
 
+        print("=====Number of Last Filled Test=====")
+        assert test_screen.getNumLastFilled() == 4
+
         print("=====Reset Test=====")
         test_screen.reset()
         assert test_screen.getMatrix() == [[1,1,1,1,1,1,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,1,1,1,1,1,1]]
+
+        print("=====Track Pacman Test=====")
+        test_screen.trackPacman((3,3))
+        assert test_screen.getMatrix() == [[1,1,1,1,1,1,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,0,0,.5,0,0,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,1,1,1,1,1,1]]
+
 
         print("=====Remove Track Test=====")
         test_screen.matrix = [[1,1,1,1,1,1,1],[1,0,.5,0,0,0,1],[1,0,0,0,0,0,1],[1,0,.5,.5,0,.5,1],[1,0,0,0,0,.5,1],[1,0,.5,.5,.5,.5,1],[1,.5,0,.5,0,0,1],[1,1,1,1,1,1,1]]
         test_screen.removeTrack()
         assert test_screen.getMatrix() == [[1,1,1,1,1,1,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,0,0,0,0,0,1],[1,1,1,1,1,1,1]]
+
 
         print("######## Testing Bottombar Model #########")
         print("=====Checking Output=====")
