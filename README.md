@@ -21,26 +21,55 @@ PacXon is a game where a player controls a Pacman character to fence portions of
 
    This screen is the first screen that the user sees. It gives the user the option to press SPACEBAR to start the game, "i" to see instructions or "q" to quit.
 
+   <p float="center">
+   <center>
+   <img src="assets/wireframeimages/Startscreenconcept.png" width="60%"/>
+   </center>
+   </p>
+
 2.	Instructions Screen
 
    Explains briefly the goal of the game and the abilities of the different powerups. It gives the user the option to press SPACEBAR to return to the Start Screen or "q" to quit.
+
+   <p float="center">
+   <center>
+   <img src="assets/wireframeimages/Instructionsscreenconcept.png" width="60%"/>
+   </center>
+   </p>
 
 3.	The Game Menu
 
    This is the screen where the gameplay of PacXon takes place. Ghosts bounce around the screen, and Powerups randomly spawn. Using the arrow keys, Pacman can fence in certain areas of the screen, adding to his score. At the bottom of the screen, the lives, level, percent, highscore and score are displayed. If Pacman is collided with, he loses a life. If 80% of the screen is fenced in, the "Next Level Screen" is shown. Pacman gains two lives, gets 250 points and the screen resets with more ghosts. If Pacman has zero lives, the "Game Over Screen" shows. The game is fully reset. If the window is closed or "q" is pressed, the game is closed.
 
+   <p float="center">
+   <center>
+   <img src="assets/wireframeimages/Gamescreenconcept.png" width="60%"/>
+   </center>
+   </p>
+
 4.	Next Level Screen
 
    This screen appears if 80% of the screen is filled by Pacman. The screen displays the level number. It gives the user the option to press SPACEBAR to continue or "q" to quit.
+
+   <p float="center">
+   <center>
+   <img src="assets/wireframeimages/Levelscreenconcept.png" width="60%"/>
+   </center>
+   </p>
 
 5.	Game Over Screen
 
    This screen appears if Pacman has zero lives. The screen displays the current score and the high score. This screen gives the user the option to press SPACEBAR to restart or "q" to quit.
 
+   <p float="center">
+   <center>
+   <img src="assets/wireframeimages/Gameoverscreenconcept.png" width="60%"/>
+   </center>
+   </p>
 
+<br>
 
-
-
+**Final GUI Interface**
  <p float="center">
  <img src="assets/Startscreen.png" width="49%"/>
  <img src="assets/Instructionsscreen.png" width="49%"/>
