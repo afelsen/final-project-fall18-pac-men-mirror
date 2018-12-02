@@ -43,7 +43,7 @@ PacXon is a game where a player controls a Pacman character to fence portions of
 
  <p float="center">
  <img src="assets/Startscreen.png" width="49%"/>
- <img src="assets/Instructionsscreen.png" width="49%"/> 
+ <img src="assets/Instructionsscreen.png" width="49%"/>
  </p>
  <p float="center">
  <img src="assets/Gamescreen.png" width="49%" />
@@ -62,6 +62,9 @@ PacXon is a game where a player controls a Pacman character to fence portions of
 
 ### Non-Standard Libraries and Modules Used
 * **Pygame** (https://pygame.org) - A free and Open Source python programming language library for making multimedia applications like games, developed by Pete Shinners and the pygame community.
+<img src="assets/MVC.png" width="100%"/>
+
+### Class and File Relationships (Flowchart)
 
 ### List of Classes
 * **Controller** - The class that defines the logic between the other classes. It includes collisions with powerups and the abilities that come with them and the bouncing of the ghosts on the screen. It also includes the logic behind filling in the screen, Pacman's motion and the loss of lives when Pacman's trail is collided with. It includes all of the game screens (Intro, Instructions, Game Menu, Next Level and Game Over). It includes win and lose logic and displays everything to the screen.
